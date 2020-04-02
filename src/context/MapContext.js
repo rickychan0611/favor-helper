@@ -4,11 +4,8 @@ import getLatLng from "../functions/getLatLng"
 
 export const MapContext = createContext()
 
-let userInitLocation = "v7a 4n9"
+let userInitLocation = "vancouver"
 const jobLocations = []
-
-// const getInitLocation = async () => getLatLng(userInitLocation)
-// getInitLocation().then((loc) => return loc)
 
 //get Lat, Lng by address from all posts in database
 posts.map((post) => {

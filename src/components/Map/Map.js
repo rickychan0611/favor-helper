@@ -22,14 +22,15 @@ const Map = () => {
       <LoadScript
         id="script-loader"
         googleMapsApiKey="AIzaSyCquh2O1gZyLsvJGclXV4fgoMh682fso2E"
-      >
+        region = "ca"
+      > 
         <GoogleMap
           id="map"
           mapContainerStyle={{
             height: "calc(100vh - 9.5rem)",
             width: "auto"
           }}
-          zoom={12}
+          zoom={11}
           center={{
             lat: loc.lat,
             lng: loc.lng
