@@ -3,6 +3,7 @@ import { Card, Icon, Image, Grid, Segment, Header } from 'semantic-ui-react'
 import "./styles.css";
 
 const PostCard = ({ item, click }) => {
+  // const timestamp = item.createAt.toDate()
   return (
     <Fragment>
       <Segment fluid="true" >
@@ -10,7 +11,10 @@ const PostCard = ({ item, click }) => {
           <Grid.Column width={11}>
             <Header as='h3'>{item.title}</Header>
             <Card.Meta>
-              <Icon name='calendar alternate outline' /><span className='date'>Date: {item.jobDate}</span>
+              <Icon name='calendar alternate outline' />
+              <span className='date'>
+                Date: { item.createAt.toDate().toLocaleString()}
+              </span>
             </Card.Meta>
             <Card.Description>
               <Icon name='point' />

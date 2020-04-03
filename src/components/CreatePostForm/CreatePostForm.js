@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import db from '../../firestore'
 import posts from '../../data/posts.json'
 import { useHistory } from "react-router-dom";
-
+import { firebase } from '@firebase/app';
 
 import {
   Container,
@@ -35,9 +35,14 @@ const CreatePostForm = () => {
   const handleSubmit = () => {
     setState({ ...state, submitted: true })
 
+   const timestamp = new Date()
+
     let newPost = db.collection("posts").doc()
     newPost.set(
-      { ...state, id: newPost.id, authorPic: randomPic() }
+      { ...state, 
+        id: newPost.id, 
+        authorPic: randomPic(),
+        createAt: timestamp}
       )
       .then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);

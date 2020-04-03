@@ -10,13 +10,14 @@ const PostsContextProvider = ({ children }) => {
     () => {
       const unsubscribe = 
         db.collection('posts')
+        .orderBy('createAt', 'desc')
         .onSnapshot( snapshot => { 
           const arr = [] 
           snapshot.forEach(doc => { arr.push(doc.data()) }) 
           setPosts(arr)
           console.log(arr)
         }
-          )
+      )
       return () => unsubscribe()
     },
     []
@@ -26,7 +27,8 @@ const PostsContextProvider = ({ children }) => {
     <PostsContext.Provider
       value={
         {
-          posts        }
+          posts        
+        }
       }>
       {children}
     </PostsContext.Provider>
