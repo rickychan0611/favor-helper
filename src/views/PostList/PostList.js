@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
-import { Map, PostDetail, PostCard } from '../../components'
+import { Map, PostCard } from '../../components'
+import PostDetail from '../PostDetail'
 import posts from '../../data/posts.json'
+import {
+  Link,
+  Route,
+  Switch,
+  useRouteMatch,
+} from "react-router-dom"
+
 import {
   Container,
   Grid,
@@ -12,7 +20,9 @@ import {
 import styles from './styles'
 
 const PostList = () => {
-  const [showMap, setShowMap] = useState(true)
+
+  let { path, url } = useRouteMatch();
+
   return (
     <div>
       <Container style={styles.container}>
@@ -26,13 +36,25 @@ const PostList = () => {
                 <Segment basic style={styles.posts}>
                   {posts.map((item) => {
                     return (
-                      <PostCard key={item.id} item={item} />
+                      <Link to={url + "/" + item.id + '/' + item.title.split(' ').join('-')}>
+                        <PostCard key={item.id} item={item}
+                        />
+                      </Link>
                     )
                   })}
                 </Segment>
               </Grid.Column>
               <Grid.Column>
-                {showMap ? <Map /> : <PostDetail />}
+                <Switch>
+                  {/* parent path: eg. posts/ */}
+                  <Route exact path={path}>
+                    <Map />
+                  </Route>
+                  {/* switch to path params */}
+                  <Route path={`${path}/:id`}>
+                    <PostDetail />
+                  </Route>
+                </Switch>
               </Grid.Column>
             </Grid.Row>
           </Grid>

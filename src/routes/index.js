@@ -1,12 +1,15 @@
 import React, { Fragment } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import PostList from "../views/PostList"
+import PostDetail from "../views/PostDetail"
+
 
 export default () => (
   <Fragment>
     <Switch>
-    <Route path="/" exact component={PostList} />
-      {/* <Route path="/profile:userId" component={Profile} /> */}
+      <Redirect exact from="/" to="/posts" />
+      {/* <Route path="/" exact component={PostList} /> */}
+      <Route path="/posts" component={PostList} />
     </Switch>
   </Fragment>
 )
