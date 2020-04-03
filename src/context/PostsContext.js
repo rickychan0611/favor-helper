@@ -21,13 +21,12 @@ const PostsContextProvider = ({ children }) => {
     },
     []
   )
-
+    
   return (
     <PostsContext.Provider
       value={
         {
-          posts,
-        }
+          posts        }
       }>
       {children}
     </PostsContext.Provider>

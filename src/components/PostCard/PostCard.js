@@ -1,15 +1,6 @@
 import React, { Fragment } from 'react'
-// import {
-//   Card,
-//   CardBody,
-//   CardText,
-//   Row,
-//   Col
-// } from "reactstrap";
-
 import { Card, Icon, Image, Grid, Segment, Header } from 'semantic-ui-react'
 import "./styles.css";
-
 
 const PostCard = ({ item, click }) => {
   return (

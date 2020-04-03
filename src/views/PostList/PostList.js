@@ -2,13 +2,13 @@ import React from 'react'
 import { Map, PostCard } from '../../components'
 import PostDetail from '../PostDetail'
 import { PostsContext } from '../../context/PostsContext'
-
 import {
   Link,
   Route,
   Switch,
   useRouteMatch,
-  useHistory
+  useHistory,
+  Redirect
 } from "react-router-dom"
 
 import {
@@ -58,6 +58,7 @@ const PostList = () => {
                   <Route path={`${path}/:id`}>
                     <PostDetail />
                   </Route>
+                  <Redirect from={`${path}//*`} to={`${path}/*`} />
                 </Switch>
               </Grid.Column>
             </Grid.Row>

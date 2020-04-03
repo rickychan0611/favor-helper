@@ -10,6 +10,7 @@ export default () => (
       <Redirect exact from="/" to="/posts" />
       <Route path="/create-post" exact component={CreatePostForm} />
       <Route path="/posts" component={PostList} />
+      <Redirect from="*" to="/" />
     </Switch>
   </Fragment>
 )
