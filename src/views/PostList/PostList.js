@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import db from '../../firestore'
+import React from 'react'
 import { Map, PostCard } from '../../components'
 import PostDetail from '../PostDetail'
-// import posts from '../../data/posts.json'
+import { PostsContext } from '../../context/PostsContext'
+
 import {
   Link,
   Route,
@@ -25,23 +25,7 @@ import styles from './styles'
 const PostList = () => {
   const history = useHistory()
   let { path, url } = useRouteMatch();
-  const [posts, setPosts] = useState([])
-
-useEffect(
-  () => {
-    const unsubscribe = 
-      db.collection('posts')
-      .onSnapshot( snapshot => { 
-        const arr = [] 
-        snapshot.forEach(doc => {arr.push(doc.data()) }) 
-        setPosts(arr)
-        console.log(arr)
-      }
-        )
-    return () => unsubscribe()
-  },
-  []
-)
+  const { posts } = React.useContext(PostsContext)
 
   return (
     <div>
