@@ -6,7 +6,6 @@ const PostCard = ({ item, click }) => {
   // const timestamp = item.createAt.toDate()
   return (
     <Fragment>
-      <Segment fluid="true" >
         <Grid column={2} >
           <Grid.Column width={11}>
             <Header as='h3'>{item.title}</Header>
@@ -27,7 +26,6 @@ const PostCard = ({ item, click }) => {
               <Image src={item.authorPic} avatar style={{fontSize: 28, objectFit: 'cover'}} />
           </Grid.Column>
         </Grid>
-      </Segment>
     </Fragment>
   )
 }

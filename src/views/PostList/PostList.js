@@ -31,23 +31,26 @@ const PostList = () => {
     <div>
       <Container style={styles.container}>
         <Header as='h1'>Posts</Header>
-        <Button onClick={()=>{history.push('/create-post')}}>Create a post</Button>
+        <Button onClick={() => { history.push('/create-post') }}>Create a post</Button>
         {/* display map for large screen only */}
-        <Responsive minWidth={998}>
+        <Responsive minWidth={800}>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <Segment basic style={styles.posts}>
+                <Segment basic style={styles.posts} >
                   {posts ? posts.map((item) => {
                     return (
-                      <Link to={url + "/" + item.id + '/' + item.title.split(' ').join('-')}>
-                        <PostCard key={item.id} item={item}
-                        />
-                      </Link>
+                      <Segment fluid="true" >
+                        <Link to={url + "/" + item.id + '/' + item.title.split(' ').join('-')}>
+                          <PostCard key={item.id} item={item} style={styles.postCard}
+                          />
+                        </Link>
+                      </Segment>
                     )
                   }) : null}
                 </Segment>
               </Grid.Column>
+
               <Grid.Column>
                 <Switch>
                   {/* parent path: eg. posts/ */}
@@ -61,21 +64,40 @@ const PostList = () => {
                   <Redirect from={`${path}//*`} to={`${path}/*`} />
                 </Switch>
               </Grid.Column>
+              
             </Grid.Row>
           </Grid>
         </Responsive>
 
-        {/* hide map for small screen */}
-        <Responsive maxWidth={997}>
-          <Grid columns={2} stackable>
-            {posts.map((item, i) => {
-              return (
-                <Grid.Column key={i}>
-                  <PostCard key={i} item={item} />
-                </Grid.Column>
-              )
-            })}
-          </Grid>
+   {/************ layout for small screen {/************/}
+        <Responsive maxWidth={799}>
+          <Switch>
+            {/* parent path: eg. posts/ */}
+            <Route exact path={path}>
+              <Grid columns={2} stackable>
+                {posts.map((item, i) => {
+                  return (
+                    <Grid.Column key={i}>
+                      <Segment fluid="true" >
+                        <Link to={url + "/" + item.id + '/' + item.title.split(' ').join('-')}>
+                          <PostCard key={item.id} item={item} style={styles.postCard}
+                          />
+                        </Link>
+                      </Segment>
+                    </Grid.Column>
+                  )
+                })}
+              </Grid>
+            </Route>
+
+            {/* switch to path params */}
+            <Route path={`${path}/:id`}>
+              <PostDetail />
+            </Route>
+
+            <Redirect from={`${path}//*`} to={`${path}/*`} />
+
+          </Switch>
         </Responsive>
       </Container>
     </div>

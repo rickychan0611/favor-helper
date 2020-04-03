@@ -5,6 +5,9 @@ const styles = {
   posts :{
     maxHeight: 'calc(100vh - 8rem)',
     overflowY: 'auto',
+  },
+  postCard:{
+    marginBottom: 30
   }
 }
 
