@@ -1,3 +1,3 @@
-import Home from './Temp'
+import Home from './Home'
 
 export default Home
