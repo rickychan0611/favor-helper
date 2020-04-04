@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Map, PostCard } from '../../components'
 import PostDetail from '../PostDetail'
 import { PostsContext } from '../../context/PostsContext'
@@ -26,6 +26,18 @@ const PostList = () => {
   const history = useHistory()
   let { path, url } = useRouteMatch();
   const { posts } = React.useContext(PostsContext)
+  const [post, setPost] = useState()
+
+  const PostCardContainer = ({item}) => {
+    return (
+      <Segment raised fluid="true" onClick={()=>{
+        setPost(item)
+        history.push(url + "/" + item.id + '/' + item.title.split(' ').join('-'))
+      }}>
+         <PostCard key={item.id} item={item} style={styles.postCard} />
+      </Segment>
+    )
+  }
 
   return (
     <div>
@@ -41,12 +53,7 @@ const PostList = () => {
                 <Segment basic style={styles.posts} >
                   {posts ? posts.map((item) => {
                     return (
-                      <Segment fluid="true" >
-                        <Link to={url + "/" + item.id + '/' + item.title.split(' ').join('-')}>
-                          <PostCard key={item.id} item={item} style={styles.postCard}
-                          />
-                        </Link>
-                      </Segment>
+                      <PostCardContainer item={item}/>
                     )
                   }) : null}
                 </Segment>
@@ -60,7 +67,7 @@ const PostList = () => {
                   </Route>
                   {/* switch to path params */}
                   <Route path={`${path}/:id`}>
-                    <PostDetail />
+                    <PostDetail post={post}/>
                   </Route>
                   <Redirect from={`${path}//*`} to={`${path}/*`} />
                 </Switch>
@@ -79,23 +86,16 @@ const PostList = () => {
                 {posts.map((item, i) => {
                   return (
                     <Grid.Column key={i}>
-                      <Segment raised fluid="true" >
-                        <Link to={url + "/" + item.id + '/' + item.title.split(' ').join('-')}>
-                          <PostCard key={item.id} item={item} style={styles.postCard}
-                          />
-                        </Link>
-                      </Segment>
+                       <PostCardContainer item={item}/>
                     </Grid.Column>
                   )
                 })}
               </Grid>
             </Route>
-
             {/* switch to path params */}
             <Route path={`${path}/:id`}>
-              <PostDetail />
+              <PostDetail post={post}/>
             </Route>
-
             <Redirect from={`${path}//*`} to={`${path}/*`} />
 
           </Switch>

@@ -7,7 +7,8 @@ const styles = {
     overflowY: 'auto',
   },
   postCard:{
-    marginBottom: 30
+    marginBottom: 30,
+    zIndex: 1000
   }
 }
 
