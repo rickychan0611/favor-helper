@@ -10,7 +10,11 @@ const getLatLng = (location) => {
     },
     error => {
       console.error("error" + error)
-      alert(location + ' not found')
+      alert(location + ' is not a place')
+      return {
+        lat: 0,
+        lng: 0
+      }
     }
   )
 }

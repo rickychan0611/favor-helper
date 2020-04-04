@@ -8,6 +8,7 @@ const options = [
   { key: 'register', icon: 'edit', text: 'Register', value: 'register' },
   { key: 'sign-in', icon: 'sign-in', text: 'Sign in', value: 'sign-in' },
   { key: 'sign-out', icon: 'sign-out', text: 'Sign out', value: 'sign-out' },
+  
 ]
 
 
@@ -51,6 +52,15 @@ const TopBar = () => {
       >
         Posts
       </Menu.Item>
+
+      <Menu.Item
+        name='map'
+        active={activeItem === 'map'}
+        onClick={handleItemClick}
+      >
+        Map
+      </Menu.Item>
+
       <Menu.Menu position='right'>
         <Responsive minWidth={531} as={React.Fragment}>
           <Menu.Item

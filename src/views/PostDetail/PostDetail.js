@@ -55,7 +55,7 @@ const PostDetail = (props) => {
             <div>
               id:{post.id} <br />
               title: {post.title} <br />
-              description: {post.des}<br />
+              description: {post.desc}<br />
               location: {post.location}<br />
               postDate: {post.postDate}<br />
               jobDate: {post.jobDate}<br />
