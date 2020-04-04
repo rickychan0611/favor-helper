@@ -31,8 +31,9 @@ const PostList = () => {
     <div>
       <Container style={styles.container}>
         <Header as='h1'>Posts</Header>
-        <Button onClick={() => { history.push('/create-post') }}>Create a post</Button>
-        {/* display map for large screen only */}
+        <Button style={{marginBottom: 10}} onClick={() => { history.push('/create-post') }}>Create a post</Button>
+        
+      {/* display map for large screen only */}
         <Responsive minWidth={800}>
           <Grid columns={2}>
             <Grid.Row>
@@ -64,12 +65,12 @@ const PostList = () => {
                   <Redirect from={`${path}//*`} to={`${path}/*`} />
                 </Switch>
               </Grid.Column>
-              
+
             </Grid.Row>
           </Grid>
         </Responsive>
 
-   {/************ layout for small screen {/************/}
+   {/************ layout for small screen ************/}
         <Responsive maxWidth={799}>
           <Switch>
             {/* parent path: eg. posts/ */}
@@ -78,7 +79,7 @@ const PostList = () => {
                 {posts.map((item, i) => {
                   return (
                     <Grid.Column key={i}>
-                      <Segment fluid="true" >
+                      <Segment raised fluid="true" >
                         <Link to={url + "/" + item.id + '/' + item.title.split(' ').join('-')}>
                           <PostCard key={item.id} item={item} style={styles.postCard}
                           />
