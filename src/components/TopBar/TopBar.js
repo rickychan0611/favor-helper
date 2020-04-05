@@ -34,7 +34,7 @@ const TopBar = () => {
         name=''
         onClick={handleItemClick}
       >
-        <img src='https://cdn.freebiesupply.com/logos/large/2x/facebook-love-logo-png-transparent.png' />
+        <img src='https://img.icons8.com/cotton/64/000000/like--v3.png' />
       </Menu.Item>
 
       <Menu.Item
@@ -68,15 +68,17 @@ const TopBar = () => {
             active={activeItem === 'sign-in'}
             onClick={handleItemClick}
           >
-            Register
+            Sign In
          </Menu.Item>
+
           <Menu.Item
             name='register'
             active={activeItem === 'register'}
             onClick={handleItemClick}
           >
-            Sign-in
+            Register
          </Menu.Item>
+
           <Menu.Item
             name='sign-out'
             active={activeItem === 'sign-out'}
@@ -84,6 +86,7 @@ const TopBar = () => {
           >
             Sign-out
           </Menu.Item>
+
         </Responsive>
         <Responsive maxWidth={530} as={React.Fragment}>
           <Menu.Item>

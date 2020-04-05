@@ -3,7 +3,7 @@ const styles = {
     backgroundColor: 'white'
   },
   posts :{
-    maxHeight: 'calc(100vh - 8rem)',
+    maxHeight: 'calc(100vh - 10rem)',
     overflowY: 'auto',
   },
   postCard:{

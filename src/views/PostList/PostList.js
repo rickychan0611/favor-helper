@@ -42,7 +42,7 @@ const PostList = () => {
   return (
     <div>
       <Container style={styles.container}>
-        <Header as='h1'>Posts</Header>
+        {/* <Header as='h1'>Posts</Header> */}
         <Button style={{marginBottom: 10}} onClick={() => { history.push('/create-post') }}>Create a post</Button>
         
       {/* display map for large screen only */}
