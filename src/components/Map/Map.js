@@ -42,7 +42,7 @@ const Map = () => {
 
       <LoadScript
         id="script-loader"
-        googleMapsApiKey="AIzaSyCquh2O1gZyLsvJGclXV4fgoMh682fso2E"
+        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
         region="ca"
       >
         <GoogleMap

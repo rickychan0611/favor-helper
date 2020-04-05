@@ -3,7 +3,7 @@ const firebase = require("firebase");
 require("firebase/firestore");
 
 firebase.initializeApp({
-  apiKey: "AIzaSyAxf4FalvPiHu7m-o5Z_JSP5ljTgbkN6Eo",
+    apiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
     authDomain: "favor-helper.firebaseapp.com",
     databaseURL: "https://favor-helper.firebaseio.com",
     projectId: "favor-helper",
