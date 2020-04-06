@@ -4,7 +4,7 @@ import firebase from 'firebase'
 export const UserContext = createContext()
 
 const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({loading: true})
   const [loading, setLoading] = useState(true)
 
   React.useEffect(
