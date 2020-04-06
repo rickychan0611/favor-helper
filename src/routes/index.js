@@ -4,6 +4,7 @@ import PostList from "../views/PostList"
 import Register from "../views/Register"
 import SignIn from "../views/SignIn"
 import Home from "../views/Home"
+import Profile from "../views/Profile"
 import { CreatePostForm, TopBar, Map } from "../components"
 
 import styles from './styles'
@@ -22,6 +23,7 @@ export default () => (
         <Route path="/register" component={Register} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="/sign-out" component={Home} />
+        <Route path="/profile" component={Profile} />
         <Route path="/map" component={Map} />
         <Redirect from="*" to="/" />
       </Switch>

@@ -1,9 +1,10 @@
 const firebase = require("firebase");
 // Required for side-effects
+require("firebase/auth");
 require("firebase/firestore");
 
 firebase.initializeApp({
-    apiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "favor-helper.firebaseapp.com",
     databaseURL: "https://favor-helper.firebaseio.com",
     projectId: "favor-helper",
@@ -14,5 +15,5 @@ firebase.initializeApp({
 });
 
 const db = firebase.firestore();
-
+export const auth = firebase.auth()
 export default db

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button, Form, Grid, Header, Image, Message, Segment, Icon } from 'semantic-ui-react'
 import validatePassword from '../../functions/validatePassword'
+import {auth} from '../../firestore'
+import registerValidation from '../../functions/registerValidation'
 import styles from './styles'
 
 const fields = [
@@ -10,8 +12,8 @@ const fields = [
   { name: 'email', label: 'Email', type: 'text' },
   { name: 'password', label: 'Password (min. 6 characters and at least 1 uppercase and 1 digit)', type: 'password', icon: true },
   { name: 'confirmPassword', label: 'Confirm Password', type: 'password', icon: true },
-  { name: 'city', label: 'Which city to you live?', type: 'text' },
-  { name: 'tel', label: 'Phone Number', type: 'number' }
+  // { name: 'city', label: 'Which city to you live?', type: 'text' },
+  // { name: 'tel', label: 'Phone Number', type: 'number' }
 ]
 
 const genderOptions = [
@@ -30,76 +32,10 @@ const Register = () => {
     return 'https://avatars.dicebear.com/v2/human/' + Math.floor(Math.random() * 100) + '.svg'
   }
 
-  const validation = () => {
-    let emailOK, passwordOK, confirmPasswordOK = null
-    
-    // validateEmail ------------
-    if (!validateEmail(state.email)) {
-      console.log('email?? NO')
-      fields[fields.findIndex(item => item.name === "email")].error = {
-        content: 'Invalid email address',
-        pointing: 'below',
-      }
-      setFieldState(fields)
-    }
-    // validatePassword ------------
-    if (!validatePassword(state.password)) {
-      fields[fields.findIndex(item => item.name === "password")].error = {
-        content: 'Invalid password',
-        pointing: 'below',
-      }
-      setFieldState(fields)
-    }
-    // Confirm Password ------------
-    if (!comparePassword(state.password, state.confirmPassword)) {
-      fields[fields.findIndex(item => item.name === "confirmPassword")].error = {
-        content: 'Password does not match',
-        pointing: 'below',
-      }
-      setFieldState(fields)
-    }
-  
-    //hide error
-    if (validateEmail(state.email))  {
-      delete fields[fields.findIndex(item => item.name === "email")].error //del error 
-      setFieldState(fields)
-      emailOK = true
-    }
-    //hide error
-    if (validatePassword(state.password)) {
-      delete fields[fields.findIndex(item => item.name === "password")].error //del error 
-      setFieldState(fields)
-      passwordOK = true
-    }
-    //hide error
-    if (comparePassword(state.password, state.confirmPassword)) {
-      delete fields[fields.findIndex(item => item.name === "confirmPassword")].error //del error 
-      confirmPasswordOK = true
-      setFieldState(fields)
-    }
-
-    if (emailOK && passwordOK && confirmPasswordOK) return true
-    else return false
-  }
-
-   const validateEmail = (email) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      return (true)
-      }
-      return (false)
-    }
-
-    const comparePassword = (password, comparePassword) => {
-      if ( password === comparePassword ) {
-        return true
-      }
-      else return false
-    }
-
   const [visible, setVisible] = useState("password")
   const [eyeIcon, setEyeIcon] = useState("eye slash")
 
-  const handleVisible = () => {
+  const switchEyeIcon = () => {
     if (visible === "password") {
       setVisible('text')
       setEyeIcon('eye')
@@ -116,8 +52,15 @@ const Register = () => {
 
   const handleSubmit = () => {
     setState({ ...state, registerDate: timestamp })
-    if (validation()){
-      alert("Form is validated. Ready to submit: \n" + JSON.stringify(state))
+    let validate = registerValidation(state, fields, setFieldState)
+    if (validate){
+      alert("User registered \n" + JSON.stringify(state))
+      auth.createUserWithEmailAndPassword(state.email, state.password).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode)
+        console.log(errorMessage)
+      });
     }
   }
 
@@ -146,19 +89,16 @@ const Register = () => {
                     type={field.type === 'password' ? visible : field.type}
                     icon={field.icon ?
                       <Icon name={eyeIcon} link
-                        onClick={() => handleVisible()} /> : false}
+                        onClick={() => switchEyeIcon()} /> : false}
                   />
                 </>
               )
             })}
             <Button fluid size='large'>
-              Sign in
+              Sign up
           </Button>
           </Segment>
         </Form>
-        <Message>
-          New to us? <a href='#'>Sign Up</a>
-        </Message>
       </Grid.Column>
     </Grid>
   )

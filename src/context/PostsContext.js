@@ -15,7 +15,6 @@ const PostsContextProvider = ({ children }) => {
           const arr = [] 
           snapshot.forEach(doc => { arr.push(doc.data()) }) 
           setPosts(arr)
-          console.log(arr)
         }
       )
       return () => unsubscribe()

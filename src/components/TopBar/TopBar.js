@@ -1,31 +1,47 @@
-import React from 'react'
-import { Menu, Dropdown, Responsive } from 'semantic-ui-react'
+import React, { useContext } from 'react'
+import { Menu, Dropdown, Responsive, Image, Loader, Dimmer } from 'semantic-ui-react'
 import { useHistory } from "react-router-dom";
-
+import firebase from 'firebase'
 import styles from './styles'
+import { UserContext } from '../../context/UserContext'
 
 const options = [
   { key: 'register', icon: 'edit', text: 'Register', value: 'register' },
   { key: 'sign-in', icon: 'sign-in', text: 'Sign in', value: 'sign-in' },
   { key: 'sign-out', icon: 'sign-out', text: 'Sign out', value: 'sign-out' },
-  
 ]
 
+const signOut = () => {
+  firebase.auth().signOut().then(function () {
+    console.log("Sign-out successful.")
+    alert("You have signed out")
+  }).catch(function (error) {
+    console.log(error)
+  })
+}
 
 const TopBar = () => {
+  const { user, loading } = useContext(UserContext)
   const history = useHistory()
   const [state, setState] = React.useState({})
   const { activeItem, value } = state
 
   const handleItemClick = (e, { name }) => {
     setState({ activeItem: name })
+    if (name === 'sign-out') {
+      signOut()
+    }
     history.push(`/${name}`)
   }
 
-  const handleClick = (e, { value }) => {
+  const onDropdownClick = (e, { value }) => {
     console.log('Value' + value)
+    if (value === 'sign-out') {
+      signOut()
+    }
     history.push(`/${value}`)
   }
+
 
   return (
     <Menu borderless fluid
@@ -61,31 +77,45 @@ const TopBar = () => {
         Map
       </Menu.Item>
 
+      { !loading ? 
       <Menu.Menu position='right'>
         <Responsive minWidth={531} as={React.Fragment}>
-          <Menu.Item
-            name='sign-in'
-            active={activeItem === 'sign-in'}
-            onClick={handleItemClick}
-          >
-            Sign In
-         </Menu.Item>
-
-          <Menu.Item
-            name='register'
-            active={activeItem === 'register'}
-            onClick={handleItemClick}
-          >
-            Register
-         </Menu.Item>
-
-          <Menu.Item
-            name='sign-out'
-            active={activeItem === 'sign-out'}
-            onClick={handleItemClick}
-          >
-            Sign-out
-          </Menu.Item>
+          {!user ?
+            <>
+              <Menu.Item
+                name='sign-in'
+                active={activeItem === 'sign-in'}
+                onClick={handleItemClick}
+              >
+                Sign In
+             </Menu.Item>
+              <Menu.Item
+                name='register'
+                active={activeItem === 'register'}
+                onClick={handleItemClick}
+              >
+                Register
+            </Menu.Item>
+            </>
+            :
+            <>
+              <Menu.Item
+                name='profile'
+                active={activeItem === 'profile'}
+                onClick={handleItemClick}
+              >
+                <Image src={user.photoURL} avatar />
+                <span>{user.displayName}</span>
+              </Menu.Item>
+              <Menu.Item
+                name='sign-out'
+                active={activeItem === 'sign-out'}
+                onClick={handleItemClick}
+              >
+                Sign-out
+            </Menu.Item>
+            </>
+          }
 
         </Responsive>
         <Responsive maxWidth={530} as={React.Fragment}>
@@ -96,11 +126,12 @@ const TopBar = () => {
               options={options}
               trigger={<React.Fragment />}
               value={value}
-              onChange={handleClick}
+              onChange={onDropdownClick}
             />
           </Menu.Item>
         </Responsive>
       </Menu.Menu>
+      : null }
     </Menu>
   )
 }
