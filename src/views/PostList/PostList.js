@@ -40,23 +40,20 @@ const PostList = () => {
   }
 
   return (
-    <div>
-      <Container style={styles.container}>
+      <div style={styles.container}>
         {/* <Header as='h1'>Posts</Header> */}
-        <Button style={{marginBottom: 10}} onClick={() => { history.push('/create-post') }}>Create a post</Button>
-        
+        <Button style={{marginBottom: 10}} onClick={() => 
+          { history.push('/create-post') }}>Create a post</Button>
       {/* display map for large screen only */}
         <Responsive minWidth={800}>
           <Grid columns={2}>
             <Grid.Row>
               <Grid.Column>
-                <Segment basic style={styles.posts} >
                   {posts ? posts.map((item) => {
                     return (
                       <PostCardContainer item={item}/>
                     )
                   }) : null}
-                </Segment>
               </Grid.Column>
 
               <Grid.Column>
@@ -82,7 +79,7 @@ const PostList = () => {
           <Switch>
             {/* parent path: eg. posts/ */}
             <Route exact path={path}>
-              <Grid columns={2} stackable>
+              <Grid columns={2} stackable >
                 {posts.map((item, i) => {
                   return (
                     <Grid.Column key={i}>
@@ -100,8 +97,7 @@ const PostList = () => {
 
           </Switch>
         </Responsive>
-      </Container>
-    </div>
+      </div>
   )
 }
 

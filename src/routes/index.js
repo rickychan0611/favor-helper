@@ -11,11 +11,15 @@ import styles from './styles'
 import { Grid, Container } from 'semantic-ui-react';
 
 export default () => (
-  <Container style={{ maxWidth: 1200, paddingTop: 80 }}>
+  <div style={{
+    maxWidth: 1200,
+    margin: '0 auto',
+    paddingTop: 60,
+  }}>
     <div style={styles.topBar}>
-        <TopBar />
-      </div>
-    <Container style={{ }}>
+      <TopBar />
+    </div>
+    <div style={{}}>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/create-post" exact component={CreatePostForm} />
@@ -27,6 +31,6 @@ export default () => (
         <Route path="/map" component={Map} />
         <Redirect from="*" to="/" />
       </Switch>
-    </Container>
-    </Container>
-      )
+    </div>
+  </div>
+)
