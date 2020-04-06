@@ -10,7 +10,7 @@ const uiConfig = {
   // Popup signin flow rather than redirect flow.
   signInFlow: 'popup',
   // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-  signInSuccessUrl: '/',
+  signInSuccessUrl: '/posts',
   // We will display Google and Facebook as auth providers.
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -29,15 +29,18 @@ const SignIn = () => {
   const handleChange = (e, { name, value }) => setState({ ...state, [name]: value })
 
   const handleSubmit = () => {
-    console.log(state)
-    auth.signInWithEmailAndPassword(state.email, state.password).catch(function(error) {
+    auth.signInWithEmailAndPassword(state.email, state.password)
+    .then(function(result) {
+      history.push('/posts')
+    })
+    .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode)
       console.log(errorMessage)
+      alert(errorMessage)
     });
 
-    // history.push('/posts')
   }
   return (
     <Grid textAlign='center' style={{ height: 'calc(100vh - 11rem)'}} verticalAlign='middle'>
@@ -46,16 +49,16 @@ const SignIn = () => {
       <Image src='https://img.icons8.com/cotton/64/000000/like--v3.png' /> 
       Log-in to your account
       </Header>
-      <Form size='large' onSubmit={handleSubmit}>
+      <Form size='large' onSubmit={handleSubmit} >
         <Segment>
-          <Form.Input fluid 
+          <Form.Input fluid required
           icon='user' 
           iconPosition='left' 
           placeholder='E-mail address' 
           name='email'
           onChange={handleChange}
           />
-          <Form.Input
+          <Form.Input required
             fluid
             icon='lock'
             iconPosition='left'

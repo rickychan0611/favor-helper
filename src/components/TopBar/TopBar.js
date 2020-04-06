@@ -5,10 +5,13 @@ import firebase from 'firebase'
 import styles from './styles'
 import { UserContext } from '../../context/UserContext'
 
-const options = [
-  { key: 'register', icon: 'edit', text: 'Register', value: 'register' },
-  { key: 'sign-in', icon: 'sign-in', text: 'Sign in', value: 'sign-in' },
-  { key: 'sign-out', icon: 'sign-out', text: 'Sign out', value: 'sign-out' },
+const options1 = [
+  { key: 'sign-in', icon: 'sign-in', text: 'Sign in', value: 'sign-in'},
+  { key: 'register', icon: 'edit', text: 'Register', value: 'register'},
+]
+
+const options2 = [
+  { key: 'sign-out', icon: 'sign-out', text: 'Sign out', value: 'sign-out'},
 ]
 
 const signOut = () => {
@@ -77,61 +80,65 @@ const TopBar = () => {
         Map
       </Menu.Item>
 
-      { !loading ? 
-      <Menu.Menu position='right'>
-        <Responsive minWidth={531} as={React.Fragment}>
-          {!user ?
-            <>
-              <Menu.Item
-                name='sign-in'
-                active={activeItem === 'sign-in'}
-                onClick={handleItemClick}
-              >
-                Sign In
+      {!loading ?
+        <Menu.Menu position='right'>
+          <Responsive minWidth={531} as={React.Fragment}>
+            {!user ?
+              <>
+                <Menu.Item
+                  name='sign-in'
+                  active={activeItem === 'sign-in'}
+                  onClick={handleItemClick}
+                >
+                  Sign In
              </Menu.Item>
-              <Menu.Item
-                name='register'
-                active={activeItem === 'register'}
-                onClick={handleItemClick}
-              >
-                Register
+                <Menu.Item
+                  name='register'
+                  active={activeItem === 'register'}
+                  onClick={handleItemClick}
+                >
+                  Register
             </Menu.Item>
-            </>
-            :
-            <>
-              <Menu.Item
-                name='profile'
-                active={activeItem === 'profile'}
-                onClick={handleItemClick}
-              >
-                <Image src={user.photoURL} avatar />
-                <span>{user.displayName}</span>
-              </Menu.Item>
-              <Menu.Item
-                name='sign-out'
-                active={activeItem === 'sign-out'}
-                onClick={handleItemClick}
-              >
-                Sign-out
+              </>
+              :
+              <>
+                <Menu.Item
+                  name='profile'
+                  active={activeItem === 'profile'}
+                  onClick={handleItemClick}
+                >
+                  <Image src={user.photoURL} avatar />
+                  <span>{user.displayName}</span>
+                </Menu.Item>
+                <Menu.Item
+                  name='sign-out'
+                  active={activeItem === 'sign-out'}
+                  onClick={handleItemClick}
+                >
+                  Sign-out
             </Menu.Item>
-            </>
-          }
+              </>
+            }
 
-        </Responsive>
-        <Responsive maxWidth={530} as={React.Fragment}>
-          <Menu.Item>
-            <Dropdown
-              icon='bars'
-              floating
-              options={options}
-              trigger={<React.Fragment />}
-              value={value}
-              onChange={onDropdownClick}
-            />
-          </Menu.Item>
-        </Responsive>
-      </Menu.Menu>
-      : null }
+          </Responsive>
+          <Responsive maxWidth={530} as={React.Fragment}>
+            <Menu.Item>
+              {user ? 
+              <Image src={user.photoURL} avatar 
+              onClick={()=>{history.push('/profile')}}/> 
+              : null}
+              <Dropdown
+                icon='bars'
+                floating
+                options={!user ? options1 : options2}
+                trigger={<React.Fragment />}
+                value={value}
+                onChange={onDropdownClick}
+              />
+            </Menu.Item>
+          </Responsive>
+        </Menu.Menu>
+        : null}
     </Menu>
   )
 }
