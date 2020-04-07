@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Menu, Dropdown, Responsive, Image, Loader, Dimmer } from 'semantic-ui-react'
+import { Menu, Dropdown, Responsive, Image, Button, Dimmer } from 'semantic-ui-react'
 import { useHistory } from "react-router-dom";
 import firebase from 'firebase'
 import styles from './styles'
@@ -47,7 +47,7 @@ const TopBar = () => {
 
 
   return (
-    <Menu borderless fluid
+    <Menu borderless fluid compact
     >
       <Menu.Item
         name=''
@@ -57,11 +57,11 @@ const TopBar = () => {
       </Menu.Item>
 
       <Menu.Item
-        name='home'
-        active={activeItem === 'home'}
+        name='create-post'
+        active={activeItem === 'create-post'}
         onClick={handleItemClick}
       >
-        Home
+          <Button color="teal"> Create a favor </Button>
       </Menu.Item>
 
       <Menu.Item
@@ -69,7 +69,7 @@ const TopBar = () => {
         active={activeItem === 'posts'}
         onClick={handleItemClick}
       >
-        Posts
+        Favors
       </Menu.Item>
 
       <Menu.Item

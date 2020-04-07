@@ -48,7 +48,7 @@ const Map = () => {
         <GoogleMap
           id="map"
           mapContainerStyle={{
-            height: "calc(100vh - 15rem)",
+            height: "calc(100vh - 11rem)",
             width: "auto"
           }}
           zoom={11}

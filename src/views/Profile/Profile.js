@@ -5,10 +5,10 @@ import { Menu, Dropdown, Segment, Image, Loader, Dimmer } from 'semantic-ui-reac
 import styles from './styles'
 
 const Profile = () => {
-  const  {user}  = useContext(UserContext)
+  const { user } = useContext(UserContext)
   console.log(user)
   return (
-    <div>
+    <div style={{ padding: 14 }}>
       {!user.loading ?
         <>
           <h1>Profile</h1>
@@ -22,11 +22,9 @@ const Profile = () => {
         </>
         :
         <>
-          <Segment>
-            <Dimmer active>
-              <Loader size='medium'>Loading</Loader>
-            </Dimmer>
-          </Segment>
+          <Dimmer active inverted>
+            <Loader inverted content='Loading' />
+          </Dimmer>
         </>
       }
     </div>

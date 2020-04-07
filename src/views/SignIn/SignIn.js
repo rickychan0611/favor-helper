@@ -43,7 +43,7 @@ const SignIn = () => {
 
   }
   return (
-    <Grid textAlign='center' style={{ height: 'calc(100vh - 11rem)'}} verticalAlign='middle'>
+    <Grid textAlign='center' style={{ height: 'calc(100vh - 6rem)'}} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 350 }}>
       <Header as='h2' color='grey' textAlign='center'>
       <Image src='https://img.icons8.com/cotton/64/000000/like--v3.png' /> 

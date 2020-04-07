@@ -12,9 +12,10 @@ import { Grid, Container } from 'semantic-ui-react';
 
 export default () => (
   <div style={{
-    maxWidth: 1200,
+    maxWidth: '1000px',
     margin: '0 auto',
-    paddingTop: 60,
+    paddingTop: 80,
+    // backgroundColor: 'yellow'
   }}>
     <div style={styles.topBar}>
       <TopBar />
@@ -22,7 +23,7 @@ export default () => (
     <div style={{}}>
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/create-post" exact component={CreatePostForm} />
+        <Route path="/create-post" component={CreatePostForm} />
         <Route path="/posts" component={PostList} />
         <Route path="/register" component={Register} />
         <Route path="/sign-in" component={SignIn} />

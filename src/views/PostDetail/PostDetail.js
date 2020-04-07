@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import db from '../../firestore'
+import { UserContext } from '../../context/UserContext'
+
 import styles from './styles'
 import {
   useParams, useRouteMatch, useHistory
@@ -10,14 +12,21 @@ import {
   Button,
   Dimmer,
   Loader,
-  Segment
+  Form,
+  Grid,
+  Image,
+  Divider,
 } from 'semantic-ui-react'
+import {QuestionsContainer} from '../../components/';
+
+const timestamp = new Date()
 
 const PostDetail = (props) => {
   let { id } = useParams();
   let history = useHistory()
   const [post, setPost] = useState(null)
   const [loading, setLoading] = useState(true)
+  const { user } = React.useContext(UserContext)
 
 
   const postQuery = (id) => {
@@ -45,11 +54,9 @@ const PostDetail = (props) => {
     return (
       <div>
         {loading ?
-          <Segment basic placeholder>
-            <Dimmer active inverted>
-              <Loader inverted>Loading</Loader>
-            </Dimmer>
-          </Segment>
+          <Dimmer active inverted>
+            <Loader inverted content='Loading' />
+          </Dimmer>
           :
           post ?
             <div>
@@ -68,6 +75,27 @@ const PostDetail = (props) => {
       </div>
     )
   }
+  
+  const [QuestionsQuery, setQuestionsQuery] = useState()
+
+  // useEffect(
+  //   () => {
+  //     if (post != null) {
+  //     const unsubscribe = 
+  //     db.collection('posts').doc(post.id).collection('questions')
+  //       .orderBy('createAt', 'desc')
+  //       .onSnapshot( snapshot => { 
+  //         const arr = [] 
+  //         snapshot.forEach(doc => { arr.push(doc.data()) }) 
+  //         setQuestionsQuery(arr)
+  //         console.log('QuestionsQuery' + QuestionsQuery)
+  //       }
+  //     )
+  //     return () => unsubscribe()
+  //   }
+  //   },
+  //   []
+  // )
 
   useEffect(() => {
     if (!props.post) {
@@ -78,18 +106,57 @@ const PostDetail = (props) => {
     }
   }, [id])
 
+  const [question, SetQueston] = useState('')
+  const handleQuestionChange = (e, {value}) => {
+    SetQueston(value)
+    console.log('value' + question)
+  }
+  const HandleQuestionSubmit = () => {
+    let newQuestion = db.collection('questions').doc()
+    newQuestion.set({
+      id: newQuestion.id,
+      postId: id,
+      posterId: user.uid, 
+      question: question,
+      createAt: timestamp
+    })
+  }
+
   return (
     <Container style={styles.container}>
       page id: {id}
       {props.post ?
         <div> fetch from local
       <Post post={props.post} />
+      <QuestionsContainer post={props.post}/>
         </div>
         :
         <div> fetch from server
       <Post post={post} />
+      <QuestionsContainer post={post}/>
         </div>
       }
+      <h4>Ask poster a question</h4>
+      <div style={{display: 'flex'}}>
+      <div style={{width: '10%'}}>
+          <Image src={user.photoURL} avatar />
+        </div>
+        <div style={{width: '90%'}}>
+        <Form onSubmit={HandleQuestionSubmit}>
+            <Form.TextArea 
+              placeholder='Ask a question...' 
+              onChange = {handleQuestionChange}
+              value={question}
+            />
+            
+      <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+        <Button type='submit'>Send</Button>
+      </div>
+          </Form>
+        </div>
+      </div>
+      <br></br>
+      <Divider />
       <Button onClick={() => history.push('/posts')}>Go back</Button>
     </Container>
   )

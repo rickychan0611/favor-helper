@@ -2,7 +2,7 @@ const styles = {
   container :{
   },
   posts :{
-    maxHeight: 'calc(100vh - 10rem)',
+    maxHeight: 'calc(100vh - 6rem)',
     overflowY: 'auto',
   },
   postCard:{

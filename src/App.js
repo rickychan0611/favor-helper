@@ -4,6 +4,7 @@ import AppRoutes from './routes'
 import MapContextProvider from './context/MapContext'
 import PostsContextProvider from './context/PostsContext'
 import UserContextProvider from './context/UserContext'
+import QuestionsContextProvider from './context/QuestionsContext'
 
 
 //check if user is signed in when page is loaded
@@ -26,11 +27,13 @@ const App = () => {
   return (
     <UserContextProvider>
       <PostsContextProvider>
+        <QuestionsContextProvider>
         <MapContextProvider >
           <BrowserRouter>
             <AppRoutes />
           </ BrowserRouter>
         </MapContextProvider>
+        </QuestionsContextProvider>
       </PostsContextProvider>
     </UserContextProvider>
   )

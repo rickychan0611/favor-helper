@@ -65,7 +65,7 @@ const Register = () => {
   }
 
   return (
-    <Grid textAlign='center' style={{ height: 'calc(100vh - 11rem)' }} verticalAlign='middle'>
+    <Grid textAlign='center' style={{ height: 'calc(100vh - 6rem)' }} verticalAlign='middle'>
       <Grid.Column style={{ maxWidth: 500, padding: 0 }}>
         <Header as='h2' color='grey' textAlign='left'>
           Register
