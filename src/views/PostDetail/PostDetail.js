@@ -85,9 +85,9 @@ const PostDetail = (props) => {
     }
   }, [id])
 
-  const [question, SetQueston] = useState('')
+  const [question, setQuestion] = useState('')
   const handleQuestionChange = (e, { value }) => {
-    SetQueston(value)
+    setQuestion(value)
     console.log('value' + question)
   }
   const HandleQuestionSubmit = () => {
@@ -98,7 +98,8 @@ const PostDetail = (props) => {
       posterId: user.uid,
       question: question,
       createAt: timestamp
-    })
+    }).then(()=> setQuestion('')
+    )
   }
 
   return (
@@ -132,7 +133,7 @@ const PostDetail = (props) => {
             />
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type='submit'>Send</Button>
+              <Button content='Submit'>Send</Button>
             </div>
           </Form>
         </div>
