@@ -16,6 +16,7 @@ import {
   Grid,
   Image,
   Divider,
+  Segment,
 } from 'semantic-ui-react'
 import { QuestionsContainer } from '../../components/';
 
@@ -117,6 +118,7 @@ const PostDetail = (props) => {
         </div>
       }
       <h4>Ask poster a question</h4>
+      {user ? 
       <div style={{ display: 'flex' }}>
         <div style={{ width: '10%' }}>
           <Image src={user.photoURL} avatar />
@@ -134,7 +136,11 @@ const PostDetail = (props) => {
             </div>
           </Form>
         </div>
-      </div>
+      </div> :
+      
+      <Segment warning textAlign='center' onClick={()=>history.push('/sign-in')}>
+        Please login to leave a message</Segment>
+      }
       <br></br>
       <Divider />
       <Button onClick={() => history.push('/posts')}>Go back</Button>

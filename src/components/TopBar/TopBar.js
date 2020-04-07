@@ -33,21 +33,23 @@ const TopBar = () => {
     setState({ activeItem: name })
     if (name === 'sign-out') {
       signOut()
-    }
+    } else {
     history.push(`/${name}`)
+  }
   }
 
   const onDropdownClick = (e, { value }) => {
     console.log('Value' + value)
     if (value === 'sign-out') {
       signOut()
-    }
+    } else {
     history.push(`/${value}`)
+  }
   }
 
 
   return (
-    <Menu borderless fluid compact
+    <Menu borderless fluid
     >
       {/* <Menu.Item
         name=''
