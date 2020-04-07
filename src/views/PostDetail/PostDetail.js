@@ -17,7 +17,7 @@ import {
   Image,
   Divider,
 } from 'semantic-ui-react'
-import {QuestionsContainer} from '../../components/';
+import { QuestionsContainer } from '../../components/';
 
 const timestamp = new Date()
 
@@ -60,8 +60,7 @@ const PostDetail = (props) => {
           :
           post ?
             <div>
-              id:{post.id} <br />
-              title: {post.title} <br />
+              <h2>{post.title}</h2>
               description: {post.desc}<br />
               location: {post.location}<br />
               postDate: {post.postDate}<br />
@@ -75,27 +74,6 @@ const PostDetail = (props) => {
       </div>
     )
   }
-  
-  const [QuestionsQuery, setQuestionsQuery] = useState()
-
-  // useEffect(
-  //   () => {
-  //     if (post != null) {
-  //     const unsubscribe = 
-  //     db.collection('posts').doc(post.id).collection('questions')
-  //       .orderBy('createAt', 'desc')
-  //       .onSnapshot( snapshot => { 
-  //         const arr = [] 
-  //         snapshot.forEach(doc => { arr.push(doc.data()) }) 
-  //         setQuestionsQuery(arr)
-  //         console.log('QuestionsQuery' + QuestionsQuery)
-  //       }
-  //     )
-  //     return () => unsubscribe()
-  //   }
-  //   },
-  //   []
-  // )
 
   useEffect(() => {
     if (!props.post) {
@@ -107,7 +85,7 @@ const PostDetail = (props) => {
   }, [id])
 
   const [question, SetQueston] = useState('')
-  const handleQuestionChange = (e, {value}) => {
+  const handleQuestionChange = (e, { value }) => {
     SetQueston(value)
     console.log('value' + question)
   }
@@ -116,7 +94,7 @@ const PostDetail = (props) => {
     newQuestion.set({
       id: newQuestion.id,
       postId: id,
-      posterId: user.uid, 
+      posterId: user.uid,
       question: question,
       createAt: timestamp
     })
@@ -124,34 +102,36 @@ const PostDetail = (props) => {
 
   return (
     <Container style={styles.container}>
-      page id: {id}
+      <Divider horizontal>Post details</Divider>
       {props.post ?
-        <div> fetch from local
-      <Post post={props.post} />
-      <QuestionsContainer post={props.post}/>
+        <div>
+          {/* fetch from local, preload from context via props */}
+          <Post post={props.post} />
+          <QuestionsContainer post={props.post} />
         </div>
         :
-        <div> fetch from server
-      <Post post={post} />
-      <QuestionsContainer post={post}/>
+        <div>
+          {/* fetch from server, data load here when refresh */}
+          <Post post={post} />
+          <QuestionsContainer post={post} />
         </div>
       }
       <h4>Ask poster a question</h4>
-      <div style={{display: 'flex'}}>
-      <div style={{width: '10%'}}>
+      <div style={{ display: 'flex' }}>
+        <div style={{ width: '10%' }}>
           <Image src={user.photoURL} avatar />
         </div>
-        <div style={{width: '90%'}}>
-        <Form onSubmit={HandleQuestionSubmit}>
-            <Form.TextArea 
-              placeholder='Ask a question...' 
-              onChange = {handleQuestionChange}
+        <div style={{ width: '90%' }}>
+          <Form onSubmit={HandleQuestionSubmit}>
+            <Form.TextArea
+              placeholder='Ask a question...'
+              onChange={handleQuestionChange}
               value={question}
             />
-            
-      <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-        <Button type='submit'>Send</Button>
-      </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button type='submit'>Send</Button>
+            </div>
           </Form>
         </div>
       </div>

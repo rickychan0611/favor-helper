@@ -49,19 +49,19 @@ const TopBar = () => {
   return (
     <Menu borderless fluid compact
     >
-      <Menu.Item
+      {/* <Menu.Item
         name=''
         onClick={handleItemClick}
       >
         <img src='https://img.icons8.com/cotton/64/000000/like--v3.png' />
-      </Menu.Item>
+      </Menu.Item> */}
 
       <Menu.Item
         name='create-post'
         active={activeItem === 'create-post'}
         onClick={handleItemClick}
       >
-          <Button color="teal"> Create a favor </Button>
+          <Button color="teal"> Create a post </Button>
       </Menu.Item>
 
       <Menu.Item
@@ -69,7 +69,7 @@ const TopBar = () => {
         active={activeItem === 'posts'}
         onClick={handleItemClick}
       >
-        Favors
+        Posts
       </Menu.Item>
 
       <Menu.Item
