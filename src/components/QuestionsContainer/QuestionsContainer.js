@@ -15,7 +15,10 @@ const QuestionsContainer = ({ post }) => {
         let query = db.collection('questions').where('postId', '==', post.id)
         query.onSnapshot(snapshot => {
           const arr = []
-          snapshot.forEach(doc => { arr.push(doc.data()) })
+            snapshot.forEach(doc => { arr.push(doc.data()) })
+            arr.sort((a , b )=>{
+              return a.createAt.toDate() - b.createAt.toDate()
+            })
           setQuestions(arr)
         }
         )
