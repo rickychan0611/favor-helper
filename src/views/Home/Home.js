@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <div>
-      <Segment placeholder basic>
+      <Segment placeholder basic style={{height: '90vh'}}>
         <Header icon>
           <Icon name='heart outline' color="pink" />
           Welcome to Favor Helper.

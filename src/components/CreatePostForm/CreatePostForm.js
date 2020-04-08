@@ -85,8 +85,8 @@ const CreatePostForm = () => {
               <p style={{ fontSize: 20 }}>Richmond, BC &nbsp;</p>
               <Segment basic><Rating defaultRating={4} maxRating={5} icon='star' disabled /> ({4})
                 <br /><br />
-                <img src="https://lh3.googleusercontent.com/proxy/rkyHWguyOFRCn-6n3JYeG12I0Caxseoo0BcjnQCk-jWt4qpyCL0XwQgkuL8pk6JdSOs--FfYnW5K0NwI4aOheYEbgqeEM-wqiVLhIgw3qnima1q0ZrB4ZCm3ns829fqTD3LTKUpeCUyjymK8vu0tBrOBSOjb-FhKn9qwHHZ76RUitPwoLN8"
-                  style={{ width: 70, height: 70, objectFit: 'cover', borderRadius: '50%' }} />
+                <img src="https://thechefsconnection.com/wp-content/uploads/2014/06/bobby-flay_profile_2017.jpg"
+                  style={{ width: 90, height: 90, objectFit: 'cover', borderRadius: '50%' }} />
                 <br />
                 André Natera
               </Segment>
@@ -117,16 +117,18 @@ const CreatePostForm = () => {
             {/* ------------------- About Me------------------*/}
             <br />
             <Header style={{ margin: 0, textAlign: "left" }}>About you</Header>
-            <p style={{ fontSize: 12, marginTop: 0, textAlign: "left" }}>
+            <p style={{ fontSize: 12, marginTop: 0, textAlign: "left"}}>
               Smile! A great picture of your face helps customer get to know you a bit better</p>
             <Segment>
-              <Grid column={2}>
+              <Grid column={2} stackable>
                 <Grid.Column width={3}>
-                  <Segment basic>
-                    <img src="https://lh3.googleusercontent.com/proxy/rkyHWguyOFRCn-6n3JYeG12I0Caxseoo0BcjnQCk-jWt4qpyCL0XwQgkuL8pk6JdSOs--FfYnW5K0NwI4aOheYEbgqeEM-wqiVLhIgw3qnima1q0ZrB4ZCm3ns829fqTD3LTKUpeCUyjymK8vu0tBrOBSOjb-FhKn9qwHHZ76RUitPwoLN8"
-                      style={{ width: 70, height: 70, objectFit: 'cover', borderRadius: '50%' }} />
-                    <Button size="tiny">Change</Button>
-                  </Segment>
+                  <div style={{textAlign: 'center', margin:"0 auto" }}>
+                    <img src="https://thechefsconnection.com/wp-content/uploads/2014/06/bobby-flay_profile_2017.jpg"
+                      style={{ width: 90, height: 90, objectFit: 'cover', borderRadius: '50%' }} />
+                    <div style={{textAlign: 'center', margin:"0 auto" }}>
+                      <Button size="tiny">Change</Button>
+                      </div>
+                  </div>
                 </Grid.Column>
                 <Grid.Column width={13}>
                   <Form>
