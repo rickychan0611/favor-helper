@@ -6,33 +6,16 @@ import PostsContextProvider from './context/PostsContext'
 import UserContextProvider from './context/UserContext'
 import QuestionsContextProvider from './context/QuestionsContext'
 
-
-//check if user is signed in when page is loaded
-// firebase.auth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     console.log('onAuthStateChanged' + JSON.stringify(user))
-//   } else {
-//     console.log('onAuthStateChanged not sign in' + JSON.stringify(user))
-//   }
-// });
-
-// var user = firebase.auth().currentUser;
-// if (user) {
-//   console.log('currentUser' + JSON.stringify(user))
-// } else {
-//   // No user is signed in.
-// }
-
 const App = () => {
   return (
     <UserContextProvider>
       <PostsContextProvider>
         <QuestionsContextProvider>
-        <MapContextProvider >
-          <BrowserRouter>
-            <AppRoutes />
-          </ BrowserRouter>
-        </MapContextProvider>
+          <MapContextProvider >
+            <BrowserRouter>
+              <AppRoutes />
+            </ BrowserRouter>
+          </MapContextProvider>
         </QuestionsContextProvider>
       </PostsContextProvider>
     </UserContextProvider>

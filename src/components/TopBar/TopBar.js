@@ -35,6 +35,7 @@ const TopBar = () => {
       signOut()
     } else {
     history.push(`/${name}`)
+    console.log(name)
   }
   }
 

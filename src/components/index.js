@@ -4,6 +4,7 @@ import CreatePostForm from './CreatePostForm/CreatePostForm'
 import TopBar from './TopBar/TopBar'
 import QuestionsContainer from './QuestionsContainer/QuestionsContainer'
 import Question from './Question/Question'
+import PhotoSlider from './PhotoSlider/PhotoSlider'
 
 
 export {
@@ -12,5 +13,6 @@ export {
   CreatePostForm,
   TopBar,
   Question,
-  QuestionsContainer
+  QuestionsContainer,
+  PhotoSlider
 }

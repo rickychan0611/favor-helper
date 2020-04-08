@@ -62,7 +62,7 @@ const PostList = () => {
               <Switch>
                 {/* parent path: eg. posts/ */}
                 <Route exact path={path}>
-                  <Map />
+                  <Map height="calc(100vh - 11rem)"/>
                 </Route>
                 {/* switch to path params */}
                 <Route path={`${path}/:id`}>

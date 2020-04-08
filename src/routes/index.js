@@ -11,27 +11,33 @@ import styles from './styles'
 import { Grid, Container } from 'semantic-ui-react';
 
 export default () => (
-  <div style={{
-    maxWidth: '1000px',
-    margin: '0 auto',
-    paddingTop: 80,
-    // backgroundColor: 'yellow'
-  }}>
+  <>
     <div style={styles.topBar}>
       <TopBar />
     </div>
-    <div style={{}}>
+    <div style={{
+      paddingTop: 55,
+    }}>
+
       <Switch>
-        <Route path="/" exact component={Home} />
         <Route path="/create-post" component={CreatePostForm} />
-        <Route path="/posts" component={PostList} />
-        <Route path="/register" component={Register} />
-        <Route path="/sign-in" component={SignIn} />
-        <Route path="/sign-out" component={Home} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/map" component={Map} />
-        <Redirect from="*" to="/" />
+        <div style={{
+          maxWidth: '1000px',
+          margin: '0 auto',
+          // backgroundColor: 'yellow'
+        }}>
+          <Route path="/" exact component={Home} />
+          {/* <Route path="/*" component={Home} /> */}
+          <Route path="/posts" component={PostList} />
+          <Route path="/register" component={Register} />
+          <Route path="/sign-in" component={SignIn} />
+          <Route path="/sign-out" component={Home} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/map" component={()=><Map height="calc(100vh - 11rem)"/>} />
+        </div>
       </Switch>
+      {/* <Redirect from="/*" to="/" /> */}
+
     </div>
-  </div>
+  </>
 )
