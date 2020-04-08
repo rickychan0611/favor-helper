@@ -5,8 +5,7 @@ import Register from "../views/Register"
 import SignIn from "../views/SignIn"
 import Home from "../views/Home"
 import Profile from "../views/Profile"
-import { CreatePostForm, TopBar, Map } from "../components"
-
+import { CreatePostForm, TopBar, Map, Footer } from "../components"
 import styles from './styles'
 import { Grid, Container } from 'semantic-ui-react';
 
@@ -37,7 +36,8 @@ export default () => (
         </div>
       </Switch>
       {/* <Redirect from="/*" to="/" /> */}
-
+      <br /><br /><br />
+      <Footer/>
     </div>
   </>
 )

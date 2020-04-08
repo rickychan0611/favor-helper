@@ -64,11 +64,11 @@ const PriceTimeForm = ({state, handleChange, pickUpToggle, deliveryToggle}) => {
         <Header style={{ margin: 0 }}>Pick up / Delivery? </Header>
         <p style={{ fontSize: 12, marginTop: 0 }}>Can be both. You can arrange with customer later. </p>
         <Checkbox
-          label="Pick Up"
+          label="Self-pickup"
           onChange={pickUpToggle}
-        /> &nbsp;&nbsp;&nbsp;
+        /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Checkbox
-          label="Delivery"
+          label="Delivery within 1km"
           onChange={deliveryToggle}
         />
       </Form>

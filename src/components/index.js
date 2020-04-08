@@ -5,6 +5,7 @@ import TopBar from './TopBar/TopBar'
 import QuestionsContainer from './QuestionsContainer/QuestionsContainer'
 import Question from './Question/Question'
 import PhotoSlider from './PhotoSlider/PhotoSlider'
+import Footer from './Footer/Footer'
 
 
 export {
@@ -14,5 +15,6 @@ export {
   TopBar,
   Question,
   QuestionsContainer,
-  PhotoSlider
+  PhotoSlider,
+  Footer
 }
