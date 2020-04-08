@@ -9,7 +9,7 @@ const Profile = () => {
   console.log(user)
   return (
     <div style={{ padding: 14 }}>
-      {!user.loading ?
+      {user ? user.loading?
         <>
           <h1>Profile</h1>
           <Image src={user.photoURL} size='tiny' circular />
@@ -26,7 +26,7 @@ const Profile = () => {
             <Loader inverted content='Loading' />
           </Dimmer>
         </>
-      }
+      : <h3>user not loggin</h3>}
     </div>
   )
 }

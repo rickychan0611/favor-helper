@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import {auth} from '../../firestore'
-import { Button, Form, Grid, Header, Image, Divider, Segment } from 'semantic-ui-react'
+import { Message, Button, Form, Grid, Header, Image, Divider, Segment } from 'semantic-ui-react'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 
@@ -43,8 +43,10 @@ const SignIn = () => {
 
   }
   return (
-    <Grid textAlign='center' style={{ height: 'calc(100vh - 6rem)'}} verticalAlign='middle'>
-    <Grid.Column style={{ maxWidth: 350 }}>
+    <>
+    <Segment basic style={{height: '90vh'}}>
+     <Grid textAlign='center' style={{ height: 'calc(100vh - 6rem)'}} verticalAlign='middle'>
+     <Grid.Column style={{ maxWidth: 400 }}>
       <Header as='h2' color='grey' textAlign='center'>
       <Image src='https://img.icons8.com/cotton/64/000000/like--v3.png' /> 
       Log-in to your account
@@ -72,10 +74,13 @@ const SignIn = () => {
           </Button>
         </Segment>
       </Form>
+        New to us? <Link to='/register'>Sign Up</Link>
       <Divider horizontal>Or</Divider>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/>
-    </Grid.Column>
-  </Grid>
+   </Grid.Column>
+   </Grid>
+  </Segment>
+  </>
   )
 }
 

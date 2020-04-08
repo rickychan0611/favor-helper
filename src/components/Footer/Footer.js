@@ -14,11 +14,15 @@ import {
   Sidebar,
   Visibility,
 } from 'semantic-ui-react'
+import { Route, Switch, Redirect, useParams } from 'react-router-dom';
 
 import styles from './styles'
 
 const Footer = () => {
+  let { id } = useParams();
   return (
+    <>
+    { id != "register" && id != "sign-in" ?
     <Segment inverted vertical 
     style={{ padding: '5em 0em', backgroundColor: '#929292' }}
       >
@@ -53,8 +57,10 @@ const Footer = () => {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </Container>
+      </Container> 
     </Segment>
+    : null }
+    </>
   )
 }
 
