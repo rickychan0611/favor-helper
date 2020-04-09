@@ -6,6 +6,7 @@ import QuestionsContainer from './QuestionsContainer/QuestionsContainer'
 import Question from './Question/Question'
 import PhotoSlider from './PhotoSlider/PhotoSlider'
 import Footer from './Footer/Footer'
+import LocationInput from './LocationInput/LocationInput'
 
 
 export {
@@ -16,5 +17,6 @@ export {
   Question,
   QuestionsContainer,
   PhotoSlider,
-  Footer
+  Footer,
+  LocationInput
 }

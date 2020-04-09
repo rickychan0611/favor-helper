@@ -1,18 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { GoogleMap, LoadScript, Marker, Circle  } from '@react-google-maps/api'
 import { MapContext } from '../../context/MapContext'
 import getLatLng from "../../functions/getLatLng"
 import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { LocationInput } from '..'
+import { withGoogleMap, GoogleMap, Circle } from 'react-google-maps';
+import { usePosition } from 'use-position';
 
-const Map = ({height}) => {
-  const [loc, setLoc] = useState(null)
+
+const Map = ({ height }) => {
+  const { latitude, longitude, timestamp, accuracy, error } = usePosition();
+
+  const [loc, setLoc] = useState({ lat: 0, lng: 0 })
 
   const [myLocation, setMyLoacation] = useState("")
   const {
-    jobLocations,
+    location,
     userInitLocation
   } = useContext(MapContext)
-  
+
   const handleChange = (e, { value }) => setMyLoacation(value)
 
   const handleSubmit = () => {
@@ -20,32 +25,74 @@ const Map = ({height}) => {
     getLocation().then((loc) => setLoc(loc))
   }
 
-  //load user location to center map
+  // get location from browser
   useEffect(() => {
-    setMyLoacation(userInitLocation)
-    const getLocation = async () => getLatLng(userInitLocation)
-    getLocation().then((loc) => {setLoc(loc)})
-  }, [userInitLocation])
+    if (latitude && longitude && !error) {
+      setLoc({ 'lat': latitude, "lng": longitude })
+    }
+  }, [latitude])
+
+  // get location from selecton in mapContext
+  useEffect(() => {
+    setLoc(location)
+  }, [location])
+
+  const RenderMap = withGoogleMap((props) => {
+    console.log('xxxxxxxxxxxxxxxx' + JSON.stringify(loc))
+    return (
+      <>
+
+        <GoogleMap
+          defaultCenter={loc}
+          defaultZoom={13}
+          center={loc}
+        >
+          <Circle
+            center={loc}
+            options={{
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.6,
+              strokeWeight: 0,
+              fillColor: '#FF0000',
+              fillOpacity: 0.35,
+              clickable: false,
+              draggable: false,
+              editable: false,
+              visible: true,
+              radius: 1200,
+              zIndex: 10
+            }}
+          />
+        </GoogleMap>
+      </>
+    )
+  });
 
   return (
     <div>
-      <div>Current city: {JSON.stringify(myLocation)} </div>
-      <div>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Input
-              placeholder='Set your city'
-              onChange={handleChange}            />
-            <Form.Button content='Submit' />
-          </Form.Group>
-        </Form>
-      </div>
+      <LocationInput />
 
-      {loc ? <LoadScript
-        id="script-loader"
-        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
-        region="ca"
-      >
+      <div>Current city: {JSON.stringify(myLocation)} </div>
+      <div>selected city: {JSON.stringify(location)} </div>
+      <code>
+        latitude: {latitude}<br />
+      longitude: {longitude}<br />
+        {/* timestamp: {timestamp}<br/> */}
+      accuracy: {accuracy && `${accuracy}m`}<br />
+      error: {error}
+      </code>
+
+      {loc ?
+        <>
+          <div>{JSON.stringify(loc)}</div>
+
+          <RenderMap
+            containerElement={<div style={{ height, width: 'auto' }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+          />
+        </> : null}
+
+      {/* {loc ?
         <GoogleMap
           mapContainerStyle={{
             height,
@@ -76,19 +123,9 @@ const Map = ({height}) => {
               zIndex: 10
             }}
           />
-          {/* {jobLocations ? jobLocations.map((job, i) => {
-            return (
-              <Marker
-                // onLoad={onLoad}
-                position={job.loc}
-                key={i}
-              />
-            )
-          }) : null} */}
 
         </GoogleMap>
-      </LoadScript>
-      : null }
+      : null } */}
     </div>
   )
 }

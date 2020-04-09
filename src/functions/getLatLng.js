@@ -6,6 +6,7 @@ Geocode.setLanguage("en")
 const getLatLng = (location) => {
   return Geocode.fromAddress(location).then(
     response => {
+      console.log('getLatLng run: ' + location + JSON.stringify(response.results[0].geometry.location))
       return response.results[0].geometry.location
     },
     error => {
