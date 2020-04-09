@@ -3,7 +3,7 @@ import db from '../../firestore'
 import posts from '../../data/posts.json'
 import { useHistory } from "react-router-dom";
 import { firebase } from '@firebase/app';
-import { PhotoSlider, Map } from '../../components'
+import { PhotoSlider, Map, PickFile } from '../../components'
 import PriceTimeForm from './PriceTimeForm'
 import {
   Container,
@@ -74,7 +74,7 @@ const CreatePostForm = () => {
   return (
     <>
       <PhotoSlider />
-
+      <PickFile>Upload Image</PickFile>
       <Container>
         <br></br>
         <Grid column={2} stackable>

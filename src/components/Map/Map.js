@@ -13,6 +13,7 @@ const Map = ({ height }) => {
   const [loc, setLoc] = useState({ lat: 0, lng: 0 })
 
   const [myLocation, setMyLoacation] = useState("")
+  
   const {
     location,
     userInitLocation
@@ -71,8 +72,6 @@ const Map = ({ height }) => {
   return (
     <div>
       <LocationInput />
-
-      <div>Current city: {JSON.stringify(myLocation)} </div>
       <div>selected city: {JSON.stringify(location)} </div>
       <code>
         latitude: {latitude}<br />

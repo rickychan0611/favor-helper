@@ -7,6 +7,7 @@ import Question from './Question/Question'
 import PhotoSlider from './PhotoSlider/PhotoSlider'
 import Footer from './Footer/Footer'
 import LocationInput from './LocationInput/LocationInput'
+import PickFile from './PickFile/PickFile'
 
 
 export {
@@ -18,5 +19,6 @@ export {
   QuestionsContainer,
   PhotoSlider,
   Footer,
-  LocationInput
+  LocationInput,
+  PickFile
 }
