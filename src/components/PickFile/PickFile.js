@@ -2,12 +2,16 @@ import React, { useContext, Fragment } from 'react'
 import firebase from 'firebase'
 import imageCompression from 'browser-image-compression';
 import { ImageSliderContext } from '../../context/ImageSliderContext'
+import { UserContext } from '../../context/UserContext'
+
 import noImage from '../../assets/images/no-image.jpg'
 
 const PickFile = ({ children, index }) => {
   const [currectIndex, setcurrectIndex] = React.useState(0)
   console.log('pickfile index', index)
   const { insertImage } = useContext(ImageSliderContext)
+  const { user } = useContext(UserContext)
+
   const [imgFile, setImgFile] = React.useState({})
 
   const fileChangedHandler = (event, index) => {
@@ -102,7 +106,12 @@ const PickFile = ({ children, index }) => {
     <div>
 
       <div onClick={() => {
+        if (user){
         fileInputRef.current.click()
+      }
+      else (
+        alert('please login 1st')
+      )
         // onPickFile(index)
       }} >
         {children}
