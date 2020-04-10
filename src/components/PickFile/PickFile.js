@@ -1,58 +1,23 @@
-import React, { Children } from 'react'
+import React, { useContext, Fragment } from 'react'
 import firebase from 'firebase'
-import {
-  Container,
-  Grid,
-  Button,
-  Form,
-  Header,
-  Segment,
-  Input,
-  Rating,
-  Image,
-  Divider,
-  Icon,
-  Checkbox,
-  Responsive
-} from 'semantic-ui-react'
-import db from '../../firestore'
 import imageCompression from 'browser-image-compression';
+import { ImageSliderContext } from '../../context/ImageSliderContext'
+import noImage from '../../assets/images/no-image.jpg'
 
-import styles from './styles'
-
-const handleImageUpload = (event) => {
-
-  var imageFile = event.target.files[0];
-  console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-  console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
-
-  var options = {
-    maxSizeMB: 1,
-    maxWidthOrHeight: 1920,
-    useWebWorker: true
-  }
-  imageCompression(imageFile, options)
-    .then(function (compressedFile) {
-      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
-
-      // return uploadToServer(compressedFile); // write your own logic
-    })
-    .catch(function (error) {
-      console.log(error.message);
-    });
-}
-
-
-const PickFile = ({ children }) => {
-
+const PickFile = ({ children, index }) => {
+  const [currectIndex, setcurrectIndex] = React.useState(0)
+  console.log('pickfile index', index)
+  const { insertImage } = useContext(ImageSliderContext)
   const [imgFile, setImgFile] = React.useState({})
 
-  const fileChangedHandler = (event) => {
+  const fileChangedHandler = (event, index) => {
+    console.log('@@@@@@@@@@@@@@@@@@@@@@' + index)
     let file = event.target.files[0];// let files = event.target.files
     // console.log(file)
     let filename = ''
-    filename = file.name
+    if (file) {
+      filename = file.name
+    }
     if (filename.lastIndexOf('.') <= 0) {
       return alert('Please add a valid file!')
     };
@@ -71,15 +36,15 @@ const PickFile = ({ children }) => {
 
     //****image Compression
     const options = {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 1920,
+      maxSizeMB: 0.5,
+      maxWidthOrHeight: 600,
     };
 
     imageCompression(file, options)
       .then(function (compressedFile) {
         console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
         console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
-        return uploadToServer(compressedFile, filename); // write your own logic
+        return uploadToServer(compressedFile, filename, index); // write your own logic
       })
       .catch(function (error) {
         console.log(error.message);
@@ -87,7 +52,7 @@ const PickFile = ({ children }) => {
   }
 
   //****upload the file to firebase
-  const uploadToServer = (file, filename) => {
+  const uploadToServer = (file, filename, index) => {
     firebase.storage().ref('image/' + filename).put(file)
       .then((fileData) => { // then get downloadUrl
         console.log('then get downloadUrl')
@@ -99,22 +64,23 @@ const PickFile = ({ children }) => {
         })
           .then((downloadURL) => {
             console.log('downloadURL: ' + downloadURL)
+            insertImage(downloadURL, index)
             return
             // updatePreview('imageUrl', downloadURL)
             // firebase.database().ref('sellers/' + this.id + '/' + item.productName + '/' + item.buyer).update({ 'refundImg': downloadURL })
           })
-          // .then(() => {
-            // item.loading = false
-            // vm.$forceUpdate()
-          // })
+        // .then(() => {
+        // item.loading = false
+        // vm.$forceUpdate()
+        // })
       });
   }
 
   //overwrite dom input button
-  const onPickFile = () => {
-    // console.log(this.$refs.fileInput.click)
-    document.getElementById("file").click() // $refs = all ref in this file, in this case, ref="fileInput"
-  }
+  // const onPickFile = (index) => {
+  //   // console.log(this.$refs.fileInput.click)
+  //   document.getElementById("file").click() // $refs = all ref in this file, in this case, ref="fileInput"
+  // }
 
   let { imagePreviewUrl } = imgFile;
   let imagePreview = null;
@@ -124,16 +90,32 @@ const PickFile = ({ children }) => {
     imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
   }
 
+
+  React.useEffect(() => {
+    setcurrectIndex(index)
+    console.log(currectIndex)
+  })
+
+  const fileInputRef = React.createRef();
+
   return (
     <div>
-      <Button onClick={onPickFile} >{children}
-        {/* <input type="file" accept="image/*" onchange="handleImageUpload(event);"/> */}
 
-        <input style={{ display: "none" }} id="file" type="file"
+      <div onClick={() => {
+        fileInputRef.current.click()
+        // onPickFile(index)
+      }} >
+        {children}
+        <input hidden
+          type="file"
+          ref={fileInputRef}
           accept="image/*"
-          onChange={fileChangedHandler}
+          onChange={(e) => {
+            fileChangedHandler(e, index)
+            insertImage( noImage ,index)
+          }}
         />
-      </Button>
+      </div>
     </div>
   )
 }

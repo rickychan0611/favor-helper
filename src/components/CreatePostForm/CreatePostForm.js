@@ -74,7 +74,7 @@ const CreatePostForm = () => {
   return (
     <>
       <PhotoSlider />
-      <PickFile>Upload Image</PickFile>
+      {/* <PickFile>Upload Image</PickFile> */}
       <Container>
         <br></br>
         <Grid column={2} stackable>
