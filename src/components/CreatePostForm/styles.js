@@ -10,6 +10,12 @@ const styles = {
   },
   PhotoSlider : {
     position: 'relative'
+  },
+  title: {
+    fontSize: 28, 
+    fontFamily: "font-family: 'Nunito'", 
+    fontWeight: 'bold',
+    textAlign: "center"
   }
 }
 

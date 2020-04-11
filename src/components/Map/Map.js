@@ -39,10 +39,8 @@ const Map = ({ height }) => {
   }, [location])
 
   const RenderMap = withGoogleMap((props) => {
-    console.log('xxxxxxxxxxxxxxxx' + JSON.stringify(loc))
     return (
       <>
-
         <GoogleMap
           defaultCenter={loc}
           defaultZoom={13}

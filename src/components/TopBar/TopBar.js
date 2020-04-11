@@ -4,14 +4,15 @@ import { useHistory } from "react-router-dom";
 import firebase from 'firebase'
 import styles from './styles'
 import { UserContext } from '../../context/UserContext'
+import { PostsContext } from '../../context/PostsContext'
 
 const options1 = [
-  { key: 'sign-in', icon: 'sign-in', text: 'Sign in', value: 'sign-in'},
-  { key: 'register', icon: 'edit', text: 'Register', value: 'register'},
+  { key: 'sign-in', icon: 'sign-in', text: 'Sign in', value: 'sign-in' },
+  { key: 'register', icon: 'edit', text: 'Register', value: 'register' },
 ]
 
 const options2 = [
-  { key: 'sign-out', icon: 'sign-out', text: 'Sign out', value: 'sign-out'},
+  { key: 'sign-out', icon: 'sign-out', text: 'Sign out', value: 'sign-out' },
 ]
 
 const signOut = () => {
@@ -25,6 +26,8 @@ const signOut = () => {
 
 const TopBar = () => {
   const { user, loading } = useContext(UserContext)
+  const { preview, setPreview } = useContext(PostsContext)
+
   const history = useHistory()
   const [state, setState] = React.useState({})
   const { activeItem, value } = state
@@ -34,9 +37,9 @@ const TopBar = () => {
     if (name === 'sign-out') {
       signOut()
     } else {
-    history.push(`/${name}`)
-    console.log(name)
-  }
+      history.push(`/${name}`)
+      console.log(name)
+    }
   }
 
   const onDropdownClick = (e, { value }) => {
@@ -44,29 +47,69 @@ const TopBar = () => {
     if (value === 'sign-out') {
       signOut()
     } else {
-    history.push(`/${value}`)
-  }
+      history.push(`/${value}`)
+    }
   }
 
 
   return (
     <Menu borderless fluid
     >
-      {!user ? 
-      <Menu.Item
-        name=''
-        onClick={handleItemClick}
-      >
-        <img src='https://img.icons8.com/cotton/64/000000/like--v3.png' />
-      </Menu.Item>
-      :
-      <Menu.Item
-        name='create-post'
-        active={activeItem === 'create-post'}
-        onClick={handleItemClick}
-      >
-          <Button color="teal"> Create a post </Button>
-      </Menu.Item>
+      {!user ?
+        <Menu.Item
+          name=''
+          onClick={handleItemClick}
+        >
+          <img src='https://img.icons8.com/cotton/64/000000/like--v3.png' />
+        </Menu.Item>
+        :
+        activeItem === 'create-post' ?
+        <>
+
+            {preview ?
+
+            <Menu.Item
+              name='create-post'
+              active={activeItem === 'create-post'}
+              onClick={()=>setPreview(!preview)}
+            >
+              <Button color="red"> Edit </Button>
+            </Menu.Item>
+            :
+            <Menu.Item
+              name='create-post'
+              active={activeItem === 'create-post'}
+              onClick={()=>setPreview(!preview)}
+            >
+              <Button color="red"> Preview </Button>
+            </Menu.Item>
+            }
+
+
+        <Menu.Item
+          name='create-post'
+          active={activeItem === 'create-post'}
+          onClick={(()=>{alert('save post')})}
+        >
+          <Button color="teal"> Save Post </Button>
+        </Menu.Item>
+        <Menu.Item
+          name='home'
+          active={activeItem === 'home'}
+          onClick={handleItemClick}
+        >
+          <Button color="grey"> Cancel </Button>
+        </Menu.Item>
+        </>
+        :
+        <Menu.Item
+          name='create-post'
+          active={activeItem === 'create-post'}
+          onClick={handleItemClick}
+        >
+          <Button color="teal"> create a post </Button>
+        </Menu.Item>
+
       }
       <Menu.Item
         name='posts'
@@ -127,10 +170,10 @@ const TopBar = () => {
           </Responsive>
           <Responsive maxWidth={530} as={React.Fragment}>
             <Menu.Item>
-              {user ? 
-              <Image src={user.photoURL} avatar 
-              onClick={()=>{history.push('/profile')}}/> 
-              : null}
+              {user ?
+                <Image src={user.photoURL} avatar
+                  onClick={() => { history.push('/profile') }} />
+                : null}
               <Dropdown
                 icon='bars'
                 floating

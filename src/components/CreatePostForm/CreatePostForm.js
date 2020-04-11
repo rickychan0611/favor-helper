@@ -22,14 +22,12 @@ import {
 } from 'semantic-ui-react'
 
 import styles from './styles'
-
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
-import { MapContext } from '../../context/MapContext'
-import getLatLng from "../../functions/getLatLng"
+import { PostsContext } from '../../context/PostsContext';
 
 const CreatePostForm = () => {
   const history = useHistory()
   const [state, setState] = useState({})
+  const { preview, setPreview } = useContext(PostsContext)
 
   let randomPic = () => {
     return 'https://avatars.dicebear.com/v2/human/' + Math.floor(Math.random() * 100) + '.svg'
@@ -71,6 +69,23 @@ const CreatePostForm = () => {
     history.push('/posts')
   }
 
+  const PreviewIcon = () => {
+    return (
+      <Icon name='edit' size='large' color="olive" style={{
+        display: "inline-block", marginRight: 10
+      }}
+        // onClick={() => {
+        //   setPreview(!preview)
+        //   console.log('preview')
+        // }} 
+        />
+    )
+  }
+
+  useEffect(()=>{
+    setPreview(false)
+  },[])
+
   return (
     <>
       <PhotoSlider />
@@ -79,9 +94,33 @@ const CreatePostForm = () => {
         <br></br>
         <Grid column={2} stackable>
           <Grid.Column width={10} >
-            {/* ------------------- Header ------------------*/}
+            <div style={{ zIndex: 100, backgroundColor: "white" }}>{JSON.stringify(preview)}</div>
+            {/* ------------------- Title ------------------*/}
             <Segment placeholder basic textAlign="center">
-              <Header as='h1'>Crockpot Chicken Spaghetti</Header>
+
+              {preview ?
+                <h1 styles={styles.title}>{state.title}</h1>
+                :
+                <div>
+                  <PreviewIcon />
+                  <input type="text" 
+                    placeholder="Name of your meal here"
+                    value={state.title}
+                    style={{
+                      width: "80%",
+                      fontSize: 28,
+                      fontFamily: "font-family: 'Nunito'",
+                      fontWeight: 'bold',
+                      textAlign: "center",
+                      border: 'none',
+                      borderBottom: '1px solid green',
+                      marginBottom: 14
+                    }}
+                    onChange={(e) => { setState({ ...state, title: e.target.value }) }} />
+                  {/* <div style={{ minWidth: 38, display: "inline-block" }}></div> */}
+                </div>
+              }
+
               <p style={{ fontSize: 20 }}>Richmond, BC &nbsp;</p>
               <Segment basic><Rating defaultRating={4} maxRating={5} icon='star' disabled /> ({4})
                 <br /><br />
@@ -117,17 +156,17 @@ const CreatePostForm = () => {
             {/* ------------------- About Me------------------*/}
             <br />
             <Header style={{ margin: 0, textAlign: "left" }}>About you</Header>
-            <p style={{ fontSize: 12, marginTop: 0, textAlign: "left"}}>
+            <p style={{ fontSize: 12, marginTop: 0, textAlign: "left" }}>
               Smile! A great picture of your face helps customer get to know you a bit better</p>
             <Segment>
               <Grid column={2} stackable>
                 <Grid.Column width={3}>
-                  <div style={{textAlign: 'center', margin:"0 auto" }}>
+                  <div style={{ textAlign: 'center', margin: "0 auto" }}>
                     <img src="https://thechefsconnection.com/wp-content/uploads/2014/06/bobby-flay_profile_2017.jpg"
                       style={{ width: 90, height: 90, objectFit: 'cover', borderRadius: '50%' }} />
-                    <div style={{textAlign: 'center', margin:"0 auto" }}>
+                    <div style={{ textAlign: 'center', margin: "0 auto" }}>
                       <Button size="tiny">Change</Button>
-                      </div>
+                    </div>
                   </div>
                 </Grid.Column>
                 <Grid.Column width={13}>
@@ -142,7 +181,7 @@ const CreatePostForm = () => {
             </Segment>
             {/* ------------------- Loaction map------------------*/}
             <Header>Your Location</Header>
-            <Map height={300}/>
+            <Map height={300} />
 
           </Grid.Column>
 

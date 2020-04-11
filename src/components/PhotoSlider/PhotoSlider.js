@@ -12,16 +12,16 @@ import { CarouselProvider, Slider, Slide, DotGroup, Dot } from 'pure-react-carou
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import useWindowDimensions from '../../functions/getWindowDimensions'
 
-const images = [
-  { src: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
-  { src: "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/eggs-breakfast-avocado-1296x728-header.jpg?w=1155&h=1528" },
-  { src: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
-  { src: "https://drop.ndtv.com/albums/COOKS/pasta-vegetarian/pastaveg_640x480.jpg" },
-  { src: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
-  { src: "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/eggs-breakfast-avocado-1296x728-header.jpg?w=1155&h=1528" },
-  { src: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
-  { src: "https://drop.ndtv.com/albums/COOKS/pasta-vegetarian/pastaveg_640x480.jpg" }
-]
+// const images = [
+//   { src: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
+//   { src: "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/eggs-breakfast-avocado-1296x728-header.jpg?w=1155&h=1528" },
+//   { src: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
+//   { src: "https://drop.ndtv.com/albums/COOKS/pasta-vegetarian/pastaveg_640x480.jpg" },
+//   { src: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
+//   { src: "https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/eggs-breakfast-avocado-1296x728-header.jpg?w=1155&h=1528" },
+//   { src: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
+//   { src: "https://drop.ndtv.com/albums/COOKS/pasta-vegetarian/pastaveg_640x480.jpg" }
+// ]
 
 const PhotoSlider = () => {
 
@@ -37,7 +37,7 @@ const PhotoSlider = () => {
   const handleClose = () => setState({ active: false })
 
   const {
-    // images,
+    images,
     deleteImage,
     loading } = useContext(ImageSliderContext)
 
@@ -59,8 +59,8 @@ const PhotoSlider = () => {
     // slider container
     <>
       <CarouselProvider
-        naturalSlideWidth={100}
-        naturalSlideHeight={100}
+        naturalSlideWidth={400}
+        naturalSlideHeight={500}
         totalSlides={images.length}
         visibleSlides={width < 420 ? 1 : width < 800 ? 2 : width < 1025 ? 3 : 4}
         isIntrinsicHeight={true}

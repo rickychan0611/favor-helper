@@ -7,17 +7,13 @@ import { UserContext } from '../../context/UserContext'
 import noImage from '../../assets/images/no-image.jpg'
 
 const PickFile = ({ children, index }) => {
-  const [currectIndex, setcurrectIndex] = React.useState(0)
-  console.log('pickfile index', index)
   const { insertImage } = useContext(ImageSliderContext)
   const { user } = useContext(UserContext)
 
   const [imgFile, setImgFile] = React.useState({})
 
   const fileChangedHandler = (event, index) => {
-    console.log('@@@@@@@@@@@@@@@@@@@@@@' + index)
     let file = event.target.files[0];// let files = event.target.files
-    // console.log(file)
     let filename = ''
     if (file) {
       filename = file.name
@@ -34,8 +30,6 @@ const PickFile = ({ children, index }) => {
 
     imageCompression(file, options)
       .then(function (compressedFile) {
-        console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-        console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
         return uploadToServer(compressedFile, filename, index); // write your own logic
       })
       .catch(function (error) {
@@ -47,7 +41,6 @@ const PickFile = ({ children, index }) => {
   const uploadToServer = (file, filename, index) => {
     firebase.storage().ref('image/' + filename).put(file)
       .then((fileData) => { // then get downloadUrl
-        console.log('then get downloadUrl')
         let storage = firebase.storage()
         let urlRef = storage.ref('image/' + filename)
         urlRef.getDownloadURL().then(function (downloadURL) {
@@ -55,7 +48,6 @@ const PickFile = ({ children, index }) => {
           return downloadURL
         })
           .then((downloadURL) => {
-            console.log('downloadURL: ' + downloadURL)
             insertImage(downloadURL, index)
             return
             // updatePreview('imageUrl', downloadURL)
@@ -75,11 +67,6 @@ const PickFile = ({ children, index }) => {
   } else {
     imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
   }
-
-  React.useEffect(() => {
-    setcurrectIndex(index)
-    console.log(currectIndex)
-  })
 
   const fileInputRef = React.createRef();
 
