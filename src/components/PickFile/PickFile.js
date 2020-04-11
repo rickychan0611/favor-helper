@@ -26,18 +26,6 @@ const PickFile = ({ children, index }) => {
       return alert('Please add a valid file!')
     };
 
-    // ****changing the filename:
-    // const ext = filename.slice(filename.lastIndexOf('.'))
-    // let reader = new FileReader()
-    // reader.onloadend = () => {
-    //   setImgFile({
-    //     file: file,
-    //     imagePreviewUrl: reader.result
-    //   });
-    // }
-    // reader.readAsDataURL(file)
-    // updatePreview('imageUrl', imgFile.imagePreviewUrl);
-
     //****image Compression
     const options = {
       maxSizeMB: 0.5,
@@ -80,12 +68,6 @@ const PickFile = ({ children, index }) => {
       });
   }
 
-  //overwrite dom input button
-  // const onPickFile = (index) => {
-  //   // console.log(this.$refs.fileInput.click)
-  //   document.getElementById("file").click() // $refs = all ref in this file, in this case, ref="fileInput"
-  // }
-
   let { imagePreviewUrl } = imgFile;
   let imagePreview = null;
   if (imagePreviewUrl) {
@@ -93,7 +75,6 @@ const PickFile = ({ children, index }) => {
   } else {
     imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
   }
-
 
   React.useEffect(() => {
     setcurrectIndex(index)
@@ -112,7 +93,6 @@ const PickFile = ({ children, index }) => {
       else (
         alert('please login 1st')
       )
-        // onPickFile(index)
       }} >
         {children}
         <input hidden
