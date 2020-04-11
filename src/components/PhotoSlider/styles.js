@@ -4,14 +4,16 @@ const styles = {
   },
   photo : {
     objectFit: 'cover',
-    height: 300,
+    height: 350,
     // width: "100vw",
     width: 420,
   },
   ModalPhoto : {
     objectFit: 'cover',
-    height: 'auto',
-    // width: '80vw',
+    // minWidth: 400,
+    // minHeight: 600,
+    maxHeight: '95vw',
+    maxWidth: '90vw',
   }
 }
 
