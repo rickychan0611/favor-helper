@@ -22,14 +22,31 @@ import {
   DatesRangeInput
 } from 'semantic-ui-calendar-react';
 
-const PriceTimeForm = ({state, handleChange, pickUpToggle, deliveryToggle}) => {
+import { PreviewIcon } from '../../../components'
+
+const PriceTimeForm = ({ preview, state, setState, handleChange, pickUpToggle, deliveryToggle }) => {
   return (
     <Segment>
       <Header as='h1'>$15</Header>
       <Divider />
 
-      {/* ------------------- Cut off Time ------------------*/}
       <Form>
+        <PreviewIcon preview={preview} />
+        <Header style={{ margin: 0 }}>Minimum Order: </Header>
+        <p style={{ fontSize: 12, marginTop: 0 }}> Start cooking only when min. order is met. (0 = no min. order)</p>
+        <Input fluid icon='stopwatch' iconPosition='left' placeholder='Enter a number' type='number'
+          value={state.minOrder} onChange={(e) => { setState({ ...state, minOrder: e.target.value }) }} />
+        <Divider />
+
+        <PreviewIcon preview={preview} />
+        <Header style={{ margin: 0 }}>Maximum Order: </Header>
+        <p style={{ fontSize: 12, marginTop: 0 }}> Can't cook too many dishes? Stop getting orders while max. order has reached. (0 = no max. order)</p>
+        <Input fluid icon='stopwatch' iconPosition='left' placeholder='Enter a number' type='number'
+          value={state.maxOrder} onChange={(e) => { setState({ ...state, maxOrder: e.target.value }) }} />
+        <Divider />
+
+        {/* ------------------- Cut off Time ------------------*/}
+        <PreviewIcon preview={preview} />
         <Header style={{ margin: 0 }}>Order Cut off Time:</Header>
         <p style={{ fontSize: 12, marginTop: 0 }}>The time that you want to stop receiving orders. So that you can prepare and cook.</p>
         <DateTimeInput
@@ -46,6 +63,7 @@ const PriceTimeForm = ({state, handleChange, pickUpToggle, deliveryToggle}) => {
         <Divider />
 
         {/* ------------------- Completion Date ------------------*/}
+        <PreviewIcon preview={preview} />
         <Header style={{ margin: 0 }}>Completion Date: </Header>
         <p style={{ fontSize: 12, marginTop: 0 }}>The date that your food is ready to be distributed to customers.</p>
         <DateInput
@@ -61,13 +79,14 @@ const PriceTimeForm = ({state, handleChange, pickUpToggle, deliveryToggle}) => {
         <Divider />
 
         {/* ------------------- Pick up / Delivery ------------------*/}
+        <PreviewIcon preview={preview} />
         <Header style={{ margin: 0 }}>Pick up / Delivery? </Header>
         <p style={{ fontSize: 12, marginTop: 0 }}>Can be both. You can arrange with customer later. </p>
         <Checkbox
           label="Self-pickup"
           onChange={pickUpToggle}
         /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Checkbox
+          <Checkbox
           label="Delivery within 1km"
           onChange={deliveryToggle}
         />

@@ -3,8 +3,10 @@ import db from '../../firestore'
 import posts from '../../data/posts.json'
 import { useHistory } from "react-router-dom";
 import { firebase } from '@firebase/app';
-import { PhotoSlider, Map, PickFile } from '../../components'
+import { PhotoSlider, Map, PreviewIcon } from '../../components'
 import PriceTimeForm from './PriceTimeForm'
+import { MapContext } from '../../context/MapContext'
+
 import {
   Container,
   Grid,
@@ -25,10 +27,18 @@ import styles from './styles'
 import { PostsContext } from '../../context/PostsContext';
 
 const CreatePostForm = () => {
-  const history = useHistory()
-  const [state, setState] = useState({})
-  const { preview, setPreview } = useContext(PostsContext)
+  const [state, setState] = useState({
+    title: '',
+  })
+  const {
+    location,
+    userInitLocation
+  } = useContext(MapContext)
 
+  const { preview, setPreview } = useContext(PostsContext)
+  
+  const history = useHistory()
+  
   let randomPic = () => {
     return 'https://avatars.dicebear.com/v2/human/' + Math.floor(Math.random() * 100) + '.svg'
   }
@@ -68,27 +78,13 @@ const CreatePostForm = () => {
       })
     history.push('/posts')
   }
-
-  const PreviewIcon = () => {
-    return (
-      <Icon name='edit' size='large' color="olive" style={{
-        display: "inline-block", marginRight: 10
-      }}
-        // onClick={() => {
-        //   setPreview(!preview)
-        //   console.log('preview')
-        // }} 
-        />
-    )
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     setPreview(false)
-  },[])
+  }, [])
 
   return (
     <>
-      <PhotoSlider />
+      <PhotoSlider formState={state} setFormState={setState} />
       {/* <PickFile>Upload Image</PickFile> */}
       <Container>
         <br></br>
@@ -102,21 +98,23 @@ const CreatePostForm = () => {
                 <h1 styles={styles.title}>{state.title}</h1>
                 :
                 <div>
-                  <PreviewIcon />
-                  <input type="text" 
-                    placeholder="Name of your meal here"
-                    value={state.title}
-                    style={{
-                      width: "80%",
-                      fontSize: 28,
-                      fontFamily: "font-family: 'Nunito'",
-                      fontWeight: 'bold',
-                      textAlign: "center",
-                      border: 'none',
-                      borderBottom: '1px solid green',
-                      marginBottom: 14
-                    }}
-                    onChange={(e) => { setState({ ...state, title: e.target.value }) }} />
+                  <PreviewIcon preview={preview} />
+                  <form>
+                    <input type="text"
+                      placeholder="Name of your meal here"
+                      value={state.title}
+                      style={{
+                        width: "70%",
+                        fontSize: 28,
+                        fontFamily: "font-family: 'Nunito'",
+                        fontWeight: 'bold',
+                        textAlign: "center",
+                        border: 'none',
+                        borderBottom: '1px solid green',
+                        marginBottom: 14
+                      }}
+                      onChange={(e) => { setState({ ...state, title: e.target.value }) }} />
+                  </form>
                   {/* <div style={{ minWidth: 38, display: "inline-block" }}></div> */}
                 </div>
               }
@@ -132,15 +130,20 @@ const CreatePostForm = () => {
             </Segment>
 
             {/* ------------------- Details ------------------*/}
-            <div style={{ textAlign: "left" }}><Header>About this meal</Header></div>
+            <div style={{ textAlign: "left" }}>
+
+              <Header>About this meal</Header></div>
+
             <Segment textAlign="left">
               <Form>
+                <PreviewIcon preview={preview} />
                 <Form.Input fluid label='What style are you doing?' name="dishStyle"
-                  value={state.title} onChange={handleChange}
+                  value={state.dishStyle} onChange={handleChange}
                   placeholder='Ex. Chinese, Japanese, Indian, Italian' />
-                <Form.TextArea fluid label='What so good about your meal?' name="Summary"
-                  value={state.title} onChange={handleChange}
-                  placeholder='Tell your customers what you are making. Detailed descriptons get the most customers joinning up!' />
+                <PreviewIcon preview={preview} />
+                <Form.TextArea fluid label="Summary" name="summary"
+                  value={state.summary} onChange={handleChange}
+                  placeholder="What's so good about your meal? Detailed descriptons get the most customers joinning up!" />
               </Form>
             </Segment>
             {/* ------------------- Price visable on small screen only------------------*/}
@@ -171,9 +174,10 @@ const CreatePostForm = () => {
                 </Grid.Column>
                 <Grid.Column width={13}>
                   <Form>
+                  <PreviewIcon preview={preview} />
                     <Form.TextArea fluid label='Tell us about yourself' name="aboutMe"
                       style={{ minHeight: 100 }}
-                      value={state.title} onChange={handleChange}
+                      value={state.aboutMe} onChange={handleChange}
                       placeholder='Tell us a bit about yourself so guest can get to know you' />
                   </Form>
                 </Grid.Column>
@@ -181,7 +185,8 @@ const CreatePostForm = () => {
             </Segment>
             {/* ------------------- Loaction map------------------*/}
             <Header>Your Location</Header>
-            <Map height={300} />
+            <PreviewIcon preview={preview} />
+            <Map height={300} formState={state} setFormState={setState}/>
 
           </Grid.Column>
 
@@ -189,7 +194,9 @@ const CreatePostForm = () => {
           <Grid.Column width={6}>
             <Responsive minWidth={766}>
               <PriceTimeForm
+                preview={preview}
                 state={state}
+                setState={setState}
                 handleChange={handleChange}
                 pickUpToggle={pickUpToggle}
                 deliveryToggle={deliveryToggle}
@@ -198,8 +205,6 @@ const CreatePostForm = () => {
             </Responsive>
           </Grid.Column>
         </Grid>
-
-
       </Container>
     </>
   )

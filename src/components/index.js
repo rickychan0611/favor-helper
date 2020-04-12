@@ -8,6 +8,7 @@ import PhotoSlider from './PhotoSlider/PhotoSlider'
 import Footer from './Footer/Footer'
 import LocationInput from './LocationInput/LocationInput'
 import PickFile from './PickFile/PickFile'
+import PreviewIcon from './PreviewIcon/PreviewIcon'
 
 
 export {
@@ -20,5 +21,6 @@ export {
   PhotoSlider,
   Footer,
   LocationInput,
-  PickFile
+  PickFile,
+  PreviewIcon
 }

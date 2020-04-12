@@ -13,7 +13,8 @@ const UserContextProvider = ({ children }) => {
         if (userData) {
           setUser(userData)
           setLoading(false)
-          console.log('onAuthStateChanged')
+          console.log('user signed in')
+          console.log(JSON.stringify(userData))
         } else {
           setUser(null)
           setLoading(false)

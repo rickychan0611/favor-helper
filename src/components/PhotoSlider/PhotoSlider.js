@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import { Button, Dimmer, Image, Header, Segment, Icon, Modal, Container } from 'semantic-ui-react'
 import noImage from '../../assets/images/no-image.jpg'
@@ -23,7 +23,7 @@ import useWindowDimensions from '../../functions/getWindowDimensions'
 //   { src: "https://drop.ndtv.com/albums/COOKS/pasta-vegetarian/pastaveg_640x480.jpg" }
 // ]
 
-const PhotoSlider = () => {
+const PhotoSlider = ({ formState, setFormState }) => {
 
   const { height, width } = useWindowDimensions();
 
@@ -55,6 +55,16 @@ const PhotoSlider = () => {
     // alert(now-start_time);
   }
 
+  useEffect(() => {
+    // when the last photo is deleted, set img to empty
+    if (images[0].src == addImage) {
+      setFormState({ ...formState, images: '' })
+    }
+    else {
+      setFormState({ ...formState, images: images })
+    }
+  }, images)
+
   return (
     // slider container
     <>
@@ -74,11 +84,11 @@ const PhotoSlider = () => {
             {images.map((image, index) => {
               return (
                 <>
-                  <Slide index={index - 1} style={{ position: "relative" }} >
+                  <Slide index={index - 1} style={{ position: "relative" }} key={index}>
 
-                  {/* // photo loading */}
+                    {/* // photo loading */}
                     {image.src == noImage ?
-                      <Slide index={index - 1}>
+                      <Slide index={index - 1} key={index}>
                         <Placeholder style={{ height: 350, width: 420 }}>
                           <Placeholder.Image />
                         </Placeholder>
@@ -99,7 +109,7 @@ const PhotoSlider = () => {
                         <>
                           <PickFile index={index}>
                             <div style={{ position: "absolute", bottom: 20, right: 20 }}>
-                              <Button raised circular icon='add' size='huge' color="olive"
+                              <Button circular icon='add' size='huge' color="olive"
                                 style={{ boxShadow: '0px 0px 5px grey' }} />
                             </div>
                           </PickFile>
