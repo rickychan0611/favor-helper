@@ -18,7 +18,7 @@ const options2 = [
 
 const TopBar = () => {
   const { user, loading } = useContext(UserContext)
-  const { preview, setPreview } = useContext(PostsContext)
+  const { preview, setPreview, submitPost } = useContext(PostsContext)
 
   const history = useHistory()
   const [state, setState] = React.useState({})
@@ -73,14 +73,14 @@ const TopBar = () => {
           name='create-post'
           onClick={() => setPreview(!preview)}
         >
-          <Button icon="edit" content="Edit" color="red" />
+          <Button icon="edit" content="Edit" color="teal" />
         </Menu.Item>
         :
         <Menu.Item
           name='create-post'
           onClick={() => setPreview(!preview)}
         >
-          <Button icon="eye" content="Preview" color="red" />
+          <Button icon="eye" content="Preview" color="teal" />
         </Menu.Item>
       }
     </>
@@ -92,18 +92,19 @@ const TopBar = () => {
 
       <Menu.Menu position='right'>
 
-        <Menu.Item
+      </Menu.Menu>
+      <Menu.Item
+        onClick={(() => {submitPost()})}
+      >
+        <Button icon="check" circular content="SUBMIT" color="green"/>
+      </Menu.Item>
+
+      
+      <Menu.Item
           onClick={handleItemClick}
         >
           <Button icon="close" circular color="grey" />
         </Menu.Item>
-
-      </Menu.Menu>
-      <Menu.Item
-        onClick={(() => { alert('save post') })}
-      >
-        <Button icon="check" circular color="teal"/>
-      </Menu.Item>
 
     </>
   )

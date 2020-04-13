@@ -1,12 +1,30 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
 import db from '../firestore'
 
 export const PostsContext = createContext()
 
 const PostsContextProvider = ({ children }) => {
-  const [posts, setPosts] = React.useState([])
+  const [posts, setPosts] = useState([])
+  const [preview, setPreview] = useState(false)
+  const [formState, setFormState] = useState({
+    title: '',
+  })
 
-  const [preview, setPreview] = React.useState(false)
+  const submitPost = () => {
+    const timeStamp = new Date()
+    const createPost = db.collection('posts').doc()
+    createPost.set(
+      {...formState, createAt: timeStamp, id: createPost.id}
+    ).then(function (doc) {
+      // setUser(doc.data())
+      // setLoading(false)
+      console.log("Post Saved: ", doc.id);
+    })
+      .catch(function (error) {
+        console.error("Error adding Post: ", error);
+      })
+    return
+  }
 
   React.useEffect(
     () => {
@@ -30,7 +48,10 @@ const PostsContextProvider = ({ children }) => {
         {
           posts,
           preview,
-          setPreview
+          setPreview,
+          formState, 
+          setFormState,
+          submitPost
         }
       }>
       {children}

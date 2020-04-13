@@ -3,14 +3,24 @@ import { Icon } from 'semantic-ui-react'
 
 import styles from './styles'
 
-const PreviewIcon = ({ preview }) => {
+const PreviewIcon = ({ preview, required }) => {
+  let color = ""
+  if (required) {
+    color="red"
+  }
+  else {
+    color="olive"
+
+  }
   return (
     <>
       {preview ? null :
-        <Icon name='edit' color="olive" style={{
+        <p style={required ? {color:  'red'} : {color:'grey'}}><Icon name='edit' color={color} style={{
           display: "inline-block", marginRight: 10
         }}
         />
+        {required ? 'required' : 'optional'}
+        </p>
       }
     </>
   )
