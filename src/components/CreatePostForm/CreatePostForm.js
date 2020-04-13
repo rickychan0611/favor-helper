@@ -66,7 +66,7 @@ const CreatePostForm = () => {
         ...state,
         id: newPost.id,
         authorPic: randomPic(),
-        createAt: timestamp
+        createAt: timestamp,
       }
     )
       .then(function (docRef) {
@@ -128,7 +128,8 @@ const CreatePostForm = () => {
                 </div>
               }
 
-              <p style={{ fontSize: 20 }}>Richmond, BC &nbsp;</p>
+              <p style={{ fontSize: 20 }}>
+                {state.address ? state.address[2].long_name : null }</p>
               <Segment basic><Rating defaultRating={4} maxRating={5} icon='star' disabled /> ({4})
                 <br /><br />
                 <img src={user.photoURL}
@@ -193,7 +194,9 @@ const CreatePostForm = () => {
               </Grid>
             </Segment>
             {/* ------------------- Loaction map------------------*/}
-            <Header>Your Location</Header>
+            <Header style={{ margin: 0, textAlign: "left" }}>Your Location</Header>
+            <p style={{ fontSize: 12, marginTop: 0, textAlign: "left" }}>
+            Enter your address or pick up location to find customers that close to you.</p>
             <PreviewIcon preview={preview} />
             <Map height={300} formState={state} setFormState={setState}/>
 

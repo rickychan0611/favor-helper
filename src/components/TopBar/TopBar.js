@@ -39,7 +39,17 @@ const TopBar = () => {
     setState({ activeItem: name })
     if (name === 'sign-out') {
       signOut()
-    } else {
+    }
+    if (name === 'create-post') {
+      if (!user) {
+        alert('please login')
+        return
+      }
+      else {
+        history.push(`/${name}`)
+      }
+    }
+    else {
       history.push(`/${name}`)
       console.log(name)
     }
@@ -47,6 +57,7 @@ const TopBar = () => {
 
   const onDropdownClick = (e, { value }) => {
     console.log('Value' + value)
+    setState({ activeItem: value })
     if (value === 'sign-out') {
       signOut()
     } else {
@@ -80,18 +91,20 @@ const TopBar = () => {
       <EditOrPreviewButtons />
 
       <Menu.Menu position='right'>
-        <Menu.Item
-          onClick={(() => { alert('save post') })}
-        >
-          <Button icon="check" content="Submit" color="teal" />
-        </Menu.Item>
 
         <Menu.Item
           onClick={handleItemClick}
         >
-          <Button icon="close" content="Cancel" color="grey" />
+          <Button icon="close" circular color="grey" />
         </Menu.Item>
+
       </Menu.Menu>
+      <Menu.Item
+        onClick={(() => { alert('save post') })}
+      >
+        <Button icon="check" circular color="teal"/>
+      </Menu.Item>
+
     </>
   )
 
@@ -106,31 +119,25 @@ const TopBar = () => {
   )
 
   return (
-    <Menu borderless fluid
-    >
-      {!user ?
-        <Menu.Item
-          name=''
-          onClick={handleItemClick}
-        >
-          <img src='https://img.icons8.com/cotton/64/000000/like--v3.png' />
-        </Menu.Item>
+    <Menu borderless fluid style={{ position: "fixed", height: 55 }}>
+      {user ? null :
+        <div style={{ position: "relative", height: 40 }}>
+          <img src='https://img.icons8.com/cotton/64/000000/like--v3.png'
+            style={{ width: 40, height: 40, marginTop: 7, marginLeft: 5, marginRight: -10 }}
+            onClick={() => { history.push('/') }} />
+        </div>
+      }
+      {activeItem === 'create-post' && user ?
+        <PreviewSaveCancelButtons />
         :
         <>
-          {activeItem === 'create-post' ?
-            <PreviewSaveCancelButtons />
-            :
-            <>
-              <TopBarItem name='create-post'>
-                <Button color="teal"> create a post </Button>
-              </TopBarItem>
-            </>
-          }
+          <TopBarItem name='create-post'>
+            <Button color="teal"> Create a post </Button>
+          </TopBarItem>
         </>
       }
-
-      {activeItem == 'create-post' ?
-        null : 
+      {activeItem === 'create-post' && user ?
+        null :
         <>
           <TopBarItem name='posts'> Posts </TopBarItem>
           <TopBarItem name='map' > Map </TopBarItem>
@@ -196,7 +203,7 @@ const TopBar = () => {
             : null
           }
 
-        </> }
+        </>}
 
     </Menu>
   )

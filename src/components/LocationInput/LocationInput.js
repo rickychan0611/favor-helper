@@ -4,32 +4,40 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import { MapContext } from '../../context/MapContext'
 import getLatLng from "../../functions/getLatLng"
+import getAddress from "../../functions/getAddress"
 
-const LocationInput = ({formState, setFormState}) => {
+const LocationInput = ({ formState, setFormState }) => {
   const {
     selectLoaction,
     userInitLocation
   } = useContext(MapContext)
 
-const handleSelect = (description) => {
-  const getLocation = async () => getLatLng(description)
+  const handleSelect = (description) => {
+    const getLocation = async () => getLatLng(description)
     getLocation().then((loc) => {
       selectLoaction(loc)
-      setFormState({...formState, location: loc, address: description})
+      setFormState({ ...formState, location: loc})
+      const Address = async () => getAddress(loc)
+      Address().then((address) => {
+        setFormState({ ...formState, address })
+
+        console.log(address)
+      })
     }
     )
     return
-}
-  return (
+  }
+
+   return (
     <div>
-      <h3>Search an address</h3>
-    <GooglePlacesAutocomplete
-      onSelect={({ description })=>{
-        console.log('@@@@' + description)
-        handleSelect(description)
-      }}
-    />
-  </div>
+      {/* <h3>Enter an address</h3> */}
+      <GooglePlacesAutocomplete
+        onSelect={({ description }) => {
+          console.log('@@@@' + description)
+          handleSelect(description)
+        }}
+      />
+    </div>
   );
 };
 

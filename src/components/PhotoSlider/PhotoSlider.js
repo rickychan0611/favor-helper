@@ -103,7 +103,7 @@ const PhotoSlider = ({ formState, setFormState }) => {
                               <div style={{position: "relative", width: '100%'}}>
                               <img fluid src={image.src} style={styles.photo} />
                               <div style={{position: "absolute", top: 10, left: 10,}}>
-                                <Button>Upload photos</Button>
+                                <Button>Upload photos to gallery</Button>
                               </div>
                               </div>
                             </PickFile>
