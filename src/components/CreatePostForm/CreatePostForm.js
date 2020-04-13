@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react'
 import db from '../../firestore'
-import posts from '../../data/posts.json'
 import { useHistory } from "react-router-dom";
-import { firebase } from '@firebase/app';
 import { PhotoSlider, Map, PreviewIcon } from '../../components'
 import PriceTimeForm from './PriceTimeForm'
-import { MapContext } from '../../context/MapContext'
+
+import { PostsContext } from '../../context/PostsContext'
+import { UserContext } from '../../context/UserContext'
 
 import {
   Container,
@@ -24,18 +24,17 @@ import {
 } from 'semantic-ui-react'
 
 import styles from './styles'
-import { PostsContext } from '../../context/PostsContext';
+import './styles.css'
+
 
 const CreatePostForm = () => {
   const [state, setState] = useState({
     title: '',
   })
-  const {
-    location,
-    userInitLocation
-  } = useContext(MapContext)
 
   const { preview, setPreview } = useContext(PostsContext)
+  const { user, setUser } = useContext(UserContext)
+
   
   const history = useHistory()
   
@@ -80,17 +79,26 @@ const CreatePostForm = () => {
   }
   useEffect(() => {
     setPreview(false)
-  }, [])
+    if (!user) {
+        history.push('/')
+      return
+    }
+    if (user) {
+      setState({...state, posterUid: user.uid})
+    }
+  }, [user])
 
   return (
     <>
+      {user ?
+      <>
       <PhotoSlider formState={state} setFormState={setState} />
       {/* <PickFile>Upload Image</PickFile> */}
       <Container>
         <br></br>
         <Grid column={2} stackable>
           <Grid.Column width={10} >
-            <div style={{ zIndex: 100, backgroundColor: "white" }}>{JSON.stringify(preview)}</div>
+
             {/* ------------------- Title ------------------*/}
             <Segment placeholder basic textAlign="center">
 
@@ -101,10 +109,11 @@ const CreatePostForm = () => {
                   <PreviewIcon preview={preview} />
                   <form>
                     <input type="text"
-                      placeholder="Name of your meal here"
+                      className="titleInput"
+                      placeholder="Enter a title"
                       value={state.title}
                       style={{
-                        width: "70%",
+                        width: "90%",
                         fontSize: 28,
                         fontFamily: "font-family: 'Nunito'",
                         fontWeight: 'bold',
@@ -122,10 +131,10 @@ const CreatePostForm = () => {
               <p style={{ fontSize: 20 }}>Richmond, BC &nbsp;</p>
               <Segment basic><Rating defaultRating={4} maxRating={5} icon='star' disabled /> ({4})
                 <br /><br />
-                <img src="https://thechefsconnection.com/wp-content/uploads/2014/06/bobby-flay_profile_2017.jpg"
-                  style={{ width: 90, height: 90, objectFit: 'cover', borderRadius: '50%' }} />
+                <img src={user.photoURL}
+                  style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: '50%' }} />
                 <br />
-                André Natera
+                {user.displayName}
               </Segment>
             </Segment>
 
@@ -165,8 +174,8 @@ const CreatePostForm = () => {
               <Grid column={2} stackable>
                 <Grid.Column width={3}>
                   <div style={{ textAlign: 'center', margin: "0 auto" }}>
-                    <img src="https://thechefsconnection.com/wp-content/uploads/2014/06/bobby-flay_profile_2017.jpg"
-                      style={{ width: 90, height: 90, objectFit: 'cover', borderRadius: '50%' }} />
+                    <img src={user.photoURL}
+                      style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '50%' }} />
                     <div style={{ textAlign: 'center', margin: "0 auto" }}>
                       <Button size="tiny">Change</Button>
                     </div>
@@ -206,6 +215,8 @@ const CreatePostForm = () => {
           </Grid.Column>
         </Grid>
       </Container>
+      </>
+      : null}
     </>
   )
 }

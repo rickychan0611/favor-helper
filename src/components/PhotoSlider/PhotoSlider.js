@@ -69,8 +69,8 @@ const PhotoSlider = ({ formState, setFormState }) => {
     // slider container
     <>
       <CarouselProvider
-        naturalSlideWidth={400}
-        naturalSlideHeight={500}
+        naturalSlideWidth={420}
+        naturalSlideHeight={350}
         totalSlides={images.length}
         visibleSlides={width < 420 ? 1 : width < 800 ? 2 : width < 1025 ? 3 : 4}
         isIntrinsicHeight={true}
@@ -100,7 +100,12 @@ const PhotoSlider = ({ formState, setFormState }) => {
                         <>
                           <Slide index={index - 1} style={{ position: "relative" }} >
                             <PickFile src={image.src} index={index}>
+                              <div style={{position: "relative", width: '100%'}}>
                               <img fluid src={image.src} style={styles.photo} />
+                              <div style={{position: "absolute", top: 10, left: 10,}}>
+                                <Button>Upload photos</Button>
+                              </div>
+                              </div>
                             </PickFile>
                           </Slide>
                         </>

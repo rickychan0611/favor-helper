@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useContext } from 'react';
 import { Route, Switch, Redirect, useParams } from 'react-router-dom';
 import PostList from "../views/PostList"
 import Register from "../views/Register"
@@ -6,11 +6,13 @@ import SignIn from "../views/SignIn"
 import Home from "../views/Home"
 import Profile from "../views/Profile"
 import { CreatePostForm, TopBar, Map, Footer } from "../components"
+import UserContext from '../context/UserContext'
 
 import styles from './styles'
 import { Grid, Container } from 'semantic-ui-react';
 
 export default (props) => {
+  // const { user, setUser } = useContext(UserContext)
   let { id } = useParams();
   return (
     <>

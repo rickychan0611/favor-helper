@@ -1,0 +1,3 @@
+input.titleInput::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgb(223, 221, 221);
+}
