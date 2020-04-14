@@ -6,26 +6,49 @@ export const PostsContext = createContext()
 const PostsContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([])
   const [preview, setPreview] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [validationError, setValidationError] = useState(false)
   const [formState, setFormState] = useState({
     title: "",
-    price: 0
+    price: "",
+    address: "",
+    pickup: false,
+    delivery: false
   })
 
-  const submitPost = () => {
+  const { title, price, pickUp, delivery, address } = formState
+
+  const validation = () => {
+    if ( title === "" || price === "" || address === "" ){
+      return false
+    }
+    else if ( pickUp === true || delivery === true ) {
+      return true
+    }
+    else return false
+  }
+
+  const submitPostToServer = () => {
     const timeStamp = new Date()
     const createPost = db.collection('posts').doc()
-    createPost.set(
-      {...formState, createAt: timeStamp, id: createPost.id}
-    ).then(function (doc) {
-      // setUser(doc.data())
-      // setLoading(false)
-      console.log("Post Saved: ", doc.id);
-    })
-      .catch(function (error) {
-        console.error("Error adding Post: ", error);
+    if (validation()) {
+      
+      createPost.set(
+        { ...formState, createAt: timeStamp, id: createPost.id }
+      ).then( doc => {
+        setSuccess(true)
+        console.log("Post Saved: ");
       })
-    return
+        .catch(function (error) {
+          console.error("Error adding Post: ", error);
+        })
+      return
+    }
+    else {
+      setValidationError(true)
+    }
   }
+
 
   React.useEffect(
     () => {
@@ -50,9 +73,13 @@ const PostsContextProvider = ({ children }) => {
           posts,
           preview,
           setPreview,
-          formState, 
+          formState,
           setFormState,
-          submitPost
+          submitPostToServer,
+          validationError,
+          setValidationError,
+          success, 
+          setSuccess
         }
       }>
       {children}

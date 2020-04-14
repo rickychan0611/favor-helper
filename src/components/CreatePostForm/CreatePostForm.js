@@ -18,7 +18,7 @@ import {
   Input,
   Rating,
   Image,
-  Divider,
+  Modal,
   Icon,
   Dimmer,
   Responsive
@@ -31,7 +31,7 @@ import './styles.css'
 const CreatePostForm = () => {
   const [openBottomBar, setOpenBottomBar] = useState(false)
 
-  const { preview, setPreview, formState, setFormState } = useContext(PostsContext)
+  const { preview, setPreview, formState, setFormState, validationError, setValidationError, success, setSuccess } = useContext(PostsContext)
   const { user, updateProfilePic } = useContext(UserContext)
 
   const history = useHistory()
@@ -101,6 +101,20 @@ const CreatePostForm = () => {
     setOpenBottomBar(true)
   }, [])
 
+  useEffect(() => {
+    if (validationError) {
+      alert("Please fill out all the required fields: Title, price, pickup method and location")
+      setValidationError(false)
+    }
+  }, [validationError])
+
+  // useEffect(() => {
+  //   if (success){
+  //     alert("success")
+  //     setSuccess(false)
+  //   }
+  // }, [success])
+
   const [avatar, setAvatar] = useState(false)
 
   const apply = (file) => {
@@ -130,8 +144,22 @@ const CreatePostForm = () => {
   }
   return (
     <>
-      {/* <div style={styles.postControlBottomBar}> */}
-      {/* </div> */}
+      <Modal
+        open={success}
+        size='small'
+        dimmer='blurring'
+      >
+        <Header icon='checkmark' content='Your post has been published!' />
+        <Modal.Content>
+          <h3>You can manage your posts in your profile page.</h3>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color='green' onClick={() => { history.push('/posts') }}>
+            <Icon name='checkmark' /> OK
+          </Button>
+        </Modal.Actions>
+      </Modal>
+
       {user ?
         <>
           {console.log(JSON.stringify(formState))}
@@ -235,10 +263,10 @@ const CreatePostForm = () => {
                           </div>
                         </>
                         {/* // : */}
-                        <Dimmer active={avatar} onClickOutside={()=>{setAvatar(false)}} page>
-                        <div style={{ width: '250px', height: '250px', backgroundColor: 'white', margin: 'auto', border: '1px solid black', zIndex: 1000 }}>
-                          <AvatarImageCropper apply={apply} />
-                        </div>
+                        <Dimmer active={avatar} onClickOutside={() => { setAvatar(false) }} page>
+                          <div style={{ width: '250px', height: '250px', backgroundColor: 'white', margin: 'auto', border: '1px solid black', zIndex: 1000 }}>
+                            <AvatarImageCropper apply={apply} />
+                          </div>
                         </Dimmer>
                         {/* // } */}
 

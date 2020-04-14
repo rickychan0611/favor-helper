@@ -12,7 +12,7 @@ const Home = () => {
       <Segment placeholder basic style={{height: '75vh'}}>
         <Header icon>
           <Icon name='heart outline' color="pink" />
-          Welcome to Favor Helper.
+          Welcome to Urban Favor!
           </Header>
         <Button primary
           onClick={() => history.push('./posts')}

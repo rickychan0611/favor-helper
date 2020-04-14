@@ -18,7 +18,7 @@ const options2 = [
 
 const TopBar = () => {
   const { user, loading } = useContext(UserContext)
-  const { preview, setPreview, submitPost } = useContext(PostsContext)
+  const { preview, setPreview, submitPostToServer } = useContext(PostsContext)
 
   const history = useHistory()
   const [state, setState] = React.useState({})
@@ -95,7 +95,10 @@ const TopBar = () => {
 
       </Menu.Menu>
       <Menu.Item
-        onClick={(() => {submitPost()})}
+        onClick={(() => {
+          setState({ activeItem: 'posts' })
+          submitPostToServer()
+        })}
       >
         <Button icon="check" circular content="PUBLISH" color="green"/>
       </Menu.Item>
