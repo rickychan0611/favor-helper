@@ -6,9 +6,9 @@ import { UserContext } from '../../context/UserContext'
 
 import noImage from '../../assets/images/no-image.jpg'
 
-const PickFile = ({ children, index }) => {
+const PickFile = ({ children, index, profilePic }) => {
   const { insertImage } = useContext(ImageSliderContext)
-  const { user } = useContext(UserContext)
+  const { user, updateProfilePic } = useContext(UserContext)
 
   const [imgFile, setImgFile] = React.useState({})
 
@@ -48,7 +48,13 @@ const PickFile = ({ children, index }) => {
           return downloadURL
         })
           .then((downloadURL) => {
-            insertImage(downloadURL, index)
+            if (profilePic) {
+              console.log('PickFile PROFILE PIC load ' + downloadURL)
+              updateProfilePic(downloadURL)
+            }
+            if (!profilePic) {
+              insertImage(downloadURL, index)
+            }
             return
             // updatePreview('imageUrl', downloadURL)
             // firebase.database().ref('sellers/' + this.id + '/' + item.productName + '/' + item.buyer).update({ 'refundImg': downloadURL })
@@ -59,6 +65,7 @@ const PickFile = ({ children, index }) => {
         // })
       });
   }
+
 
   let { imagePreviewUrl } = imgFile;
   let imagePreview = null;
@@ -74,12 +81,12 @@ const PickFile = ({ children, index }) => {
     <div>
 
       <div onClick={() => {
-        if (user){
-        fileInputRef.current.click()
-      }
-      else (
-        alert('please login 1st')
-      )
+        if (user) {
+          fileInputRef.current.click()
+        }
+        else (
+          alert('please login 1st')
+        )
       }} >
         {children}
         <input hidden
@@ -88,10 +95,11 @@ const PickFile = ({ children, index }) => {
           accept="image/*"
           onChange={(e) => {
             fileChangedHandler(e, index)
-            insertImage( noImage ,index)
+            if (!profilePic) {insertImage(noImage, index)}
           }}
         />
       </div>
+
     </div>
   )
 }

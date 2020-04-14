@@ -15,8 +15,8 @@ const PreviewIcon = ({ preview, required }) => {
   return (
     <>
       {preview ? null :
-        <p style={required ? {color:  'red'} : {color:'grey'}}><Icon name='edit' color={color} style={{
-          display: "inline-block", marginRight: 10
+        <p style={required ? {color:  'red', margin: 0} : {color:'grey',  margin: 0}}><Icon name='edit' color={color} style={{
+          display: "inline-block", marginRight: 10, marginTop: 0
         }}
         />
         {required ? 'required' : 'optional'}

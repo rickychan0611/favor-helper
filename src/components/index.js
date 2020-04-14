@@ -9,6 +9,8 @@ import Footer from './Footer/Footer'
 import LocationInput from './LocationInput/LocationInput'
 import PickFile from './PickFile/PickFile'
 import PreviewIcon from './PreviewIcon/PreviewIcon'
+import PostControlBottomBar from './PostControlBottomBar/PostControlBottomBar'
+import CreatePostFormContainer from './CreatePostFormContainer/CreatePostFormContainer'
 
 
 export {
@@ -22,5 +24,7 @@ export {
   Footer,
   LocationInput,
   PickFile,
-  PreviewIcon
+  PreviewIcon,
+  PostControlBottomBar,
+  CreatePostFormContainer,
 }

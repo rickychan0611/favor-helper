@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Route, Switch, Redirect, useParams } from 'react-router-dom';
 import PostList from "../views/PostList"
 import Register from "../views/Register"
 import SignIn from "../views/SignIn"
 import Home from "../views/Home"
 import Profile from "../views/Profile"
-import { CreatePostForm, TopBar, Map, Footer } from "../components"
+import { CreatePostForm, TopBar, Map, Footer, CreatePostFormContainer } from "../components"
 import UserContext from '../context/UserContext'
 
 import styles from './styles'
@@ -13,22 +13,25 @@ import { Grid, Container } from 'semantic-ui-react';
 
 export default (props) => {
   // const { user, setUser } = useContext(UserContext)
+
   let { id } = useParams();
   return (
-    <>
+    <>    
       <div style={styles.topBar}>
         <TopBar />
       </div>
+      {/* <div style={styles.postControlBottomBar}>
+        <PostControlBottomBar openBottomBar={openBottomBar} />
+      </div> */}
       <div style={{
         paddingTop: 55,
         postion: "relative",
         height: '100vh',
         // backgroundColor: '#fafafa'
         // backgroundColor: 'yellow'
-
       }}>
         <Switch>
-          <Route path="/create-post" component={CreatePostForm} />
+          <Route path="/create-post" component={CreatePostFormContainer} />
           <div style={{
             maxWidth: '1000px',
             margin: '0 auto',
@@ -48,7 +51,7 @@ export default (props) => {
         </Switch>
         {/* <Redirect from="/*" to="/" /> */}
         <div style={{ postion: 'absolute', bottom: 0, marginTop: 20 }}>
-            <Route path="/:id" children={<Footer />} />
+          {/* <Route path="/:id" children={<Footer />} /> */}
         </div>
       </div>
     </>

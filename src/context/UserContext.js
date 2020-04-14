@@ -8,6 +8,14 @@ const UserContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  let usersDB = db.collection('users')
+
+  const updateProfilePic = (downloadURL) => {
+    console.log("!!!!updateProfilePic")
+    usersDB.doc(user.id).update({photoURL: downloadURL}).then(() => {
+      setUser({...user, photoURL: downloadURL})
+    });
+  }
 
   React.useEffect(
     () => {
@@ -18,7 +26,6 @@ const UserContextProvider = ({ children }) => {
           console.log('user signed in')
           console.log(JSON.stringify(userData))
 
-          let usersDB = db.collection('users')
           usersDB.where('uid', '==', userData.uid).get()
             .then(snapshot => {
               if (snapshot.empty) {
@@ -72,7 +79,8 @@ const UserContextProvider = ({ children }) => {
       value={
         {
           user,
-          loading
+          loading,
+          updateProfilePic,
         }
       }
     >

@@ -7,7 +7,8 @@ const PostsContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([])
   const [preview, setPreview] = useState(false)
   const [formState, setFormState] = useState({
-    title: '',
+    title: "",
+    price: 0
   })
 
   const submitPost = () => {

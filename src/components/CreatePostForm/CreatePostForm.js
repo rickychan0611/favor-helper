@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
 import db from '../../firestore'
 import { useHistory } from "react-router-dom";
-import { PhotoSlider, Map, PreviewIcon } from '../../components'
+import { PhotoSlider, Map, PreviewIcon, PickFile } from '../../components'
 import PriceTimeForm from './PriceTimeForm'
-
 import { PostsContext } from '../../context/PostsContext'
 import { UserContext } from '../../context/UserContext'
+import AvatarImageCropper from 'react-avatar-image-cropper';
+import firebase from 'firebase'
 
 import {
   Container,
@@ -19,7 +20,7 @@ import {
   Image,
   Divider,
   Icon,
-  Checkbox,
+  Dimmer,
   Responsive
 } from 'semantic-ui-react'
 
@@ -28,13 +29,10 @@ import './styles.css'
 
 
 const CreatePostForm = () => {
-  // const [formState, setFormState] = useState({
-  //   title: '',
-  // })
+  const [openBottomBar, setOpenBottomBar] = useState(false)
 
   const { preview, setPreview, formState, setFormState } = useContext(PostsContext)
-  const { user, setUser } = useContext(UserContext)
-
+  const { user, updateProfilePic } = useContext(UserContext)
 
   const history = useHistory()
 
@@ -99,10 +97,44 @@ const CreatePostForm = () => {
     }
   }, [user])
 
+  useEffect(() => {
+    setOpenBottomBar(true)
+  }, [])
+
+  const [avatar, setAvatar] = useState(false)
+
+  const apply = (file) => {
+    // handle the blob file you want
+    // such as get the image src
+    setAvatar(false)
+    // uploadToServer(window.URL.createObjectURL(file))
+    uploadToServer(file)
+    // return imgSrc
+  }
+
+  //****upload the file to firebase
+  const uploadToServer = (file) => {
+    firebase.storage().ref('userProfile/' + user.id).put(file)
+      .then((fileData) => { // then get downloadUrl
+        let storage = firebase.storage()
+        let urlRef = storage.ref('userProfile/' + user.id)
+        urlRef.getDownloadURL().then(function (downloadURL) {
+          // item.refundImg = downloadURL
+          return downloadURL
+        })
+          .then((downloadURL) => {
+            updateProfilePic(downloadURL)
+            return
+          })
+      });
+  }
   return (
     <>
+      {/* <div style={styles.postControlBottomBar}> */}
+      {/* </div> */}
       {user ?
         <>
+          {console.log(JSON.stringify(formState))}
           <PhotoSlider formState={formState} setFormState={setFormState} />
           {/* <PickFile>Upload Image</PickFile> */}
           <Container>
@@ -189,16 +221,30 @@ const CreatePostForm = () => {
                   Smile! A great picture of your face helps customer get to know you a bit better</p>
                 <Segment>
                   <Grid column={2} stackable>
-                    <Grid.Column width={3}>
+                    <Grid.Column width={4}>
                       <div style={{ textAlign: 'center', margin: "0 auto" }}>
-                        <img src={user.photoURL}
-                          style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: '50%' }} />
-                        <div style={{ textAlign: 'center', margin: "0 auto" }}>
-                          <Button size="tiny">Change</Button>
+
+                        {/* {!avatar ? */}
+                        <>
+                          <img src={user.photoURL}
+                            style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: '50%' }} />
+
+
+                          <div style={{ textAlign: 'center', margin: "0 auto" }}>
+                            <Button size="tiny" onClick={() => { setAvatar(true) }}>Change</Button>
+                          </div>
+                        </>
+                        {/* // : */}
+                        <Dimmer active={avatar} onClickOutside={()=>{setAvatar(false)}} page>
+                        <div style={{ width: '250px', height: '250px', backgroundColor: 'white', margin: 'auto', border: '1px solid black', zIndex: 1000 }}>
+                          <AvatarImageCropper apply={apply} />
                         </div>
+                        </Dimmer>
+                        {/* // } */}
+
                       </div>
                     </Grid.Column>
-                    <Grid.Column width={13}>
+                    <Grid.Column width={12}>
                       <Form>
                         <PreviewIcon preview={preview} />
                         <Form.TextArea fluid label='Tell us about yourself' name="aboutMe"
@@ -210,6 +256,7 @@ const CreatePostForm = () => {
                   </Grid>
                 </Segment>
                 {/* ------------------- Loaction map------------------*/}
+
                 <Header style={{ margin: 0, textAlign: "left" }}>Your Location</Header>
                 <p style={{ fontSize: 12, marginTop: 0, textAlign: "left" }}>
                   Enter your address or pick up location to find customers that close to you.</p>
@@ -234,6 +281,7 @@ const CreatePostForm = () => {
               </Grid.Column>
             </Grid>
           </Container>
+
         </>
         : null}
     </>

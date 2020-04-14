@@ -80,7 +80,7 @@ const TopBar = () => {
           name='create-post'
           onClick={() => setPreview(!preview)}
         >
-          <Button icon="eye" content="Preview" color="teal" />
+          <Button icon="save" content="Save as draft" color="teal" />
         </Menu.Item>
       }
     </>
@@ -88,6 +88,7 @@ const TopBar = () => {
 
   const PreviewSaveCancelButtons = () => (
     <>
+
       <EditOrPreviewButtons />
 
       <Menu.Menu position='right'>
@@ -96,7 +97,7 @@ const TopBar = () => {
       <Menu.Item
         onClick={(() => {submitPost()})}
       >
-        <Button icon="check" circular content="SUBMIT" color="green"/>
+        <Button icon="check" circular content="PUBLISH" color="green"/>
       </Menu.Item>
 
       
@@ -120,6 +121,8 @@ const TopBar = () => {
   )
 
   return (
+    <>
+    
     <Menu borderless fluid style={{ position: "fixed", height: 55 }}>
       {user ? null :
         <div style={{ position: "relative", height: 40 }}>
@@ -207,6 +210,7 @@ const TopBar = () => {
         </>}
 
     </Menu>
+    </>
   )
 }
 

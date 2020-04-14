@@ -6,6 +6,7 @@ import PostsContextProvider from './context/PostsContext'
 import UserContextProvider from './context/UserContext'
 import QuestionsContextProvider from './context/QuestionsContext'
 import ImageSliderContextProvider from './context/ImageSliderContext'
+import {PostControlBottomBar} from './components'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <MapContextProvider >
             <BrowserRouter>
               <AppRoutes />
+              {/* <PostControlBottomBar /> */}
             </ BrowserRouter>
           </MapContextProvider>
         </QuestionsContextProvider>
