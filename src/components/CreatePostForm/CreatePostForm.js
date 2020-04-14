@@ -154,7 +154,10 @@ const CreatePostForm = () => {
           <h3>You can manage your posts in your profile page.</h3>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='green' onClick={() => { history.push('/posts') }}>
+          <Button color='green' onClick={() => { 
+            setSuccess(false)
+            history.push('/posts') 
+            }}>
             <Icon name='checkmark' /> OK
           </Button>
         </Modal.Actions>
@@ -265,7 +268,7 @@ const CreatePostForm = () => {
                         {/* // : */}
                         <Dimmer active={avatar} onClickOutside={() => { setAvatar(false) }} page>
                           <div style={{ width: '250px', height: '250px', backgroundColor: 'white', margin: 'auto', border: '1px solid black', zIndex: 1000 }}>
-                            <AvatarImageCropper apply={apply} />
+                            <AvatarImageCropper apply={apply} maxsize={1024 * 1024 *5}/>
                           </div>
                         </Dimmer>
                         {/* // } */}
