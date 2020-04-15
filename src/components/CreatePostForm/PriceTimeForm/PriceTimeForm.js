@@ -120,7 +120,7 @@ const PriceTimeForm = ({ preview, formState, setFormState, handleChange, pickUpT
         <br></br>
         <Form.TextArea fluid label='Pick up and/or delievery instructions' name="pickUpGuide"
           style={{ minHeight: 100 }}
-          value={formState.aboutMe} onChange={handleChange}
+          value={formState.pickUpGuide} onChange={handleChange}
           placeholder='Briefly tell your customers how to pick up or how should the meal be delivered.' />
       </Form>
     </Segment >

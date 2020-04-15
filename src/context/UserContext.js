@@ -12,8 +12,8 @@ const UserContextProvider = ({ children }) => {
 
   const updateProfilePic = (downloadURL) => {
     console.log("!!!!updateProfilePic")
-    usersDB.doc(user.id).update({photoURL: downloadURL}).then(() => {
-      setUser({...user, photoURL: downloadURL})
+    usersDB.doc(user.id).update({ photoURL: downloadURL }).then(() => {
+      setUser({ ...user, photoURL: downloadURL })
     });
   }
 
@@ -24,17 +24,17 @@ const UserContextProvider = ({ children }) => {
           // setUser(userData)
           setLoading(false)
           console.log('user signed in')
-          console.log(JSON.stringify(userData))
+          // console.log(JSON.stringify(userData))
 
           usersDB.where('uid', '==', userData.uid).get()
             .then(snapshot => {
               if (snapshot.empty) {
 
-                let newUserRef = usersDB.doc()
-                let largPic = newUserRef.photoURL+"?type=large"
+                let newUserRef = usersDB.doc(userData.uid)
+                let largPic = newUserRef.photoURL + "?type=large"
                 newUserRef.set(
                   {
-                    id: newUserRef.id,
+                    id: userData.uid,
                     uid: userData.uid,
                     displayName: userData.displayName,
                     photoURL: userData.photoURL + "?type=large",

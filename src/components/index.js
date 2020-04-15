@@ -11,6 +11,7 @@ import PickFile from './PickFile/PickFile'
 import PreviewIcon from './PreviewIcon/PreviewIcon'
 import PostControlBottomBar from './PostControlBottomBar/PostControlBottomBar'
 import CreatePostFormContainer from './CreatePostFormContainer/CreatePostFormContainer'
+import PostCardContainer from './PostCardContainer/PostCardContainer'
 
 
 export {
@@ -27,4 +28,5 @@ export {
   PreviewIcon,
   PostControlBottomBar,
   CreatePostFormContainer,
+  PostCardContainer
 }

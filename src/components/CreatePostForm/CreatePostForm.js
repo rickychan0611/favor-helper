@@ -128,10 +128,10 @@ const CreatePostForm = () => {
 
   //****upload the file to firebase
   const uploadToServer = (file) => {
-    firebase.storage().ref('userProfile/' + user.id).put(file)
+    firebase.storage().ref('userPic/' + user.id).put(file)
       .then((fileData) => { // then get downloadUrl
         let storage = firebase.storage()
-        let urlRef = storage.ref('userProfile/' + user.id)
+        let urlRef = storage.ref('userPic/' + user.id)
         urlRef.getDownloadURL().then(function (downloadURL) {
           // item.refundImg = downloadURL
           return downloadURL
@@ -293,7 +293,7 @@ const CreatePostForm = () => {
                   Enter your address or pick up location to find customers that close to you.</p>
                 <PreviewIcon preview={preview} required={true} />
                 <Map height={300} formState={formState} setFormState={setFormState} />
-
+                  <h1>something</h1>
               </Grid.Column>
 
 

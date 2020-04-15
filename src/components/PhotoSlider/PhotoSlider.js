@@ -72,7 +72,7 @@ const PhotoSlider = ({ formState, setFormState }) => {
         naturalSlideWidth={420}
         naturalSlideHeight={350}
         totalSlides={images.length}
-        visibleSlides={width < 420 ? 1 : width < 800 ? 2 : width < 1025 ? 3 : 4}
+        visibleSlides={width < 420 ? 1 : width < 800 ? 2 : width < 1025 ? 3 : width < 1677 ? 4 : width < 2097 ? 5 : 6}
         isIntrinsicHeight={true}
         touchEnabled={true}
         dragEnabled={true}
