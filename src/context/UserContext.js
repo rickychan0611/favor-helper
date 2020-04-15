@@ -1,6 +1,8 @@
 import React, { createContext, useState } from 'react'
 import firebase from 'firebase'
 import db from '../firestore'
+import noAvatar from '../assets/images/no-avatar.png'
+
 
 export const UserContext = createContext()
 
@@ -8,6 +10,7 @@ const UserContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [displayName, setDisplayName] = useState('')
   let usersDB = db.collection('users')
 
   const updateProfilePic = (downloadURL) => {
@@ -29,15 +32,17 @@ const UserContextProvider = ({ children }) => {
           usersDB.where('uid', '==', userData.uid).get()
             .then(snapshot => {
               if (snapshot.empty) {
-
+                let photoURL = noAvatar
+                if (userData.photoURL) {
+                  setDisplayName(userData.photoURL + "?type=large")
+                }
                 let newUserRef = usersDB.doc(userData.uid)
-                let largPic = newUserRef.photoURL + "?type=large"
                 newUserRef.set(
                   {
                     id: userData.uid,
                     uid: userData.uid,
-                    displayName: userData.displayName,
-                    photoURL: userData.photoURL + "?type=large",
+                    displayName: displayName,
+                    photoURL: photoURL,
                     email: userData.email,
                     // phoneNumber: userData.photoNumber,
                     // provideId: userData.provideId,
@@ -81,6 +86,7 @@ const UserContextProvider = ({ children }) => {
           user,
           loading,
           updateProfilePic,
+          setDisplayName
         }
       }
     >
