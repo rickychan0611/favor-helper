@@ -10,21 +10,17 @@ import noImage from '../../assets/images/no-image.jpg'
 const PostCardContainer = ({ item }) => {
   const [posterPic, SetPosterPic] = useState('')
 
-  // const getPosterPic = () => {
-  //   let storage = firebase.storage()
-  //   let urlRef = storage.ref('userPic/' + item.posterUid)
-  //   urlRef.getDownloadURL().then(function (downloadURL) {
-  //     // item.refundImg = downloadURL
-  //     return downloadURL
-  //   })
-  //     .then((downloadURL) => {
-  //       updateProfilePic(downloadURL)
-  //       return
-  //     })
-  // }
+  const getPosterPic = () => {
+  db.collection('users').where('uid', '==', item.posterUid).get()
+  .then(snapshot => {
+    snapshot.forEach(doc => {
+      console.log(JSON.stringify(doc.id))
+    })
+  }
+  )}
   
   useEffect(()=>{
-    // getPosterPic()
+    getPosterPic()
   },[])
 
   return (

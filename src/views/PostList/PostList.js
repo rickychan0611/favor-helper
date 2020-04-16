@@ -26,19 +26,6 @@ const PostList = () => {
             <Grid.Column>
               <PostCardContainer item={item} />
             </Grid.Column>
-
-            <Grid.Column>
-              <PostCardContainer item={item} />
-            </Grid.Column>
-            <Grid.Column>
-              <PostCardContainer item={item} />
-            </Grid.Column>
-            <Grid.Column>
-              <PostCardContainer item={item} />
-            </Grid.Column>
-            <Grid.Column>
-              <PostCardContainer item={item} />
-            </Grid.Column>
             </>
           )
         }) : null}
