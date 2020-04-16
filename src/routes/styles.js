@@ -4,7 +4,7 @@ const styles = {
     top: 0,
     left: 0,
     width: '100vw',
-    zIndex: 100
+    zIndex: 1000
    },
    topSpace:{
      marginTop: 80

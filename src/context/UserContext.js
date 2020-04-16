@@ -31,15 +31,15 @@ const UserContextProvider = ({ children }) => {
       setLoading(false)
       console.log('user signed in')
 
-      if (userData.providerData[0].providerId == "facebook.com" ) {
-        setDisplayName(userData.displayName)
-        photoURL = userData.photoURL + "?type=large"
-      }
+      // if (userData.providerData[0].providerId == "facebook.com" ) {
+      //   setDisplayName(userData.displayName)
+      //   photoURL = userData.photoURL + "?type=large"
+      // }
 
-      if (userData.providerData[0].providerId == "google.com" ) {
-        setDisplayName(userData.displayName)
-        photoURL = userData.photoURL
-      }
+      // if (userData.providerData[0].providerId == "google.com" ) {
+      //   setDisplayName(userData.displayName)
+      //   photoURL = userData.photoURL
+      // }
       
       usersDB.where('uid', '==', userData.uid).get()
         .then(snapshot => {
