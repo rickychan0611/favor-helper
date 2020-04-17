@@ -15,7 +15,8 @@ const styles = {
     fontSize: 28, 
     fontFamily: "font-family: 'Nunito'", 
     fontWeight: 'bold',
-    textAlign: "center"
+    textAlign: "center",
+    marginBottom: 0
   }
 }
 

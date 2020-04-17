@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import db from '../firestore'
 
 export const PostsContext = createContext()
@@ -19,10 +19,10 @@ const PostsContextProvider = ({ children }) => {
   const { title, price, pickUp, delivery, address } = formState
 
   const validation = () => {
-    if ( title === "" || price === "" || address === "" ){
+    if (title === "" || price === "" || address === "") {
       return false
     }
-    else if ( pickUp === true || delivery === true ) {
+    else if (pickUp === true || delivery === true) {
       return true
     }
     else return false
@@ -32,10 +32,10 @@ const PostsContextProvider = ({ children }) => {
     const timeStamp = new Date()
     const createPost = db.collection('posts').doc()
     if (validation()) {
-      
+
       createPost.set(
         { ...formState, createAt: timeStamp, id: createPost.id }
-      ).then( doc => {
+      ).then(doc => {
         setSuccess(true)
         console.log("Post Saved: ");
       })
@@ -50,21 +50,26 @@ const PostsContextProvider = ({ children }) => {
   }
 
 
-  React.useEffect(
+  //get all posts
+  useEffect(
     () => {
+      let postArr = []
+
       const unsubscribe =
         db.collection('posts')
           .orderBy('createAt', 'desc')
           .onSnapshot(snapshot => {
-            const arr = []
-            snapshot.forEach(doc => { arr.push(doc.data()) })
-            setPosts(arr)
+            snapshot.forEach(doc => {
+              postArr.push(doc.data())
+            })
+            setPosts(postArr)
           }
-          )
+        )
       return () => unsubscribe()
     },
     []
   )
+
 
   return (
     <PostsContext.Provider
@@ -78,7 +83,7 @@ const PostsContextProvider = ({ children }) => {
           submitPostToServer,
           validationError,
           setValidationError,
-          success, 
+          success,
           setSuccess
         }
       }>

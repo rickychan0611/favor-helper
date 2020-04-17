@@ -16,10 +16,11 @@ import { PostsContext } from '../../context/PostsContext'
 
 const PostCardContainer = ({ item }) => {
   // const {  } = useContext(PostsContext)
-  const [posterData, setPosterData] = useState({})
   const history = useHistory()
   let { path, url } = useRouteMatch();
-
+  
+  const [posterData, setPosterData] = useState({})
+  
   const getPosterData = () => {
     db.collection('users').where('uid', '==', item.posterUid).get()
       .then(snapshot => {
@@ -33,7 +34,7 @@ const PostCardContainer = ({ item }) => {
 
   useEffect(() => {
     getPosterData()
-  }, [])
+  },[])
 
   return (
     <>

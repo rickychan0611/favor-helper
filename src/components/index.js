@@ -14,6 +14,7 @@ import CreatePostFormContainer from './CreatePostFormContainer/CreatePostFormCon
 import PostCardContainer from './PostCardContainer/PostCardContainer'
 import PhotoSlideInDetail from './PhotoSlideInDetail/PhotoSlideInDetail'
 import Post from './Post/Post'
+import PriceTimeColumn from './PriceTimeColumn/PriceTimeColumn'
 
 
 export {
@@ -32,5 +33,6 @@ export {
   CreatePostFormContainer,
   PostCardContainer,
   PhotoSlideInDetail,
-  Post
+  Post,
+  PriceTimeColumn
 }

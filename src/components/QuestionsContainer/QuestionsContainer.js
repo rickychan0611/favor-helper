@@ -29,7 +29,6 @@ const QuestionsContainer = ({ post }) => {
   return (
     <div>
       <Divider horizontal>Questions for poster</Divider>
-      {post.id}
       {!loading ? questions.map((item, i) => {
         return <Question item={item} key={i} />
       })

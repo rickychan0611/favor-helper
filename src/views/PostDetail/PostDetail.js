@@ -33,7 +33,9 @@ const PostDetail = (props) => {
   const { posts } = React.useContext(PostsContext)
 
   useEffect(() => {
-    setPost(() => posts.filter(item => item.id == id))
+    // setPost(() => posts.filter(item => item.id == id))
+    // getPoster(post.posterUid)
+
   }, [])
 
   const postQuery = (id) => {
@@ -48,6 +50,7 @@ const PostDetail = (props) => {
           snapshot.forEach(doc => {
             setPost(doc.data())
             setLoading(false)
+            getPoster(doc.data().posterUid)
           });
         })
         .catch(err => {
@@ -56,8 +59,6 @@ const PostDetail = (props) => {
         })
     )
   }
-
- 
 
   useEffect(() => {
     if (!post) {
@@ -85,6 +86,25 @@ const PostDetail = (props) => {
     )
   }
 
+  const [poster, setPoster] = useState({})
+  
+  const getPoster = (id) => {
+    db.collection('users').where('uid', '==', id).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          console.log(JSON.stringify(doc.data()))
+          setPoster(doc.data())
+        })
+      }
+      )
+  }
+
+  // useEffect(() => {
+  //   if(post.posterUid){
+  //   getPoster()
+  // }
+  // },[post])
+
   return (
     <>
       {post ? <PhotoSlideInDetail images={post.images} /> : null}
@@ -94,7 +114,7 @@ const PostDetail = (props) => {
           <>
             <div>
           {/* {JSON.stringify(post)} */}
-              <Post post={post} loading={loading} />
+              <Post post={post} loading={loading} poster={poster}/>
               <QuestionsContainer post={post} />
             </div>
           </>

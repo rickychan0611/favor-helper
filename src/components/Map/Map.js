@@ -7,7 +7,7 @@ import { LocationInput } from '..'
 import { usePosition } from 'use-position';
 import { GoogleMap, Circle, useLoadScript } from '@react-google-maps/api'
 
-const Map = ({ height, formState, setFormState }) => {
+const Map = ({ height, formState, setFormState, noSearchBar }) => {
   const { latitude, longitude, timestamp, accuracy, error } = usePosition();
 
   const [loc, setLoc] = useState({ lat: 0, lng: 0 })
@@ -37,40 +37,11 @@ const Map = ({ height, formState, setFormState }) => {
   useEffect(() => {
     setLoc(location)
   }, [location])
-
-  // const RenderMap = withGoogleMap((props) => {
-  //   return (
-  //     <>
-
-  //       <GoogleMap
-  //         defaultCenter={loc}
-  //         defaultZoom={13}
-  //         center={loc}
-  //       >
-  //         <Circle
-  //           center={loc}
-  //           options={{
-  //             strokeColor: '#FF0000',
-  //             strokeOpacity: 0.3,
-  //             strokeWeight: 0,
-  //             fillColor: '#FF0000',
-  //             fillOpacity: 0.2,
-  //             clickable: false,
-  //             draggable: false,
-  //             editable: false,
-  //             visible: true,
-  //             radius: 1200,
-  //             zIndex: 10
-  //           }}
-  //         />
-  //       </GoogleMap>
-  //     </>
-  //   )
-  // });
-  
+ 
   return (
     <div>
-      <LocationInput formState={formState} setFormState={setFormState} />
+      { noSearchBar ? null : 
+      <LocationInput formState={formState} setFormState={setFormState} />}
       <br></br>
       <GoogleMap
         id='example-map'
