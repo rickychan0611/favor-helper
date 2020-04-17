@@ -1,16 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import db from '../../firestore'
 import firebase from 'firebase'
 import { Rating, Divider, Icon } from 'semantic-ui-react'
 import styles from './styles'
-
+import {
+  Link,
+  Route,
+  Switch,
+  useRouteMatch,
+  useHistory,
+  Redirect
+} from "react-router-dom"
 import noImage from '../../assets/images/no-image.jpg'
+import { PostsContext } from '../../context/PostsContext'
 
 const PostCardContainer = ({ item }) => {
-  // const [posterPic, SetPosterPic] = useState('')
+  // const {  } = useContext(PostsContext)
   const [posterData, setPosterData] = useState({})
+  const history = useHistory()
+  let { path, url } = useRouteMatch();
 
-  const getPosterPic = () => {
+  const getPosterData = () => {
     db.collection('users').where('uid', '==', item.posterUid).get()
       .then(snapshot => {
         snapshot.forEach(doc => {
@@ -22,12 +32,14 @@ const PostCardContainer = ({ item }) => {
   }
 
   useEffect(() => {
-    getPosterPic()
+    getPosterData()
   }, [])
 
   return (
     <>
-      <div style={styles.container}>
+      <div style={styles.container} onClick={() => {
+        history.push("details/" + item.id + '/' + item.title.split(' ').join('-'))
+      }}>
 
         <img src={item.images.length > 0 ? item.images[0].src : noImage}
           style={styles.foodPic} />
@@ -37,7 +49,7 @@ const PostCardContainer = ({ item }) => {
         </div>
 
         <div style={styles.favesContainer}>
-          <Icon name="heart outline" size='large'/>
+          <Icon name="heart outline" size='large' />
         </div>
 
         <div style={styles.priceContainer}>

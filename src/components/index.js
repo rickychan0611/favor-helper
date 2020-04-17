@@ -12,6 +12,8 @@ import PreviewIcon from './PreviewIcon/PreviewIcon'
 import PostControlBottomBar from './PostControlBottomBar/PostControlBottomBar'
 import CreatePostFormContainer from './CreatePostFormContainer/CreatePostFormContainer'
 import PostCardContainer from './PostCardContainer/PostCardContainer'
+import PhotoSlideInDetail from './PhotoSlideInDetail/PhotoSlideInDetail'
+import Post from './Post/Post'
 
 
 export {
@@ -28,5 +30,7 @@ export {
   PreviewIcon,
   PostControlBottomBar,
   CreatePostFormContainer,
-  PostCardContainer
+  PostCardContainer,
+  PhotoSlideInDetail,
+  Post
 }

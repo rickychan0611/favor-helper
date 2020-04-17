@@ -5,6 +5,7 @@ import Register from "../views/Register"
 import SignIn from "../views/SignIn"
 import Home from "../views/Home"
 import Profile from "../views/Profile"
+import PostDetail from "../views/PostDetail"
 import { CreatePostForm, TopBar, Map, Footer, CreatePostFormContainer } from "../components"
 import UserContext from '../context/UserContext'
 
@@ -32,6 +33,8 @@ export default (props) => {
       }}>
         <Switch>
           <Route path="/create-post" component={CreatePostFormContainer} />
+          <Route path="/details/:id" component={PostDetail} />
+
           <div style={{
             maxWidth: '1000px',
             margin: '0 auto',

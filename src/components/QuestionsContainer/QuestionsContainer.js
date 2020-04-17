@@ -11,7 +11,7 @@ const QuestionsContainer = ({ post }) => {
 
   React.useEffect(
     () => {
-      if (post) {
+      if (post.id) {
         let query = db.collection('questions').where('postId', '==', post.id)
         query.onSnapshot(snapshot => {
           const arr = []
@@ -29,6 +29,7 @@ const QuestionsContainer = ({ post }) => {
   return (
     <div>
       <Divider horizontal>Questions for poster</Divider>
+      {post.id}
       {!loading ? questions.map((item, i) => {
         return <Question item={item} key={i} />
       })

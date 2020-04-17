@@ -70,6 +70,7 @@ const ImageSliderContextProvider = ({ children }) => {
       value={
         {
           images,
+          setImages,
           insertImage,
           deleteImage,
           setLoading,
