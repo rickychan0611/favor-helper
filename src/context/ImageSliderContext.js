@@ -10,8 +10,7 @@ const ImageSliderContextProvider = ({ children }) => {
     { src: addImage }
   ])
 
-  // React.useEffect(
-  //   () => {
+  // React.useEffect(() => {
   //     const unsubscribe = 
   //       db.collection('posts')
   //       .orderBy('createAt', 'desc')
@@ -22,12 +21,10 @@ const ImageSliderContextProvider = ({ children }) => {
   //       }
   //     )
   //     return () => unsubscribe()
-  //   },
-  //   []
+  //   }, []
   // )
 
   const insertImage = (downloadURL, index) => {
-    console.log('srcsrcsrcindexindexindexindexindex: ' + index)
     let imagesArr = []
     if (images.length == 1) {
       console.log('!!images' + downloadURL)

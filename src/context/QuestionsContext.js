@@ -28,16 +28,16 @@ const QuestionsContextProvider = ({ children }) => {
   )
   }
   
-  const getReplies = (questionId) => {
-    db.collection('questionReplies').where('questionId', '==', questionId).get()
-    .then(snapshot => {
-      snapshot.forEach(doc => {
-        const arr = [...replies.slice(0,replies.length-1), doc.data()]
-        // arr.push(doc.data())
-        setReplies(arr)
-      })
-    })
-  }
+  // const getReplies = (questionId) => {
+  //   db.collection('questionReplies').where('questionId', '==', questionId).get()
+  //   .then(snapshot => {
+  //     snapshot.forEach(doc => {
+  //       const arr = [...replies.slice(0,replies.length-1), doc.data()]
+  //       // arr.push(doc.data())
+  //       setReplies(arr)
+  //     })
+  //   })
+  // }
 
   return (
     <QuestionsContext.Provider
@@ -48,9 +48,6 @@ const QuestionsContextProvider = ({ children }) => {
           loading,
           getPoster,
           poster,
-          getReplies,
-          replies,
-          setReplies
         }
       }>
       {children}

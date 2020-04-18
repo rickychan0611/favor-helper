@@ -19,7 +19,6 @@ import {
 } from "react-router-dom";
 import styles from './styles'
 
-const timestamp = new Date()
 
 const QuestionForm = ({replyQuestion}) => {
   const { user } = React.useContext(UserContext)
@@ -33,6 +32,8 @@ const QuestionForm = ({replyQuestion}) => {
   }
 
   const HandleQuestionSubmit = () => {
+    const timestamp = new Date()
+
     let newQuestion = db.collection('questions').doc()
     newQuestion.set({
       id: newQuestion.id,

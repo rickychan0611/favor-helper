@@ -24,7 +24,6 @@ const genderOptions = [
   { key: 'f', text: 'Female', value: 'female' }
 ]
 
-const timestamp = new Date()
 
 const Register = () => {
   const history = useHistory()
@@ -53,10 +52,14 @@ const Register = () => {
   }
 
   const handleChange = (e, { name, value }) => {
+    const timestamp = new Date()
+
     setState({ ...state, [name]: value, registerDate: timestamp })
   }
 
   const handleSubmit = () => {
+    const timestamp = new Date()
+
     let displayName = state.first_name + " " + state.last_name
     console.log('displayName displayName: ' + displayName)
     setState({ ...state, registerDate: timestamp })

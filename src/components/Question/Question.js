@@ -30,7 +30,7 @@ const Question = ({ item }) => {
 
   const onReplySubmit = () => {
     setOnReply(false)
-    const timestamp = new Date().toLocaleString()
+    const timestamp = new Date()
     let newReply = db.collection('questionReplies').doc()
     const data = {
       id: newReply.id,
