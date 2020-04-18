@@ -24,7 +24,7 @@ const PostList = () => {
           return (
             <>
             <Grid.Column>
-              <PostCardContainer item={item} />
+              <PostCard item={item} />
             </Grid.Column>
             </>
           )

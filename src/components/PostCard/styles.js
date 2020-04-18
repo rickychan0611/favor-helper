@@ -4,7 +4,7 @@ const styles = {
     height: 440, 
     backgroundColor: "white", 
     position: 'relative' ,
-    // boxShadow: '0px 10px 20px #cfdde8'
+    boxShadow: '0px 10px 15px #cfdde8'
   },
   foodPic : { 
     width: "100%", 

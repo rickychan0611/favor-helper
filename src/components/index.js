@@ -11,10 +11,16 @@ import PickFile from './PickFile/PickFile'
 import PreviewIcon from './PreviewIcon/PreviewIcon'
 import PostControlBottomBar from './PostControlBottomBar/PostControlBottomBar'
 import CreatePostFormContainer from './CreatePostFormContainer/CreatePostFormContainer'
-import PostCardContainer from './PostCardContainer/PostCardContainer'
 import PhotoSlideInDetail from './PhotoSlideInDetail/PhotoSlideInDetail'
 import Post from './Post/Post'
 import PriceTimeColumn from './PriceTimeColumn/PriceTimeColumn'
+import PostTitle from './PostTitle/PostTitle'
+import PostAboutMeal from './PostAboutMeal/PostAboutMeal'
+import PostAboutPoster from './PostAboutPoster/PostAboutPoster'
+import QuestionForm from './QuestionForm/QuestionForm'
+import QuestionReplies from './QuestionReplies/QuestionReplies'
+import QuestionRepliesContainer from './QuestionRepliesContainer/QuestionRepliesContainer'
+
 
 
 export {
@@ -24,6 +30,7 @@ export {
   TopBar,
   Question,
   QuestionsContainer,
+  QuestionForm,
   PhotoSlider,
   Footer,
   LocationInput,
@@ -31,8 +38,12 @@ export {
   PreviewIcon,
   PostControlBottomBar,
   CreatePostFormContainer,
-  PostCardContainer,
   PhotoSlideInDetail,
   Post,
-  PriceTimeColumn
+  PriceTimeColumn,
+  PostTitle,
+  PostAboutPoster,
+  PostAboutMeal,
+  QuestionReplies,
+  QuestionRepliesContainer
 }

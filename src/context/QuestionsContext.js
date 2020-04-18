@@ -1,74 +1,43 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
 import db from '../firestore'
 import { PostsContext } from './PostsContext'
 
 export const QuestionsContext = createContext()
 
 const QuestionsContextProvider = ({ children }) => {
-  const [questions, setQuestions] = React.useState([])
-  const [loading, setLoading] = React.useState(true)
 
+  const [questions, setQuestions] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [poster, setPoster] = useState({})
+  const [replies, setReplies] = useState([])
   // const {post} = React.useContext(PostsContext)
 
   const questionsQuery = (props) => {
     setLoading(true)
     setQuestions([]) 
-
-    let tempArr = []
-    // if (props) {
-    //   db.collection('questions')
-    //   .where('postId', '==', props).get()
-    //   .then(snapshot => {
-    //   if (snapshot.empty) {
-    //     console.log('No matching documents.');
-    //     setLoading(false)
-    //     return;
-    //   }  
-    //   snapshot.forEach(doc => {
-    //     tempArr.push(doc.data())
-    //   })
-    //   console.log('tempArr'+ JSON.stringify(tempArr))
-    //   setLoading(false)
-    //   setQuestions(tempArr) 
-    // })
-    // .catch(err => {
-    //   console.log('Error getting documents', err);
-    //   setLoading(false)
-    //   }
-    // )
-    // }
-    
   }
-      // const unsubscribe =
-      //   db.collection('posts').doc(props).collection('questions')
-      //     .orderBy('createAt', 'desc')
-      //     .onSnapshot(snapshot => {
-      //       const arr = []
-      //       snapshot.forEach(doc => { arr.push(doc.data()) })
-      //       setQuestions(arr)
-      //       // console.log(JSON.stringify('questions' + questions))
-      //     }
-      //     )
-      // return () => unsubscribe()
-    // }
-  
 
-  // React.useEffect(
-  //   () => {
-  //     const unsubscribe =
-  //       db.collection('posts').doc(props).collection('questions')
-  //         .orderBy('createAt', 'desc')
-  //         .onSnapshot(snapshot => {
-  //           const arr = []
-  //           snapshot.forEach(doc => { arr.push(doc.data()) })
-  //           setQuestions(arr)
-  //           console.log(JSON.stringify('questions' + questions))
-  //         }
-  //         )
-  //     return () => unsubscribe()
-  //   },
-  //   []
-  // )
+  const getPoster = (posterId) => {
+    db.collection('users').where('uid', '==', posterId).get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        console.log(JSON.stringify(doc.data()))
+        setPoster(doc.data())
+      })
+    }
+  )
+  }
+  
+  const getReplies = (questionId) => {
+    db.collection('questionReplies').where('questionId', '==', questionId).get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        const arr = [...replies.slice(0,replies.length-1), doc.data()]
+        // arr.push(doc.data())
+        setReplies(arr)
+      })
+    })
+  }
 
   return (
     <QuestionsContext.Provider
@@ -76,7 +45,12 @@ const QuestionsContextProvider = ({ children }) => {
         {
           questionsQuery,
           questions,
-          loading
+          loading,
+          getPoster,
+          poster,
+          getReplies,
+          replies,
+          setReplies
         }
       }>
       {children}
@@ -85,4 +59,3 @@ const QuestionsContextProvider = ({ children }) => {
 }
 
 export default QuestionsContextProvider
-

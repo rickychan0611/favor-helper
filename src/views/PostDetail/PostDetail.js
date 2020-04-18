@@ -2,27 +2,18 @@ import React, { useState, useEffect } from 'react'
 import db from '../../firestore'
 import { UserContext } from '../../context/UserContext'
 import { PostsContext } from '../../context/PostsContext'
-import { PhotoSlideInDetail, Map, PreviewIcon, PickFile, Post } from '../../components'
+import { PhotoSlideInDetail, Post, QuestionForm } from '../../components'
 
 import styles from './styles'
 import {
-  useParams, useRouteMatch, useHistory
+  useParams, useHistory
 } from "react-router-dom";
 
 import {
   Container,
   Button,
-  Dimmer,
-  Loader,
-  Form,
-  Grid,
-  Image,
   Divider,
-  Segment,
 } from 'semantic-ui-react'
-import { QuestionsContainer } from '../../components/';
-
-const timestamp = new Date()
 
 const PostDetail = (props) => {
   let { id } = useParams();
@@ -31,12 +22,6 @@ const PostDetail = (props) => {
   const [loading, setLoading] = useState(true)
   const { user } = React.useContext(UserContext)
   const { posts } = React.useContext(PostsContext)
-
-  useEffect(() => {
-    // setPost(() => posts.filter(item => item.id == id))
-    // getPoster(post.posterUid)
-
-  }, [])
 
   const postQuery = (id) => {
     return (
@@ -69,23 +54,6 @@ const PostDetail = (props) => {
     }
   }, [id])
 
-  const [question, setQuestion] = useState('')
-  const handleQuestionChange = (e, { value }) => {
-    setQuestion(value)
-    console.log('value' + question)
-  }
-  const HandleQuestionSubmit = () => {
-    let newQuestion = db.collection('questions').doc()
-    newQuestion.set({
-      id: newQuestion.id,
-      postId: id,
-      posterId: user.uid,
-      question: question,
-      createAt: timestamp
-    }).then(() => setQuestion('')
-    )
-  }
-
   const [poster, setPoster] = useState({})
   
   const getPoster = (id) => {
@@ -99,12 +67,6 @@ const PostDetail = (props) => {
       )
   }
 
-  // useEffect(() => {
-  //   if(post.posterUid){
-  //   getPoster()
-  // }
-  // },[post])
-
   return (
     <>
       {post ? <PhotoSlideInDetail images={post.images} /> : null}
@@ -113,38 +75,16 @@ const PostDetail = (props) => {
         {post ?
           <>
             <div>
-          {/* {JSON.stringify(post)} */}
-              <Post post={post} loading={loading} poster={poster}/>
-              <QuestionsContainer post={post} />
+              <Post post={post} loading={loading} poster={poster} user={user}/>
             </div>
           </>
           :
-          <h3>loading</h3>
+          <>
+          <br></br>
+          <h3>loading...</h3>
+          </>
         }
-        <h4>Ask poster a question</h4>
-        {user ?
-          <div style={{ display: 'flex' }}>
-            <div style={{ width: '10%' }}>
-              <Image src={user.photoURL} avatar />
-            </div>
-            <div style={{ width: '90%' }}>
-              <Form onSubmit={HandleQuestionSubmit}>
-                <Form.TextArea
-                  placeholder='Ask a question...'
-                  onChange={handleQuestionChange}
-                  value={question}
-                />
-
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <Button content='Submit'>Send</Button>
-                </div>
-              </Form>
-            </div>
-          </div> :
-
-          <Segment warning textAlign='center' onClick={() => history.push('/sign-in')}>
-            Please login to leave a message</Segment>
-        }
+       
         <br></br>
         <Divider />
         <Button onClick={() => history.push('/posts')}>Go back</Button>
