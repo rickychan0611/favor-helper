@@ -28,7 +28,7 @@ const QuestionReplies = ({ item }) => {
             <Comment.Content>
               <Comment.Author as='a'>{poster.displayName}</Comment.Author>
               <Comment.Metadata>
-                <div>{item.createAt}</div>
+                <div>{item.createAt.toDate().toLocaleString()}</div>
               </Comment.Metadata>
               <Comment.Text>{item.replyContent}</Comment.Text>
             </Comment.Content>
