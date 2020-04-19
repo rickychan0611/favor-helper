@@ -16,7 +16,8 @@ const styles = {
   photoURLContainer:{
     position: 'absolute', 
     top: 180,
-    left: 8
+    left: 8,
+    zIndex: 1000
   },
   favesContainer:{
     position: 'absolute', 
