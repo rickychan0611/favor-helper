@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import db from '../../firestore'
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { PhotoSlider, Map, PreviewIcon, PickFile } from '../../components'
 import PriceTimeForm from './PriceTimeForm'
 import { PostsContext } from '../../context/PostsContext'
@@ -28,10 +28,12 @@ import styles from './styles'
 import './styles.css'
 
 
-const CreatePostForm = () => {
+const CreatePostForm = ({ item, edit }) => {
+  let { id } = useParams();
+
   const [openBottomBar, setOpenBottomBar] = useState(false)
 
-  const { preview, setPreview, formState, setFormState, validationError, setValidationError, success, setSuccess } = useContext(PostsContext)
+  const { preview, setPreview, formState, setFormState, validationError, setValidationError, success, setSuccess, posts } = useContext(PostsContext)
   const { user, updateProfilePic } = useContext(UserContext)
 
   const history = useHistory()
@@ -93,9 +95,12 @@ const CreatePostForm = () => {
       return
     }
     if (user) {
-      setFormState({ ...formState, posterUid: user.uid })
+      setFormState({ ...formState, posterUid: user.uid, aboutMe: user.aboutMe })
     }
-  }, [user])
+    if (id) {
+      setFormState({ ...formState, aboutMe: formState.aboutMe })
+    }
+  },[])
 
   useEffect(() => {
     setOpenBottomBar(true)
@@ -107,13 +112,6 @@ const CreatePostForm = () => {
       setValidationError(false)
     }
   }, [validationError])
-
-  // useEffect(() => {
-  //   if (success){
-  //     alert("success")
-  //     setSuccess(false)
-  //   }
-  // }, [success])
 
   const [avatar, setAvatar] = useState(false)
 
@@ -154,10 +152,10 @@ const CreatePostForm = () => {
           <h3>You can manage your posts in your profile page.</h3>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='green' onClick={() => { 
+          <Button color='green' onClick={() => {
             setSuccess(false)
-            history.push('/posts') 
-            }}>
+            history.push('/posts')
+          }}>
             <Icon name='checkmark' /> OK
           </Button>
         </Modal.Actions>
@@ -165,7 +163,6 @@ const CreatePostForm = () => {
 
       {user ?
         <>
-          {console.log(JSON.stringify(formState))}
           <PhotoSlider formState={formState} setFormState={setFormState} />
           {/* <PickFile>Upload Image</PickFile> */}
           <Container>
@@ -220,12 +217,12 @@ const CreatePostForm = () => {
 
                 <Segment textAlign="left">
                   <Form>
-                    <PreviewIcon preview={preview} />
+                    {/* <PreviewIcon preview={preview} />
                     <Form.Input fluid label='What style are you doing?' name="dishStyle"
                       value={formState.dishStyle} onChange={handleChange}
-                      placeholder='Ex. Chinese, Japanese, Indian, Italian' />
-                    <PreviewIcon preview={preview} />
-                    <Form.TextArea fluid label="Summary" name="summary"
+                      placeholder='Ex. Chinese, Japanese, Indian, Italian' /> */}
+                    <PreviewIcon preview={preview} required={true} />
+                    <Form.TextArea fluid label="Description" name="summary"
                       value={formState.summary} onChange={handleChange}
                       placeholder="What's so good about your meal? Detailed descriptons get the most customers joinning up!" />
                   </Form>
@@ -268,7 +265,7 @@ const CreatePostForm = () => {
                         {/* // : */}
                         <Dimmer active={avatar} onClickOutside={() => { setAvatar(false) }} page>
                           <div style={{ width: '250px', height: '250px', backgroundColor: 'white', margin: 'auto', border: '1px solid black', zIndex: 1000 }}>
-                            <AvatarImageCropper apply={apply} maxsize={1024 * 1024 *5}/>
+                            <AvatarImageCropper apply={apply} maxsize={1024 * 1024 * 5} />
                           </div>
                         </Dimmer>
                         {/* // } */}
@@ -293,7 +290,7 @@ const CreatePostForm = () => {
                   Enter your address or pick up location to find customers that close to you.</p>
                 <PreviewIcon preview={preview} required={true} />
                 <Map height={300} formState={formState} setFormState={setFormState} />
-                  <h1>something</h1>
+                <h1>something</h1>
               </Grid.Column>
 
 

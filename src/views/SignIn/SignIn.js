@@ -16,17 +16,25 @@ const SignIn = () => {
   const uiConfig = {
     callbacks: {
       signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-        db.collection('users').doc(authResult.user.uid).set({
-          id: authResult.user.uid,
-          uid: authResult.user.uid,
-          displayName: authResult.user.displayName,
-          photoURL: authResult.user.photoURL + "?type=large",
-          email: authResult.user.email,
-          emailVerified: authResult.user.emailVerified
-        })
-        // AuthState()
-        return true
-      }
+        const userRef = db.collection('users').doc(authResult.user.uid)
+        userRef.get()
+          .then((snapShot) => {
+            if (snapShot.exists){
+              return true
+            }
+            else {
+              userRef.set({
+                id: authResult.user.uid,
+                uid: authResult.user.uid,
+                displayName: authResult.user.displayName,
+                photoURL: authResult.user.photoURL + "?type=large",
+                email: authResult.user.email,
+                emailVerified: authResult.user.emailVerified
+              })
+              return true
+            }
+          })
+         }
     },
     // Popup signin flow rather than redirect flow.
     signInFlow: 'popup',

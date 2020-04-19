@@ -111,10 +111,12 @@ const PriceTimeForm = ({ preview, formState, setFormState, handleChange, pickUpT
         <Checkbox
           label="Self-pickup"
           onChange={pickUpToggle}
+          checked={formState.pickUp}
         /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Checkbox
           label="Delivery within 1km"
           onChange={deliveryToggle}
+          checked={formState.delivery}
         />
         <br></br>
         <br></br>

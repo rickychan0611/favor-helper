@@ -33,6 +33,7 @@ export default (props) => {
       }}>
         <Switch>
           <Route path="/create-post" component={CreatePostFormContainer} />
+          <Route path="/edit/:id" component={CreatePostFormContainer} />
           <Route path="/details/:id" component={PostDetail} />
 
           <div style={{

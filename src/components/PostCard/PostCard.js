@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import db from '../../firestore'
 import firebase from 'firebase'
-import { Rating, Divider, Icon } from 'semantic-ui-react'
+import { Rating, Divider, Icon, Button } from 'semantic-ui-react'
 import styles from './styles'
 import {
   Link,
@@ -14,13 +14,13 @@ import {
 import noImage from '../../assets/images/no-image.jpg'
 import { PostsContext } from '../../context/PostsContext'
 
-const PostCard = ({ item }) => {
+const PostCard = ({ item, edit }) => {
   // const {  } = useContext(PostsContext)
   const history = useHistory()
   let { path, url } = useRouteMatch();
-  
+
   const [posterData, setPosterData] = useState({})
-  
+  const { setFormState } = useContext(PostsContext)
   const getPosterData = () => {
     db.collection('users').where('uid', '==', item.posterUid).get()
       .then(snapshot => {
@@ -34,10 +34,22 @@ const PostCard = ({ item }) => {
 
   useEffect(() => {
     getPosterData()
-  },[])
+  }, [])
 
   return (
     <>
+      {edit ?
+        <div>
+          <Button color="blue"
+            onClick={() => {
+              setFormState(item)
+              history.push('/edit/' + item.id)
+            }
+            }>
+            Edit
+          </Button>
+          <Button>Delete</Button></div>
+        : null}
       <div style={styles.container} onClick={() => {
         history.push("details/" + item.id + '/' + item.title.split(' ').join('-'))
       }}>

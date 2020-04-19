@@ -101,7 +101,8 @@ const UserContextProvider = ({ children }) => {
           loading,
           updateProfilePic,
           setDisplayName,
-          AuthState
+          AuthState,
+          setUser
         }
       }
     >

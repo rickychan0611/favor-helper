@@ -1,9 +1,12 @@
 import React, { createContext, useState, useEffect } from 'react'
 import db from '../firestore'
+import { useHistory } from "react-router-dom";
 
 export const PostsContext = createContext()
 
 const PostsContextProvider = ({ children }) => {
+  const history = useHistory()
+
   const [posts, setPosts] = useState([])
   const [preview, setPreview] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -13,13 +16,14 @@ const PostsContextProvider = ({ children }) => {
     price: "",
     address: "",
     pickup: false,
-    delivery: false
+    delivery: false,
+    aboutMe: ""
   })
 
-  const { title, price, pickUp, delivery, address } = formState
+  const { title, price, pickUp, delivery, address, summary } = formState
 
   const validation = () => {
-    if (title === "" || price === "" || address === "") {
+    if (title === "" || price === "" || address === "" || summary === "") {
       return false
     }
     else if (pickUp === true || delivery === true) {
@@ -29,12 +33,56 @@ const PostsContextProvider = ({ children }) => {
   }
 
   const submitPostToServer = () => {
+    if (formState.id) {
+      console.log('formState' + JSON.stringify(formState))
+      db.collection('posts').doc(formState.id).update(formState)
+      .then(doc => {
+        console.log("Post updated!");
+        history.push('/profile')
+        setFormState({
+          title: "",
+          price: "",
+          address: "",
+          pickup: false,
+          delivery: false
+        })
+      })
+    }
+    if (!formState.id) {
+      const timeStamp = new Date()
+      const createPost = db.collection('posts').doc()
+      if (validation()) {
+        createPost.set(
+          { ...formState, createAt: timeStamp, id: createPost.id }
+        ).then(doc => {
+          setSuccess(true)
+          console.log("Post Saved: ");
+          setFormState({
+            title: "",
+            price: "",
+            address: "",
+            pickup: false,
+            delivery: false
+          })
+        })
+          .catch(function (error) {
+            console.error("Error adding Post: ", error);
+          })
+        return
+      }
+      else {
+        setValidationError(true)
+      }
+    }
+  }
+
+  const updatePostToServer = () => {
     const timeStamp = new Date()
     const createPost = db.collection('posts').doc()
     if (validation()) {
 
-      createPost.set(
-        { ...formState, createAt: timeStamp, id: createPost.id }
+      createPost.update(
+        { ...formState, createAt: timeStamp }
       ).then(doc => {
         setSuccess(true)
         console.log("Post Saved: ");
@@ -49,23 +97,20 @@ const PostsContextProvider = ({ children }) => {
     }
   }
 
-
   //get all posts
   useEffect(
     () => {
-      let postArr = []
-
-      const unsubscribe =
         db.collection('posts')
           .orderBy('createAt', 'desc')
           .onSnapshot(snapshot => {
+            let postArr = []
+            setPosts([])
             snapshot.forEach(doc => {
               postArr.push(doc.data())
             })
             setPosts(postArr)
           }
-        )
-      return () => unsubscribe()
+          )
     },
     []
   )
