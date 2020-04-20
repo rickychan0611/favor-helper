@@ -4,7 +4,7 @@ import styles from './styles'
 
 const PostTitle = ({post, poster}) => {
   return (
-    <Segment placeholder basic textAlign="center">
+    <Segment placeholder basic textAlign="left">
       <h1 styles={styles.title}>{post.title}</h1>
       <p style={{ fontSize: 20 }}>
         {post.address ? post.address[2].long_name : null}</p>

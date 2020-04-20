@@ -52,13 +52,18 @@ const PostCard = ({ item, edit }) => {
         : null}
       <div style={styles.container}>
         
-
       <div style={styles.photoURLContainer}>
             <img src={posterData.photoURL} style={styles.photoURL}
               onClick={() => {
                 history.push('/user/' + posterData.posterUid)
               }} />
           </div>
+          <div style={styles.displayName}>
+            <p>{posterData.displayName} <br />
+              <Rating defaultRating={4} maxRating={5} icon='star' size='mini' disabled /> ({4})
+          </p>
+          </div>
+
           
         <div
           onClick={() => {
@@ -75,13 +80,7 @@ const PostCard = ({ item, edit }) => {
             <h3>${item.price}</h3>
           </div>
 
-          <div style={styles.displayName}>
-            <p>{posterData.displayName} <br />
-              <Rating defaultRating={4} maxRating={5} icon='star' size='mini' disabled /> ({4})
-          </p>
-          </div>
-
-          <div style={styles.details}>
+           <div style={styles.details}>
             <h3 style={styles.title}>{item.title}</h3>
             <Divider fitted />
             <div style={styles.addressContainer}>

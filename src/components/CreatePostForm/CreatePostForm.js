@@ -290,7 +290,6 @@ const CreatePostForm = ({ item, edit }) => {
                   Enter your address or pick up location to find customers that close to you.</p>
                 <PreviewIcon preview={preview} required={true} />
                 <Map height={300} formState={formState} setFormState={setFormState} />
-                <h1>something</h1>
               </Grid.Column>
 
 

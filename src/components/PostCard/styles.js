@@ -17,7 +17,7 @@ const styles = {
     position: 'absolute', 
     top: 180,
     left: 8,
-    zIndex: 1000
+    zIndex: 200
   },
   favesContainer:{
     position: 'absolute', 

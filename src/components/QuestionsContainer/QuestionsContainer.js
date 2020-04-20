@@ -34,7 +34,6 @@ const QuestionsContainer = ({ post, user }) => {
       <Header>Questions for this meal</Header>
       {!loading ?
         <>
-          <Segment>
 
             <Comment.Group>
               {questions.map((item, i) => {
@@ -44,7 +43,6 @@ const QuestionsContainer = ({ post, user }) => {
 
             </Comment.Group>
             
-          </Segment>
         </>
         :
         "loading..."

@@ -33,36 +33,36 @@ const PriceTimeColumn = ({ post, poster }) => {
   }
 
   return (
-    <Segment>
-      <Header style={{ margin: 0 }}>Price: </Header>
-        <h1 styles={styles.title}>${post.price}</h1>
+    <Segment >
+      <Segment>
+        <Header as='h1'>Price:  ${post.price} </Header>
+        <Button fluid color="green" size='big'>I'm Hungry. Request Meal</Button>
+      </Segment>
+      <Divider fluid />
 
-      <Divider fluid/>
-      
       <Header style={{ margin: 0 }}>Minimum Order: </Header>
       {post.minOrder}
-      <Divider fluid/>
+      <Divider fluid />
 
       <Header style={{ margin: 0 }}>Maximum Order: </Header>
       {post.maxOrder}
-      <Divider fluid/>
+      <Divider fluid />
 
       <Header style={{ margin: 0 }}>Order Cut-off Time: </Header>
       {post.CutOffTime}
-      <Divider fluid/>
+      <Divider fluid />
 
       <Header style={{ margin: 0 }}>Completion Date: </Header>
       {post.completionDate}
-      <Divider fluid/>
+      <Divider fluid />
 
       <Header style={{ margin: 0 }}>Pick up / Delivery</Header>
-      Self Pick-up? {post.pickup? "Yes" : "No"} <br/>
-      Delivery? {post.delivery? "Yes" : "No"}
-      <Divider fluid/>
+      Self Pick-up? {post.pickup ? "Yes" : "No"} <br />
+      Delivery? {post.delivery ? "Yes" : "No"}
+      <Divider fluid />
 
       <Header style={{ margin: 0 }}>instructions: </Header>
       {post.pickUpGuide}
-     
     </Segment >
 
   )

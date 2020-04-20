@@ -7,7 +7,7 @@ import { LocationInput } from '..'
 import { usePosition } from 'use-position';
 import { GoogleMap, Circle, useLoadScript } from '@react-google-maps/api'
 
-const Map = ({ height, formState, setFormState, noSearchBar }) => {
+const Map = ({ height, formState, setFormState, noSearchBar, currentLocation }) => {
   const { latitude, longitude, timestamp, accuracy, error } = usePosition();
 
   const [loc, setLoc] = useState({ lat: 0, lng: 0 })
@@ -28,15 +28,25 @@ const Map = ({ height, formState, setFormState, noSearchBar }) => {
 
   // get location from browser
   useEffect(() => {
-    if (latitude && longitude && !error) {
+    if (latitude && longitude && !error && !currentLocation) {
       setLoc({ 'lat': latitude, "lng": longitude })
     }
   }, [latitude])
 
   // get location from selecton in mapContext
   useEffect(() => {
-    setLoc(location)
-  }, [location])
+    // console.log('currentLocation' + JSON.stringify(currentLocation))
+
+    if (currentLocation){
+      console.log('currentLocation' + JSON.stringify(currentLocation))
+      setLoc({ 'lat': currentLocation.lat, "lng": currentLocation.lng })
+    }
+  //   else {
+  //   setLoc(location)
+  // }
+  // setLoc(location)
+
+  }, [currentLocation])
  
   return (
     <div>

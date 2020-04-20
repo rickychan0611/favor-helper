@@ -44,13 +44,16 @@ const PostsContextProvider = ({ children }) => {
           price: "",
           address: "",
           pickup: false,
-          delivery: false
+          delivery: false,
+          location: ""
         })
       })
     }
     if (!formState.id) {
       const timeStamp = new Date()
       const createPost = db.collection('posts').doc()
+      console.log('formState' + JSON.stringify(formState))
+
       if (validation()) {
         createPost.set(
           { ...formState, createAt: timeStamp, id: createPost.id }

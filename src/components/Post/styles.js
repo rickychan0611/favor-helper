@@ -12,11 +12,13 @@ const styles = {
     position: 'relative'
   },
   title: {
-    fontSize: 28, 
-    fontFamily: "font-family: 'Nunito'", 
+    fontSize: 38, 
+    fontFamily: "Times New Roman, Times, serif",
     fontWeight: 'bold',
-    textAlign: "center",
-    marginBottom: 0
+    textAlign: "left",
+    marginTop: 20,
+    marginBottom: 0,
+    color: "#666abd"
   }
 }
 

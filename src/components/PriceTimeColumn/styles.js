@@ -3,7 +3,12 @@ const styles = {
     backgroundColor: 'white'
   },
   price : {
-    fontSize: 20
+    fontSize: 20,
+    margin: 0
+  },
+  title : {
+    fontSize: 20,
+    margin: 0
   }
 }
 

@@ -54,7 +54,7 @@ const QuestionForm = ({replyQuestion}) => {
           {/* <div style={{ width: '10%' }}>
             <Image src={user.photoURL} avatar />
           </div> */}
-          <div style={{ width: '90%' }}>
+          <div style={{ width: '100%' }}>
             <Form onSubmit={HandleQuestionSubmit}>
               <Form.TextArea required
                 onChange={handleQuestionChange}
