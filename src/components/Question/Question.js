@@ -54,7 +54,7 @@ const Question = ({ item }) => {
           <Comment.Metadata>
             <div>{item.createAt.toDate().toLocaleString()}</div>
           </Comment.Metadata>
-          <Comment.Text><h4>{item.question}</h4></Comment.Text>
+          <Comment.Text><h4 style={{whiteSpace: 'pre-line'}} >{item.question}</h4></Comment.Text>
 
           <QuestionRepliesContainer questionId={item.id} newReply={newReply} />
 

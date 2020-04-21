@@ -56,7 +56,7 @@ const QuestionForm = ({replyQuestion}) => {
           </div> */}
           <div style={{ width: '100%' }}>
             <Form onSubmit={HandleQuestionSubmit}>
-              <Form.TextArea required
+              <Form.TextArea required 
                 onChange={handleQuestionChange}
                 value={question}
               />

@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
-import { Menu, Dropdown, Responsive, Image, Button, Dimmer } from 'semantic-ui-react'
+import { Menu, Dropdown, Responsive, Image, Button, Sidebar, Icon, Segment, Grid } from 'semantic-ui-react'
 import { useHistory } from "react-router-dom";
 import firebase from 'firebase'
 import styles from './styles'
 import { UserContext } from '../../context/UserContext'
 import { PostsContext } from '../../context/PostsContext'
+import logo from '../../assets/images/logo.png'
 
 const options1 = [
   { key: 'sign-in', icon: 'sign-in', text: 'Sign in', value: 'sign-in' },
@@ -17,7 +18,7 @@ const options2 = [
 
 
 const TopBar = () => {
-  const { user, loading } = useContext(UserContext)
+  const { user, loading, openSideBar, setOpenSideBar } = useContext(UserContext)
   const { preview, setPreview, submitPostToServer } = useContext(PostsContext)
 
   const history = useHistory()
@@ -100,15 +101,15 @@ const TopBar = () => {
           submitPostToServer()
         })}
       >
-        <Button icon="check" circular content="PUBLISH" color="green"/>
+        <Button icon="check" circular content="PUBLISH" color="green" />
       </Menu.Item>
 
-      
+
       <Menu.Item
-          onClick={handleItemClick}
-        >
-          <Button icon="close" circular color="grey" />
-        </Menu.Item>
+        onClick={handleItemClick}
+      >
+        <Button icon="close" circular color="grey" />
+      </Menu.Item>
 
     </>
   )
@@ -125,94 +126,128 @@ const TopBar = () => {
 
   return (
     <>
-    
-    <Menu borderless fluid style={{ position: "fixed", height: 55 }}>
-      {user ? null :
-        <div style={{ position: "relative", height: 40 }}>
-          <img src='https://img.icons8.com/cotton/64/000000/like--v3.png'
-            style={{ width: 40, height: 40, marginTop: 7, marginLeft: 5, marginRight: -10 }}
-            onClick={() => { history.push('/') }} />
-        </div>
-      }
-      {activeItem === 'create-post' && user ?
-        <PreviewSaveCancelButtons />
-        :
-        <>
-          <TopBarItem name='create-post'>
-            <Button color="teal"> Create a post </Button>
-          </TopBarItem>
-        </>
-      }
-      {activeItem === 'create-post' && user ?
-        null :
-        <>
-          <TopBarItem name='posts'> Posts </TopBarItem>
-          <TopBarItem name='map' > Map </TopBarItem>
+      <Responsive maxWidth={530} as={React.Fragment}>
+        {/* ************* Top Bar ***************** */}
+        <Sidebar
+          icon='labeled'
+          visible={true}
+          direction="top"
+          style={{zIndex: 4000}}
+        >
+          <Segment basic style={{ backgroundColor: 'white'}}>
+            <Grid textAlign='center' verticalAlign='middle' column={3}>
+              <Grid.Column width={2} >
+                <Icon name='bars' size="large" style={{ color: '#707070' }} 
+                onClick={()=>{setOpenSideBar(!openSideBar)}}/>
+              </Grid.Column>
+              <Grid.Column width={2} >
+                {user ?
+                  <img src={user.photoURL}
+                    style={{ width: 40, borderRadius: '50%' }}
+                    onClick={() => { history.push('/profile') }} />
+                  : null}
+              </Grid.Column>
+              <Grid.Column width={8}>
+                <img src={logo} height={40} />
+              </Grid.Column>
+              <Grid.Column width={2}>
+                <Icon name='bell' size="large" style={{ color: '#707070' }} />
+              </Grid.Column>
+              <Grid.Column width={2}>
+                <Icon name='talk' size="large" style={{ color: '#707070' }} />
+              </Grid.Column>
+            </Grid>
+          </Segment>
+        </Sidebar>
+      </Responsive>
 
-          {!loading ?
-            <Menu.Menu position='right'>
-              <Responsive minWidth={531} as={React.Fragment}>
-                {!user ?
-                  <>
-                    <Menu.Item
-                      name='sign-in'
-                      active={activeItem === 'sign-in'}
-                      onClick={handleItemClick}
-                    >
-                      Sign In
-             </Menu.Item>
-                    <Menu.Item
-                      name='register'
-                      active={activeItem === 'register'}
-                      onClick={handleItemClick}
-                    >
-                      Register
-            </Menu.Item>
-                  </>
-                  :
-                  <>
-                    <Menu.Item
-                      name='profile'
-                      active={activeItem === 'profile'}
-                      onClick={handleItemClick}
-                    >
-                      <Image src={user.photoURL} avatar />
-                      <span>{user.displayName}</span>
-                    </Menu.Item>
-                    <Menu.Item
-                      name='sign-out'
-                      active={activeItem === 'sign-out'}
-                      onClick={handleItemClick}
-                    >
-                      Sign-out
-            </Menu.Item>
-                  </>
-                }
+      <Menu borderless fluid style={{ position: "fixed", height: 55 , zIndex: 3000}}>
+        {user ? null :
+          <div style={{ position: "relative", height: 40 }}>
+            <img src='https://img.icons8.com/cotton/64/000000/like--v3.png'
+              style={{ width: 40, height: 40, marginTop: 7, marginLeft: 5, marginRight: -10 }}
+              onClick={() => { history.push('/') }} />
+          </div>
+        }
+        {activeItem === 'create-post' && user ?
+          <PreviewSaveCancelButtons />
+          :
+          <>
+            <TopBarItem name='create-post'>
+              <Button color="teal"> Create a post </Button>
+            </TopBarItem>
+          </>
+        }
+        {activeItem === 'create-post' && user ?
+          null :
+          <>
+            <TopBarItem name='posts'> Posts </TopBarItem>
+            <TopBarItem name='map' > Map </TopBarItem>
 
-              </Responsive>
-              <Responsive maxWidth={530} as={React.Fragment}>
-                <Menu.Item>
-                  {user ?
-                    <Image src={user.photoURL} avatar
-                      onClick={() => { history.push('/profile') }} />
-                    : null}
-                  <Dropdown
-                    icon='bars'
-                    floating
-                    options={!user ? options1 : options2}
-                    trigger={<React.Fragment />}
-                    value={value}
-                    onChange={onDropdownClick}
-                  />
-                </Menu.Item>
-              </Responsive>
-            </Menu.Menu>
-            : null
-          }
+            {!loading ?
+              <Menu.Menu position='right'>
+                <Responsive minWidth={531} as={React.Fragment}>
+                  {!user ?
+                    <>
+                      <Menu.Item
+                        name='sign-in'
+                        active={activeItem === 'sign-in'}
+                        onClick={handleItemClick}
+                      >
+                        Sign In
+                      </Menu.Item>
+                      <Menu.Item
+                        name='register'
+                        active={activeItem === 'register'}
+                        onClick={handleItemClick}
+                      >
+                        Register
+                      </Menu.Item>
+                    </>
+                    :
+                    <>
+                      <Menu.Item
+                        name='profile'
+                        active={activeItem === 'profile'}
+                        onClick={handleItemClick}
+                      >
+                        <Image src={user.photoURL} avatar />
+                        <span>{user.displayName}</span>
+                      </Menu.Item>
+                      <Menu.Item
+                        name='sign-out'
+                        active={activeItem === 'sign-out'}
+                        onClick={handleItemClick}
+                      >
+                        Sign-out
+                     </Menu.Item>
+                    </>
+                  }
 
-        </>}
+                </Responsive>
+                <Responsive maxWidth={530} as={React.Fragment}>
+                  <Menu.Item>
+                    {user ?
+                      <Image src={user.photoURL} avatar
+                        onClick={() => { history.push('/profile') }} />
+                      : null}
+                    <Dropdown
+                      icon='bars'
+                      floating
+                      options={!user ? options1 : options2}
+                      trigger={<React.Fragment />}
+                      value={value}
+                      onChange={onDropdownClick}
+                    />
+                  </Menu.Item>
+                </Responsive>
+              </Menu.Menu>
+              : null
+            }
 
-    </Menu>
+          </>}
+
+      </Menu>
     </>
   )
 }

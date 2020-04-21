@@ -11,15 +11,26 @@ const UserContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [displayName, setDisplayName] = useState('')
+  const [displayName, setDisplayName ] = useState('')
+  const [openSideBar, setOpenSideBar ]  = useState(false)
   let usersDB = db.collection('users')
   const history = useHistory()
 
   const updateProfilePic = (downloadURL) => {
     console.log("!!!!updateProfilePic")
-    usersDB.doc(user.id).update({ photoURL: downloadURL }).then(() => {
+    db.collection('users').doc(user.id).update({ photoURL: downloadURL }).then(() => {
       setUser({ ...user, photoURL: downloadURL })
     });
+  }
+
+  const signOut = () => {
+    firebase.auth().signOut().then(function () {
+      console.log("Sign-out successful.")
+      alert("You have signed out")
+      history.push('/')
+    }).catch(function (error) {
+      console.log(error)
+    })
   }
 
   const AuthState = () => {
@@ -30,17 +41,7 @@ const UserContextProvider = ({ children }) => {
       // setUser(userData)
       setLoading(false)
       console.log('user signed in')
-
-      // if (userData.providerData[0].providerId == "facebook.com" ) {
-      //   setDisplayName(userData.displayName)
-      //   photoURL = userData.photoURL + "?type=large"
-      // }
-
-      // if (userData.providerData[0].providerId == "google.com" ) {
-      //   setDisplayName(userData.displayName)
-      //   photoURL = userData.photoURL
-      // }
-      
+            
       usersDB.where('uid', '==', userData.uid).get()
         .then(snapshot => {
           if (snapshot.empty) {
@@ -102,7 +103,9 @@ const UserContextProvider = ({ children }) => {
           updateProfilePic,
           setDisplayName,
           AuthState,
-          setUser
+          openSideBar, 
+          setOpenSideBar,
+          signOut
         }
       }
     >

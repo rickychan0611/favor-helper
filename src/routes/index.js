@@ -6,29 +6,28 @@ import SignIn from "../views/SignIn"
 import Home from "../views/Home"
 import Profile from "../views/Profile"
 import PostDetail from "../views/PostDetail"
-import { CreatePostForm, TopBar, Map, Footer, CreatePostFormContainer } from "../components"
+import { CreatePostForm, TopBar, Map, SideNavBar, Footer, CreatePostFormContainer } from "../components"
 import UserContext from '../context/UserContext'
+import { Sidebar } from 'semantic-ui-react'
 
 import styles from './styles'
 import { Grid, Container } from 'semantic-ui-react';
 
 export default (props) => {
-  // const { user, setUser } = useContext(UserContext)
-
+  // const { user } = useContext(UserContext)
   let { id } = useParams();
   return (
-    <>    
+    <>
       <div style={styles.topBar}>
         <TopBar />
       </div>
-      {/* <div style={styles.postControlBottomBar}>
-        <PostControlBottomBar openBottomBar={openBottomBar} />
-      </div> */}
+
+      <SideNavBar />
+
       <div style={{
-        paddingTop: 55,
+        paddingTop: 80,
         postion: "relative",
-        height: '100vh',
-        // backgroundColor: '#fafafa'
+        height: '100%',
         // backgroundColor: 'yellow'
       }}>
         <Switch>
@@ -59,6 +58,7 @@ export default (props) => {
           {/* <Route path="/:id" children={<Footer />} /> */}
         </div>
       </div>
+
     </>
   )
 }

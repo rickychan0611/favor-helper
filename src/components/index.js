@@ -20,6 +20,7 @@ import PostAboutPoster from './PostAboutPoster/PostAboutPoster'
 import QuestionForm from './QuestionForm/QuestionForm'
 import QuestionReplies from './QuestionReplies/QuestionReplies'
 import QuestionRepliesContainer from './QuestionRepliesContainer/QuestionRepliesContainer'
+import SideNavBar from './SideNavBar/SideNavBar'
 
 
 
@@ -45,5 +46,6 @@ export {
   PostAboutPoster,
   PostAboutMeal,
   QuestionReplies,
-  QuestionRepliesContainer
+  QuestionRepliesContainer,
+  SideNavBar
 }

@@ -30,7 +30,7 @@ const QuestionReplies = ({ item }) => {
               <Comment.Metadata>
                 <div>{item.createAt.toDate().toLocaleString()}</div>
               </Comment.Metadata>
-              <Comment.Text>{item.replyContent}</Comment.Text>
+              <Comment.Text style={{whiteSpace: 'pre-line'}}>{item.replyContent}</Comment.Text>
             </Comment.Content>
           </Comment>
         </Comment.Group>

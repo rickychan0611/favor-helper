@@ -17,6 +17,7 @@ const SignIn = () => {
     callbacks: {
       signInSuccessWithAuthResult: function (authResult, redirectUrl) {
         const userRef = db.collection('users').doc(authResult.user.uid)
+        history.push('/posts')
         userRef.get()
           .then((snapShot) => {
             if (snapShot.exists){
