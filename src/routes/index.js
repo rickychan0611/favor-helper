@@ -8,13 +8,13 @@ import Profile from "../views/Profile"
 import PostDetail from "../views/PostDetail"
 import { CreatePostForm, TopBar, Map, SideNavBar, Footer, CreatePostFormContainer } from "../components"
 import UserContext from '../context/UserContext'
-import { Sidebar } from 'semantic-ui-react'
 
 import styles from './styles'
-import { Grid, Container } from 'semantic-ui-react';
+import { Grid, Dimmer } from 'semantic-ui-react';
 
 export default (props) => {
-  // const { user } = useContext(UserContext)
+  // const { user,  openSideBar, setOpenSideBar } = useContext(UserContext)
+  const [navDim, setNavDim] = useState(false)
   let { id } = useParams();
   return (
     <>
@@ -22,42 +22,46 @@ export default (props) => {
         <TopBar />
       </div>
 
-      <SideNavBar />
+      <SideNavBar navDim={navDim} setNavDim={setNavDim} />
+      <Dimmer.Dimmable dimmed={navDim} blurring>
+        <Dimmer active={navDim} inverted/>
+        <div style={{
+          paddingTop: 72,
+          postion: "relative",
+          height: '100%',
+          // backgroundColor: 'yellow'
+        }}>
+          <Switch>
+            <Route path="/create-post" component={CreatePostFormContainer} />
+            <Route path="/edit/:id" component={CreatePostFormContainer} />
+            <Route path="/details/:id" component={PostDetail} />
 
-      <div style={{
-        paddingTop: 80,
-        postion: "relative",
-        height: '100%',
-        // backgroundColor: 'yellow'
-      }}>
-        <Switch>
-          <Route path="/create-post" component={CreatePostFormContainer} />
-          <Route path="/edit/:id" component={CreatePostFormContainer} />
-          <Route path="/details/:id" component={PostDetail} />
+            <div style={{
+              maxWidth: '1000px',
+              margin: '0 auto',
+              paddingTop: 10,
+              posotion: 'relative',
+              // backgroundColor: 'yellow'
+            }}>
+              <Route path="/" exact component={Home} />
+              {/* <Route path="/*" component={Home} /> */}
+              <Route path="/posts" component={PostList} />
+              <Route path="/register" component={Register} />
+              <Route path="/sign-in" component={SignIn} />
+              <Route path="/sign-out" component={Home} />
+              <Route path="/profile" component={Profile} />
+              <Route path="/user/:id" component={Profile} />
+              <Route path="/map" component={() => <Map height="80vh" />} />
+            </div>
+          </Switch>
 
-          <div style={{
-            maxWidth: '1000px',
-            margin: '0 auto',
-            paddingTop: 10,
-            posotion: 'relative',
-            // backgroundColor: 'yellow'
-          }}>
-            <Route path="/" exact component={Home} />
-            {/* <Route path="/*" component={Home} /> */}
-            <Route path="/posts" component={PostList} />
-            <Route path="/register" component={Register} />
-            <Route path="/sign-in" component={SignIn} />
-            <Route path="/sign-out" component={Home} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/user/:id" component={Profile} />
-            <Route path="/map" component={() => <Map height="80vh" />} />
+          {/* <Redirect from="/*" to="/" /> */}
+          <div style={{ postion: 'absolute', bottom: 0, marginTop: 20 }}>
+            {/* <Route path="/:id" children={<Footer />} /> */}
           </div>
-        </Switch>
-        {/* <Redirect from="/*" to="/" /> */}
-        <div style={{ postion: 'absolute', bottom: 0, marginTop: 20 }}>
-          {/* <Route path="/:id" children={<Footer />} /> */}
+
         </div>
-      </div>
+      </Dimmer.Dimmable>
 
     </>
   )

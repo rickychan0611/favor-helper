@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react'
 import styles from './styles'
 
-const SideNavBar = () => {
+const SideNavBar = ({navDim, setNavDim}) => {
   const { user, loading, openSideBar, setOpenSideBar, signOut } = useContext(UserContext)
   const history = useHistory()
 
@@ -39,15 +39,15 @@ const SideNavBar = () => {
         // inverted
         vertical
         visible={openSideBar}
-        onHide={() => setOpenSideBar(false)}
-
-        // width='thin'
-        style={{ zIndex: 2000, color: "white", height: "100vh", width: "69vw" }}
+        onVisible={() => setNavDim(true)}
+        onHide={() => {
+          setOpenSideBar(false)
+          setNavDim(false)}}
+        style={{ zIndex: 2000, backgroundColor: "#f0f5ff", paddingLeft: 15}}
       >
         <Menu size='large' vertical secondary
           style={{
-            paddingTop: 90, paddingLeft: 20, color: "white",
-            height: "100vh", width: "70vw", backgroundColor: "#f0f5ff",
+            paddingTop: 90, height: "100%", width: '99%'
           }}>
           <Menu.Menu position="rigth">
             <Menu.Item onClick={()=>{setOpenSideBar(false)}}>
