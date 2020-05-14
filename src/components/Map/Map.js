@@ -7,7 +7,7 @@ import { LocationInput } from '..'
 import { usePosition } from 'use-position';
 import { GoogleMap, Circle, useLoadScript } from '@react-google-maps/api'
 
-const Map = ({ height, formState, setFormState, noSearchBar, currentLocation }) => {
+const Map = ({ height, width, formState, setFormState, noSearchBar, currentLocation }) => {
   const { latitude, longitude, timestamp, accuracy, error } = usePosition();
 
   const [loc, setLoc] = useState({ lat: 0, lng: 0 })
@@ -33,53 +33,49 @@ const Map = ({ height, formState, setFormState, noSearchBar, currentLocation }) 
     }
   }, [latitude])
 
-  // get location from selecton in mapContext
+  // location is from selecton in mapContext when create post
+  // currentLocation is the location of the post
   useEffect(() => {
-    // console.log('currentLocation' + JSON.stringify(currentLocation))
-
-    if (currentLocation){
+    if (noSearchBar && currentLocation) {
       console.log('currentLocation' + JSON.stringify(currentLocation))
       setLoc({ 'lat': currentLocation.lat, "lng": currentLocation.lng })
     }
-  //   else {
-  //   setLoc(location)
-  // }
-  // setLoc(location)
+    else {
+      setLoc(location)
+    }
+  }, [location])
 
-  }, [currentLocation])
- 
   return (
     <div>
-      { noSearchBar ? null : 
-      <LocationInput formState={formState} setFormState={setFormState} />}
-      <br></br>
+      {noSearchBar ? null :
+        <LocationInput formState={formState} setFormState={setFormState} />}
       <GoogleMap
         id='example-map'
         center={loc}
         mapContainerStyle={{
-          height: "400px",
-          width: "100%"
+          height: height,
+          width: width
         }}
         zoom={13}
-        >
-          <Circle
-            center={loc}
-            options={{
-              strokeColor: '#FF0000',
-              strokeOpacity: 0.3,
-              strokeWeight: 0,
-              fillColor: '#FF0000',
-              fillOpacity: 0.2,
-              clickable: false,
-              draggable: false,
-              editable: false,
-              visible: true,
-              radius: 1200,
-              zIndex: 10
-            }}
-          />
-        </GoogleMap>
-        </div >
+      >
+        <Circle
+          center={loc}
+          options={{
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.3,
+            strokeWeight: 0,
+            fillColor: '#FF0000',
+            fillOpacity: 0.2,
+            clickable: false,
+            draggable: false,
+            editable: false,
+            visible: true,
+            radius: 1200,
+            zIndex: 10
+          }}
+        />
+      </GoogleMap>
+    </div >
   )
 }
 

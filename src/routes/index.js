@@ -22,7 +22,7 @@ export default (props) => {
         <TopBar />
       </div>
 
-      <SideNavBar navDim={navDim} setNavDim={setNavDim} />
+      <SideNavBar setNavDim={setNavDim} />
       <Dimmer.Dimmable dimmed={navDim} blurring>
         <Dimmer active={navDim} inverted/>
         <div style={{

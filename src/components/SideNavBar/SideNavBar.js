@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react'
 import styles from './styles'
 
-const SideNavBar = ({navDim, setNavDim}) => {
+const SideNavBar = ({setNavDim}) => {
   const { user, loading, openSideBar, setOpenSideBar, signOut } = useContext(UserContext)
   const history = useHistory()
 

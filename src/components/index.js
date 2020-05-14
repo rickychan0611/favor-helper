@@ -21,6 +21,7 @@ import QuestionForm from './QuestionForm/QuestionForm'
 import QuestionReplies from './QuestionReplies/QuestionReplies'
 import QuestionRepliesContainer from './QuestionRepliesContainer/QuestionRepliesContainer'
 import SideNavBar from './SideNavBar/SideNavBar'
+import CheckOutModal from './CheckOutModal/CheckOutModal'
 
 
 
@@ -47,5 +48,6 @@ export {
   PostAboutMeal,
   QuestionReplies,
   QuestionRepliesContainer,
-  SideNavBar
+  SideNavBar,
+  CheckOutModal
 }
