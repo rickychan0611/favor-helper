@@ -1,6 +1,6 @@
 const styles = {
-  container :{
-    backgroundColor: 'white'
+  td : {
+    padding: 8
   }
 }
 
