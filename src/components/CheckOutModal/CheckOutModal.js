@@ -131,13 +131,14 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
   return (
     <>
       {/* Step 1 */}
-      <Modal centered open={openModal} inverted dimmer='blurring'>
+      <Modal centered={false} open={openModal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550, marginTop: 80 }}>
         <Modal.Header
-        style={{
-          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
-          color: "white",
-          marginBottom: 15
-        }}>
+          style={{
+            backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
+
+            color: "white",
+            marginBottom: 15
+          }}>
           Set your quantity
         </Modal.Header>
         <Modal.Content>
@@ -184,13 +185,14 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       </Modal>
 
       {/* Step 2 */}
-      <Modal centered open={step2Modal} inverted dimmer='blurring'>
-        <Modal.Header 
-        style={{
-          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
-          color: "white",
-          marginBottom: 15
-        }}>
+      <Modal centered={false} open={step2Modal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550, marginTop: 80 }}>
+        <Modal.Header
+          style={{
+            backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
+
+            color: "white",
+            marginBottom: 15
+          }}>
           Self-pickup or delivery?
         </Modal.Header>
         <Modal.Content>
@@ -273,13 +275,14 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       </Modal>
 
       {/* Step3a: pickup time */}
-      <Modal centered open={step3aModal} inverted dimmer='blurring'>
+      <Modal centered={false} open={step3aModal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550, marginTop: 80 }}>
         <Modal.Header
-        style={{
-          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
-          color: "white",
-          marginBottom: 15
-        }}>
+          style={{
+            backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
+
+            color: "white",
+            marginBottom: 15
+          }}>
           Select a pickup date/time
         </Modal.Header>
         <Modal.Content>
@@ -342,13 +345,14 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       </Modal>
 
       {/* Step4a: enter phone number */}
-      <Modal centered open={step4aModal} inverted dimmer='blurring'>
+      <Modal centered={false} open={step4aModal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550, marginTop: 80 }}>
         <Modal.Header
-        style={{
-          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
-          color: "white",
-          marginBottom: 15
-        }}>
+          style={{
+            backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
+
+            color: "white",
+            marginBottom: 15
+          }}>
           Enter your phone number
         </Modal.Header>
         <Modal.Content>
@@ -403,13 +407,14 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       </Modal>
 
       {/* Step5a: pickup confirmation */}
-      <Modal centered open={step5aModal} inverted dimmer='blurring'>
+      <Modal centered={false} open={step5aModal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550, marginTop: 80 }}>
         <Modal.Header
-        style={{
-          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
-          color: "white",
-          marginBottom: 15
-        }}>
+          style={{
+            backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
+
+            color: "white",
+            marginBottom: 15
+          }}>
           Confirmation
         </Modal.Header>
         <Modal.Content>
@@ -454,7 +459,7 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
               </tr>
               <tr>
                 <td>Phone number: </td>
-                <td>{phoneNumber}</td>
+                <td>{deliveryForm.phoneNumber}</td>
               </tr>
               {deliveryForm.request ?
                 <tr>
@@ -502,37 +507,40 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       </Modal>
 
       {/* Step3b: delivery time */}
-      <Modal centered open={step3bModal} inverted dimmer='blurring'>
+      <Modal centered={false} open={step3bModal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550,  marginTop: 80 }}>
         <Modal.Header
-        style={{
-          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
-          color: "white",
-          marginBottom: 15
-        }}>
+          style={{
+            backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
+
+            color: "white",
+            marginBottom: 15
+          }}>
           Select a perferred delivery date/time
         </Modal.Header>
         <Modal.Content>
-          <Container textAlign='center'>
-            <DatePicker
-              selected={new Date()}
-              onChange={date => setDeliveryDate(date)}
-              showTimeSelect
-              timeFormat="h:mm aa"
-              timeIntervals={15}
-              timeCaption="time"
-              dateFormat="MMMM d, yyyy"
-              inline
-              minDate={new Date()}
-              // maxDate={moment().add(2,'d').toDate()}
-              minTime={now.hours(10).minutes(0).toDate()}
-              maxTime={now.hours(21).minutes(45).toDate()}
-            />
+          <div style={{ width: '100%', textAlign: 'center' }}>
+            <div>
+              <DatePicker
+                selected={new Date()}
+                onChange={date => setDeliveryDate(date)}
+                showTimeSelect
+                timeFormat="h:mm aa"
+                timeIntervals={15}
+                timeCaption="time"
+                dateFormat="MMMM d, yyyy"
+                inline
+                minDate={new Date()}
+                // maxDate={moment().add(2,'d').toDate()}
+                minTime={now.hours(10).minutes(0).toDate()}
+                maxTime={now.hours(21).minutes(45).toDate()}
+              />
+            </div>
             <h4>Perferred delivery time:&nbsp;
             {!deliveryDate ? null : deliveryDate.toLocaleString('en-US',
               { weekday: 'short', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}
             </h4><br />
             <p>(We will contact you to comfirm the actual delivery time later.)</p>
-          </Container>
+          </div>
           {/* </Segment> */}
         </Modal.Content>
         <Modal.Actions>
@@ -571,14 +579,14 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       </Modal>
 
       {/* Step4b: enter phone number */}
-      <Modal centered open={step4bModal} inverted dimmer='blurring'>
-        {/* <Modal centered open={openModal} inverted dimmer='blurring'> */}
+      <Modal centered={false} open={step4bModal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550, marginTop: 80 }}>
         <Modal.Header
-        style={{
-          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
-          color: "white",
-          marginBottom: 15
-        }}>
+          style={{
+            backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
+
+            color: "white",
+            marginBottom: 15
+          }}>
           Enter your shipping address
         </Modal.Header>
         <Modal.Content>
@@ -713,13 +721,14 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       </Modal>
 
       {/* Step5b: delivery confirmation */}
-      <Modal centered open={step5bModal} inverted dimmer='blurring'>
+      <Modal centered={false} open={step5bModal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550, marginTop: 80 }}>
         <Modal.Header
-        style={{
-          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
-          color: "white",
-          marginBottom: 15
-        }}>
+          style={{
+            backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
+
+            color: "white",
+            marginBottom: 15
+          }}>
           Confirmation
         </Modal.Header>
         <Modal.Content>
