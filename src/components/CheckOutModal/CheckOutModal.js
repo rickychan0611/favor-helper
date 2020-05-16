@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import moment from 'moment'
 import firebase from 'firebase'
 import db from '../../firestore'
@@ -26,7 +26,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
   const [qty, setQty] = useState(1)
   const [pickupDate, setPickupDate] = useState(null)
   const [deliveryDate, setDeliveryDate] = useState(null)
-  const [address, setAddress] = useState(null)
   const [phoneNumber, setPhoneNumber] = useState()
   const [deliveryForm, setDeliveryForm] = useState({})
   const [step2Modal, setStep2Modal] = useState(false)
@@ -36,9 +35,9 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
   const [step3bModal, setStep3bModal] = useState(false)
   const [step4bModal, setStep4bModal] = useState(false)
   const [step5bModal, setStep5bModal] = useState(false)
-
   const [pickupOrDelivery, setPickupOrDelivery] = useState("Pick-up")
-
+  const [loading, setLoading] = useState(false)
+  const [confirmedModal, setConfirmedModal] = useState(false)
   const now = moment()
 
   const addDays = (theDate, days) => {
@@ -71,6 +70,69 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
     }
   }
 
+  const clearField = (name) => {
+    setDeliveryForm({[name]: ''})
+  }
+
+  const submitDeliveryOrder = () => {
+    setLoading(true)
+    db.collection('users').doc(user.id).update(
+      { address: deliveryForm }
+    )
+    let newOrder = db.collection('orders').doc()
+    newOrder.set({
+      id: newOrder.id,
+      createAt: new Date(),
+      buyerUid: user.uid,
+      posterUid: post.posterUid,
+      shippingMethod: pickupOrDelivery,
+      deliveryForm,
+      deliveryDate,
+    }).then(doc => {
+      setLoading(false)
+      setStep5aModal(false)
+      setStep5bModal(false)
+      setConfirmedModal(true)
+      setQty(1)
+      setPickupDate(null)
+      setDeliveryDate(null)
+      setPhoneNumber()
+      setDeliveryForm({})
+    })
+  }
+
+  const submitPickupOrder = () => {
+    setLoading(true)
+    db.collection('users').doc(user.id).update(
+      { address: { phoneNumber }}
+    )
+    let newOrder = db.collection('orders').doc()
+    newOrder.set({
+      id: newOrder.id,
+      createAt: new Date(),
+      buyerUid: user.uid,
+      posterUid: post.posterUid,
+      shippingMethod: pickupOrDelivery,
+      pickupAddress: post.address
+    }).then(doc => {
+      setLoading(false)
+      setStep5aModal(false)
+      setStep5bModal(false)
+      setConfirmedModal(true)
+      setQty(1)
+      setPickupDate(null)
+      setDeliveryDate(null)
+      setPhoneNumber()
+      setDeliveryForm({})
+    })
+  }
+
+  useEffect(()=>{
+    if (user) {
+      setDeliveryForm(user.address)
+    }
+  },[user])
+
   return (
     <>
       {/* Step 1 */}
@@ -79,24 +141,28 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           Set your quantity
         </Modal.Header>
         <Modal.Content>
-          <Segment placeholder basic>
-            <Header icon>
-              How many do you want?
-             </Header>
-            <Grid centered column={3}>
-              <Grid.Column width={3}>
-                <Button circular size="large" icon='minus'
-                  onClick={() => { handleQty(-1) }} />
-              </Grid.Column>
-              <Grid.Column textAlign='center' width={3}>
-                <h1>{qty}</h1>
-              </Grid.Column>
-              <Grid.Column width={3}>
-                <Button circular size="large" icon='plus'
-                  onClick={() => { handleQty(1) }} />
-              </Grid.Column>
-            </Grid>
-          </Segment>
+          <Header icon>
+            How many do you want?
+             </Header><br />
+          <Button circular size="large" icon='minus'
+            onClick={() => { handleQty(-1) }} />
+          <span style={{ fontSize: 28, verticalAlign: 'sub', marginLeft: 12, marginRight: 14 }}>{qty}</span>
+          <Button circular size="large" icon='plus'
+            onClick={() => { handleQty(1) }} />
+          <br /> <br /> <br />
+          <Form>
+            <h3>
+              Any special request or message for your order?&nbsp;(optional)
+            </h3>
+            <Form.TextArea
+              // label="Any special request or message for your order? (optional)"
+              placeholder="ex. allergy to peanut or put a name on the birthday cake"
+              value={deliveryForm.request}
+              onChange={(e, { value }) => { setDeliveryForm({...deliveryForm, request: value})
+             }}
+            />
+          </Form>
+          {/* </Segment> */}
         </Modal.Content>
         <Modal.Actions>
           <Button color='grey' onClick={() => { setOpenModal(false) }}>
@@ -242,8 +308,10 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
               type='tel'
               icon='phone'
               iconPosition='left'
-              value={phoneNumber}
-              onChange={handlePhoneNumber}
+              value={deliveryForm.phoneNumber}
+              onChange={(e, {value}) => {
+                setDeliveryForm({...deliveryForm, phoneNumber})
+              }}
             />
           </Container>
           {/* </Segment> */}
@@ -276,18 +344,55 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
         </Modal.Header>
         <Modal.Content>
           <h4>
-            Meal: {post.title}<br />
-            Qty: {qty}<br />
-            Total: ${qty * post.price}<br />
-            Pickup address:&nbsp;
-            {post.address[1].long_name},&nbsp;
-            {post.address[2].long_name},&nbsp;
-            {post.address[3].long_name},&nbsp;
-            {post.address[4].short_name},&nbsp;
-            {post.address[5].short_name}&nbsp;<br />
-            Pickup Time:  {!pickupDate ? null : pickupDate.toLocaleString('en-US',
-            { weekday: 'short', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}<br />
-            Phone number: {phoneNumber}
+            <table>
+              <tr>
+                <td>Meal:</td>
+                <td>{post.title}</td>
+              </tr>
+              <tr>
+                <td>Qty:</td>
+                <td>{qty}</td>
+              </tr>
+              <tr>
+                <td>Total:</td>
+                <td>${qty * post.price}</td>
+              </tr>
+              <tr>
+                <td>Pickup address:</td>
+                <td>{post.address[1].long_name}</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td>{post.address[2].long_name}</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td>{post.address[3].long_name}</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td>{post.address[4].short_name}</td>
+              </tr>
+              <tr>
+                <td> </td>
+                <td>{post.address[5].short_name}</td>
+              </tr>
+              <tr>
+                <td>Pickup Time: </td>
+                <td>{!pickupDate ? null : pickupDate.toLocaleString('en-US',
+                  { weekday: 'short', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}</td>
+              </tr>
+              <tr>
+                <td>Phone number: </td>
+                <td>{phoneNumber}</td>
+              </tr>
+              {deliveryForm.request ?
+                <tr>
+                  <td>Special Request: </td>
+                  <td>{deliveryForm.request}</td>
+                </tr>
+                : null}
+            </table>
           </h4>
         </Modal.Content>
         <Modal.Actions>
@@ -300,12 +405,15 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
             <Icon name='arrow left' />Back
           </Button>
 
-          <Button disabled={!phoneNumber} color='green' onClick={() => {
-            setStep5aModal(false)
-            // setStep5aModal(true)
-          }}>
-            Confirm &nbsp; <Icon name='check' />
-          </Button>
+          {!loading ?
+            <Button color='green' onClick={() => {
+              submitPickupOrder()
+            }}>
+              Confirm &nbsp; <Icon name='check' />
+            </Button> :
+            <Button color='green' loading onClick={() => {
+            }}>Loading</Button>
+          }
 
         </Modal.Actions>
       </Modal>
@@ -374,7 +482,9 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
                 label='First Name'
                 name="firstName"
                 value={deliveryForm.firstName}
-                onChange={handleDeliveryForm} />
+                onChange={handleDeliveryForm} 
+                icon={<Icon name='close' link onClick={()=>{clearField("firstName")}}/>}
+                />
               <Form.Input
                 required
                 label='Last Name'
@@ -466,7 +576,7 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
       </Modal>
 
-      {/* Step5b: pickup confirmation */}
+      {/* Step5b: delivery confirmation */}
       <Modal centered open={step5bModal} inverted dimmer='blurring'>
         <Modal.Header>
           Confirmation
@@ -507,49 +617,65 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
               {deliveryForm.postalCode ?
                 <tr>
                   <td> </td>
-                  <td>{deliveryForm.postalCode}, {deliveryForm.country}</td>
+                  <td>{deliveryForm.postalCode}</td>
                 </tr> : null
               }
               <tr>
                 <td> </td>
                 <td>{deliveryForm.country}</td>
               </tr>
-                {deliveryForm.deliveryInstruction ?
-                  <tr>
-                    <td>Delivery instruction:</td>
-                    <td>{deliveryForm.deliveryInstruction}</td>
-                  </tr> : null
-                }
+              {deliveryForm.deliveryInstruction ?
                 <tr>
-                  <td>Delivery Time:  </td>
-                  <td>{!deliveryDate ? null : deliveryDate.toLocaleString('en-US',
-                    { weekday: 'short', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}</td>
-                </tr>
+                  <td>Delivery instruction:</td>
+                  <td>{deliveryForm.deliveryInstruction}</td>
+                </tr> : null
+              }
+              <tr>
+                <td>Delivery Time:  </td>
+                <td>{!deliveryDate ? null : deliveryDate.toLocaleString('en-US',
+                  { weekday: 'short', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}</td>
+              </tr>
+              {deliveryForm.request ?
                 <tr>
-                  <td>Phone number:</td>
-                  <td>{deliveryForm.phoneNumber}</td>
-                </tr>
+                  <td>Special request:</td>
+                  <td>{deliveryForm.request}</td>
+                </tr> : null
+              }
             </table>
           </h4>
         </Modal.Content>
-          <Modal.Actions>
-            <Button icon="close" color='grey' onClick={() => { setStep5bModal(false) }} />
+        <Modal.Actions>
+          <Button icon="close" color='grey' onClick={() => { setStep5bModal(false) }} />
 
-            <Button color='green' onClick={() => {
-              setStep4bModal(true)
-              setStep5bModal(false)
-            }}>
-              <Icon name='arrow left' />Back
+          <Button color='green' onClick={() => {
+            setStep4bModal(true)
+            setStep5bModal(false)
+          }}>
+            <Icon name='arrow left' />Back
           </Button>
 
+          {!loading ?
             <Button color='green' onClick={() => {
-              setStep5bModal(false)
-              // setStep5aModal(true)
+              submitDeliveryOrder()
             }}>
               Confirm &nbsp; <Icon name='check' />
-            </Button>
+            </Button> :
+            <Button color='green' loading onClick={() => {
+            }}>Loading</Button>
+          }
+        </Modal.Actions>
+      </Modal>
 
-          </Modal.Actions>
+      <Modal open={confirmedModal}>
+        <Segment basic placeholder>
+          <Header icon>
+            <Icon name="check circle outline" size="huge" color="green" />
+            <h4>Thank you! Your order has been placed. <br />
+          You can view your orders in your profile page.</h4>
+          </Header>
+          <Divider />
+          <Button color="green" onClick={() => { setConfirmedModal(false) }}>OK</Button>
+        </Segment>
       </Modal>
     </>
   )

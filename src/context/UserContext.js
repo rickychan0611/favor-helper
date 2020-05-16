@@ -4,7 +4,6 @@ import db from '../firestore'
 import noAvatar from '../assets/images/no-avatar.png'
 import { useHistory } from "react-router-dom";
 
-
 export const UserContext = createContext()
 
 const UserContextProvider = ({ children }) => {
