@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
 import moment from 'moment'
-import firebase from 'firebase'
 import db from '../../firestore'
 import {
   Modal,
@@ -26,7 +25,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
   const [qty, setQty] = useState(1)
   const [pickupDate, setPickupDate] = useState(null)
   const [deliveryDate, setDeliveryDate] = useState(null)
-  const [phoneNumber, setPhoneNumber] = useState()
   const [deliveryForm, setDeliveryForm] = useState({})
   const [step2Modal, setStep2Modal] = useState(false)
   const [step3aModal, setStep3aModal] = useState(false)
@@ -54,10 +52,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
   const handlePickupDate = (e, { value }) => {
     setPickupDate(value)
-  }
-
-  const handlePhoneNumber = (e, { value }) => {
-    setPhoneNumber(value)
   }
 
   const handleQty = (counter) => {
@@ -135,7 +129,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
         <Modal.Header
           style={{
             backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
-
             color: "white",
             marginBottom: 15
           }}>
@@ -189,7 +182,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
         <Modal.Header
           style={{
             backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
-
             color: "white",
             marginBottom: 15
           }}>
@@ -237,7 +229,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
           <Button style={{
             backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
             color: "white"
           }}
             onClick={() => {
@@ -250,7 +241,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           {pickupOrDelivery === 'Delivery' ?
             <Button style={{
               backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
               color: "white"
             }}
               onClick={() => {
@@ -279,15 +269,15 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
         <Modal.Header
           style={{
             backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
-
             color: "white",
             marginBottom: 15
           }}>
           Select a pickup date/time
         </Modal.Header>
         <Modal.Content>
-          <Container textAlign='center'>
-            <DatePicker
+        <div style={{ width: '100%', minWidth: 300, textAlign: 'center' }}>
+            <div>            
+              <DatePicker
               selected={new Date()}
               onChange={date => setPickupDate(date)}
               showTimeSelect
@@ -301,17 +291,17 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
               minTime={now.hours(10).minutes(0).toDate()}
               maxTime={now.hours(21).minutes(45).toDate()}
             />
+            </div>
             <h4>Pickup time:&nbsp;
             {!pickupDate ? null : pickupDate.toLocaleString('en-US',
               { weekday: 'short', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}
             </h4>
-          </Container>
+            </div>
           {/* </Segment> */}
         </Modal.Content>
         <Modal.Actions>
           <Button icon="close" style={{ backgroundColor: "#bcbbbd", color: "white" }}
             onClick={() => { setStep3aModal(false) }} />
-
 
           <Button style={{
             backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
@@ -349,7 +339,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
         <Modal.Header
           style={{
             backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
-
             color: "white",
             marginBottom: 15
           }}>
@@ -411,7 +400,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
         <Modal.Header
           style={{
             backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
-
             color: "white",
             marginBottom: 15
           }}>
@@ -476,7 +464,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
           <Button style={{
             backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
             color: "white"
           }} onClick={() => {
             setStep4aModal(true)
@@ -488,7 +475,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           {!loading ?
             <Button style={{
               backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
               color: "white"
             }} onClick={() => {
               submitPickupOrder()
@@ -511,14 +497,13 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
         <Modal.Header
           style={{
             backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
-
             color: "white",
             marginBottom: 15
           }}>
           Select a perferred delivery date/time
         </Modal.Header>
         <Modal.Content>
-          <div style={{ width: '100%', textAlign: 'center' }}>
+          <div style={{ width: '100%', minWidth: 300, textAlign: 'center' }}>
             <div>
               <DatePicker
                 selected={new Date()}
@@ -549,7 +534,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
           <Button style={{
             backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
             color: "white"
           }} onClick={() => {
             setStep2Modal(true)
@@ -583,7 +567,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
         <Modal.Header
           style={{
             backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
-
             color: "white",
             marginBottom: 15
           }}>
@@ -682,7 +665,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
               <Button style={{
                 backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
                 color: "white"
               }} onClick={() => {
                 setStep3bModal(true)
@@ -801,7 +783,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           <Button
             style={{
               backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
               color: "white"
             }}
             onClick={() => {
@@ -814,7 +795,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           {!loading ?
             <Button style={{
               backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
               color: "white"
             }}
               onClick={() => {
@@ -824,7 +804,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
             </Button> :
             <Button style={{
               backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
               color: "white"
             }}
               loading onClick={() => {
@@ -843,7 +822,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           <Divider />
           <Button style={{
             backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
             color: "white"
           }}
             onClick={() => { setConfirmedModal(false) }}>OK</Button>
