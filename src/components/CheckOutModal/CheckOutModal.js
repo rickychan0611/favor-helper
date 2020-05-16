@@ -50,7 +50,6 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
   const handleDeliveryForm = (e, { value, name }) => {
     setDeliveryForm({ ...deliveryForm, [name]: value })
-    console.log(deliveryForm)
   }
 
   const handlePickupDate = (e, { value }) => {
@@ -71,7 +70,7 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
   }
 
   const clearField = (name) => {
-    setDeliveryForm({[name]: ''})
+    setDeliveryForm({ [name]: '' })
   }
 
   const submitDeliveryOrder = () => {
@@ -96,15 +95,13 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       setQty(1)
       setPickupDate(null)
       setDeliveryDate(null)
-      setPhoneNumber()
-      setDeliveryForm({})
     })
   }
 
   const submitPickupOrder = () => {
     setLoading(true)
     db.collection('users').doc(user.id).update(
-      { address: { phoneNumber }}
+      { address: { phoneNumber: deliveryForm.phoneNumber } }
     )
     let newOrder = db.collection('orders').doc()
     newOrder.set({
@@ -122,22 +119,25 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       setQty(1)
       setPickupDate(null)
       setDeliveryDate(null)
-      setPhoneNumber()
-      setDeliveryForm({})
     })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     if (user) {
       setDeliveryForm(user.address)
     }
-  },[user])
+  }, [user])
 
   return (
     <>
       {/* Step 1 */}
       <Modal centered open={openModal} inverted dimmer='blurring'>
-        <Modal.Header>
+        <Modal.Header
+        style={{
+          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
+          color: "white",
+          marginBottom: 15
+        }}>
           Set your quantity
         </Modal.Header>
         <Modal.Content>
@@ -158,17 +158,22 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
               // label="Any special request or message for your order? (optional)"
               placeholder="ex. allergy to peanut or put a name on the birthday cake"
               value={deliveryForm.request}
-              onChange={(e, { value }) => { setDeliveryForm({...deliveryForm, request: value})
-             }}
+              onChange={(e, { value }) => {
+                setDeliveryForm({ ...deliveryForm, request: value })
+              }}
             />
           </Form>
           {/* </Segment> */}
         </Modal.Content>
         <Modal.Actions>
-          <Button color='grey' onClick={() => { setOpenModal(false) }}>
+          <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
+            onClick={() => { setOpenModal(false) }}>
             <Icon name='close' /> Cancel
           </Button>
-          <Button color='green'
+          <Button style={{
+            backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+            color: "white"
+          }}
             onClick={() => {
               setStep2Modal(true)
               setOpenModal(false)
@@ -180,7 +185,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
       {/* Step 2 */}
       <Modal centered open={step2Modal} inverted dimmer='blurring'>
-        <Modal.Header>
+        <Modal.Header 
+        style={{
+          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
+          color: "white",
+          marginBottom: 15
+        }}>
           Self-pickup or delivery?
         </Modal.Header>
         <Modal.Content>
@@ -220,23 +230,38 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="close" color='grey' onClick={() => { setStep2Modal(false) }} />
+          <Button icon="close" style={{ backgroundColor: "#bcbbbd", color: "white" }}
+            onClick={() => { setStep2Modal(false) }} />
 
-          <Button color='green' onClick={() => {
-            setOpenModal(true)
-            setStep2Modal(false)
-          }}>
+          <Button style={{
+            backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+            color: "white"
+          }}
+            onClick={() => {
+              setOpenModal(true)
+              setStep2Modal(false)
+            }}>
             <Icon name='arrow left' />Back
           </Button>
 
           {pickupOrDelivery === 'Delivery' ?
-            <Button color='green' onClick={() => {
-              setStep2Modal(false)
-              setStep3bModal(true)
-            }}>
+            <Button style={{
+              backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+              color: "white"
+            }}
+              onClick={() => {
+                setStep2Modal(false)
+                setStep3bModal(true)
+              }}>
               {pickupOrDelivery}<Icon name='arrow right' />
             </Button> :
-            <Button color='green' onClick={() => {
+            <Button style={{
+              backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+              color: "white"
+            }} onClick={() => {
               setStep2Modal(false)
               setStep3aModal(true)
             }}>
@@ -249,7 +274,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
       {/* Step3a: pickup time */}
       <Modal centered open={step3aModal} inverted dimmer='blurring'>
-        <Modal.Header>
+        <Modal.Header
+        style={{
+          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
+          color: "white",
+          marginBottom: 15
+        }}>
           Select a pickup date/time
         </Modal.Header>
         <Modal.Content>
@@ -276,20 +306,35 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           {/* </Segment> */}
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="close" color='grey' onClick={() => { setStep3aModal(false) }} />
+          <Button icon="close" style={{ backgroundColor: "#bcbbbd", color: "white" }}
+            onClick={() => { setStep3aModal(false) }} />
 
 
-          <Button color='green' onClick={() => {
+          <Button style={{
+            backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+            color: "white"
+          }} onClick={() => {
             setStep2Modal(true)
             setStep3aModal(false)
           }}>
             <Icon name='arrow left' />Back
           </Button>
 
-          <Button disabled={!pickupDate} color='green' onClick={() => {
-            setStep3aModal(false)
-            setStep4aModal(true)
-          }}>
+          <Button disabled={!pickupDate}
+            style={pickupDate ?
+              {
+                backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+                color: "white"
+              } :
+              {
+                backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+                color: "grey"
+              }}
+            onClick={() => {
+              setStep3aModal(false)
+              setStep4aModal(true)
+            }}>
             Next<Icon name='arrow right' />
           </Button>
 
@@ -298,7 +343,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
       {/* Step4a: enter phone number */}
       <Modal centered open={step4aModal} inverted dimmer='blurring'>
-        <Modal.Header>
+        <Modal.Header
+        style={{
+          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
+          color: "white",
+          marginBottom: 15
+        }}>
           Enter your phone number
         </Modal.Header>
         <Modal.Content>
@@ -309,28 +359,43 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
               icon='phone'
               iconPosition='left'
               value={deliveryForm.phoneNumber}
-              onChange={(e, {value}) => {
-                setDeliveryForm({...deliveryForm, phoneNumber})
+              onChange={(e, { value }) => {
+                setDeliveryForm({ ...deliveryForm, phoneNumber: value })
               }}
             />
+            &nbsp;<Icon name='close' link onClick={() => { clearField("phoneNumber") }} />
           </Container>
           {/* </Segment> */}
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="close" color='grey' onClick={() => { setStep4aModal(false) }} />
+          <Button icon="close"
+            style={{ backgroundColor: "#bcbbbd", color: "white" }}
+            onClick={() => { setStep4aModal(false) }} />
 
-
-          <Button color='green' onClick={() => {
+          <Button style={{
+            backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+            color: "white"
+          }} onClick={() => {
             setStep3aModal(true)
             setStep4aModal(false)
           }}>
             <Icon name='arrow left' />Back
           </Button>
 
-          <Button disabled={!phoneNumber} color='green' onClick={() => {
-            setStep4aModal(false)
-            setStep5aModal(true)
-          }}>
+          <Button disabled={!deliveryForm.phoneNumber}
+            style={deliveryForm.phoneNumber ?
+              {
+                backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+                color: "white"
+              } :
+              {
+                backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+                color: "grey"
+              }}
+            onClick={() => {
+              setStep4aModal(false)
+              setStep5aModal(true)
+            }}>
             Next<Icon name='arrow right' />
           </Button>
 
@@ -339,7 +404,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
       {/* Step5a: pickup confirmation */}
       <Modal centered open={step5aModal} inverted dimmer='blurring'>
-        <Modal.Header>
+        <Modal.Header
+        style={{
+          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
+          color: "white",
+          marginBottom: 15
+        }}>
           Confirmation
         </Modal.Header>
         <Modal.Content>
@@ -396,9 +466,14 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           </h4>
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="close" color='grey' onClick={() => { setStep5aModal(false) }} />
+          <Button icon="close" style={{ backgroundColor: "#bcbbbd", color: "white" }}
+            onClick={() => { setStep5aModal(false) }} />
 
-          <Button color='green' onClick={() => {
+          <Button style={{
+            backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+            color: "white"
+          }} onClick={() => {
             setStep4aModal(true)
             setStep5aModal(false)
           }}>
@@ -406,12 +481,20 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           </Button>
 
           {!loading ?
-            <Button color='green' onClick={() => {
+            <Button style={{
+              backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+              color: "white"
+            }} onClick={() => {
               submitPickupOrder()
             }}>
               Confirm &nbsp; <Icon name='check' />
             </Button> :
-            <Button color='green' loading onClick={() => {
+            <Button style={{
+              backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+              color: "white"
+            }} loading onClick={() => {
             }}>Loading</Button>
           }
 
@@ -420,7 +503,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
       {/* Step3b: delivery time */}
       <Modal centered open={step3bModal} inverted dimmer='blurring'>
-        <Modal.Header>
+        <Modal.Header
+        style={{
+          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
+          color: "white",
+          marginBottom: 15
+        }}>
           Select a perferred delivery date/time
         </Modal.Header>
         <Modal.Content>
@@ -448,19 +536,34 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           {/* </Segment> */}
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="close" color='grey' onClick={() => { setStep3bModal(false) }} />
+          <Button icon="close" style={{ backgroundColor: "#bcbbbd", color: "white" }}
+            onClick={() => { setStep3bModal(false) }} />
 
-          <Button color='green' onClick={() => {
+          <Button style={{
+            backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+            color: "white"
+          }} onClick={() => {
             setStep2Modal(true)
             setStep3bModal(false)
           }}>
             <Icon name='arrow left' />Back
           </Button>
 
-          <Button disabled={!deliveryDate} color='green' onClick={() => {
-            setStep3bModal(false)
-            setStep4bModal(true)
-          }}>
+          <Button disabled={!deliveryDate}
+            style={deliveryDate ?
+              {
+                backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+                color: "white"
+              } :
+              {
+                backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+                color: "grey"
+              }}
+            onClick={() => {
+              setStep3bModal(false)
+              setStep4bModal(true)
+            }}>
             Next<Icon name='arrow right' />
           </Button>
 
@@ -470,7 +573,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       {/* Step4b: enter phone number */}
       <Modal centered open={step4bModal} inverted dimmer='blurring'>
         {/* <Modal centered open={openModal} inverted dimmer='blurring'> */}
-        <Modal.Header>
+        <Modal.Header
+        style={{
+          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
+          color: "white",
+          marginBottom: 15
+        }}>
           Enter your shipping address
         </Modal.Header>
         <Modal.Content>
@@ -482,91 +590,119 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
                 label='First Name'
                 name="firstName"
                 value={deliveryForm.firstName}
-                onChange={handleDeliveryForm} 
-                icon={<Icon name='close' link onClick={()=>{clearField("firstName")}}/>}
-                />
+                onChange={handleDeliveryForm}
+                icon={<Icon name='close' link onClick={() => { clearField("firstName") }} />}
+              />
               <Form.Input
                 required
                 label='Last Name'
                 name="lastName"
                 value={deliveryForm.lastName}
-                onChange={handleDeliveryForm} />
+                onChange={handleDeliveryForm}
+                icon={<Icon name='close' link onClick={() => { clearField("lastName") }} />}
+              />
             </Form.Group>
             <Form.Input
               required
               label='Address line 1'
               name="address1"
               value={deliveryForm.address1}
-              onChange={handleDeliveryForm} />
+              onChange={handleDeliveryForm}
+              icon={<Icon name='close' link onClick={() => { clearField("address1") }} />}
+            />
             <Form.Input
               label='Address line 2'
               name="address2"
               value={deliveryForm.address2}
-              onChange={handleDeliveryForm} />
+              onChange={handleDeliveryForm}
+              icon={<Icon name='close' link onClick={() => { clearField("address2") }} />}
+            />
             <Form.Group widths='equal'>
               <Form.Input
                 required
                 label='City'
                 name="city"
                 value={deliveryForm.city}
-                onChange={handleDeliveryForm} />
+                onChange={handleDeliveryForm}
+                icon={<Icon name='close' link onClick={() => { clearField("city") }} />}
+              />
               <Form.Input
                 required
                 label='Province / State / Region'
                 name="province"
                 value={deliveryForm.province}
-                onChange={handleDeliveryForm} />
+                onChange={handleDeliveryForm}
+                icon={<Icon name='close' link onClick={() => { clearField("province") }} />}
+              />
               <Form.Input
                 label='Postal code / zip'
                 name="postalCode"
                 value={deliveryForm.postalCode}
-                onChange={handleDeliveryForm} />
+                onChange={handleDeliveryForm}
+                icon={<Icon name='close' link onClick={() => { clearField("postalCode") }} />}
+              />
               <Form.Input
                 required
                 label='Country'
                 name="country"
                 value={deliveryForm.country}
-                onChange={handleDeliveryForm} />
+                onChange={handleDeliveryForm}
+                icon={<Icon name='close' link onClick={() => { clearField("country") }} />}
+              />
             </Form.Group>
             <Form.Input
               required
               label='Phone Number'
               name="phoneNumber"
               value={deliveryForm.phoneNumber}
-              onChange={handleDeliveryForm} />
+              onChange={handleDeliveryForm}
+              icon={<Icon name='close' link onClick={() => { clearField("phoneNumber") }} />}
+            />
             <Form.TextArea
               label='Delivery Instruction'
               placeholder="ex. Buzz number or enter from back door."
               name="deliveryInstruction"
               value={deliveryForm.deliveryInstruction}
-              onChange={handleDeliveryForm} />
+              onChange={handleDeliveryForm}
+            />
             {/* </Segment> */}
 
             <Divider />
             <div style={{ float: 'right', marginBottom: 20 }}>
-              <Button icon="close" color='grey' onClick={() => { setStep4bModal(false) }} />
+              <Button icon="close" style={{ backgroundColor: "#bcbbbd", color: "white" }}
+                onClick={() => { setStep4bModal(false) }} />
 
-              <Button color='green' onClick={() => {
+              <Button style={{
+                backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+                color: "white"
+              }} onClick={() => {
                 setStep3bModal(true)
                 setStep4bModal(false)
               }}>
                 <Icon name='arrow left' />Back
           </Button>
 
-              <Button content='Submit' color='green' onClick={() => {
-                if (
-                  deliveryForm.firstName &&
-                  deliveryForm.lastName &&
-                  deliveryForm.address1 &&
-                  deliveryForm.city &&
-                  deliveryForm.province &&
-                  deliveryForm.country &&
-                  deliveryForm.phoneNumber
-                ) {
-                  setStep4bModal(false)
-                  setStep5bModal(true)
-                }
-              }}>
+              <Button content='Submit'
+                style={{
+                  backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+                  color: "white"
+                }}
+                onClick={() => {
+                  if (
+                    deliveryForm.firstName &&
+                    deliveryForm.lastName &&
+                    deliveryForm.address1 &&
+                    deliveryForm.city &&
+                    deliveryForm.province &&
+                    deliveryForm.country &&
+                    deliveryForm.phoneNumber
+                  ) {
+                    setStep4bModal(false)
+                    setStep5bModal(true)
+                  }
+                }}>
                 Next<Icon name='arrow right' />
               </Button>
             </div>
@@ -578,7 +714,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
       {/* Step5b: delivery confirmation */}
       <Modal centered open={step5bModal} inverted dimmer='blurring'>
-        <Modal.Header>
+        <Modal.Header
+        style={{
+          backgroundImage: 'linear-gradient(to top right, #7863d6, #b1fcfb)',
+          color: "white",
+          marginBottom: 15
+        }}>
           Confirmation
         </Modal.Header>
         <Modal.Content>
@@ -645,23 +786,40 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           </h4>
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="close" color='grey' onClick={() => { setStep5bModal(false) }} />
+          <Button icon="close" style={{ backgroundColor: "#bcbbbd", color: "white" }}
+            onClick={() => { setStep5bModal(false) }} />
 
-          <Button color='green' onClick={() => {
-            setStep4bModal(true)
-            setStep5bModal(false)
-          }}>
+          <Button
+            style={{
+              backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+              color: "white"
+            }}
+            onClick={() => {
+              setStep4bModal(true)
+              setStep5bModal(false)
+            }}>
             <Icon name='arrow left' />Back
           </Button>
 
           {!loading ?
-            <Button color='green' onClick={() => {
-              submitDeliveryOrder()
-            }}>
+            <Button style={{
+              backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+              color: "white"
+            }}
+              onClick={() => {
+                submitDeliveryOrder()
+              }}>
               Confirm &nbsp; <Icon name='check' />
             </Button> :
-            <Button color='green' loading onClick={() => {
-            }}>Loading</Button>
+            <Button style={{
+              backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+              color: "white"
+            }}
+              loading onClick={() => {
+              }}>Loading</Button>
           }
         </Modal.Actions>
       </Modal>
@@ -674,7 +832,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           You can view your orders in your profile page.</h4>
           </Header>
           <Divider />
-          <Button color="green" onClick={() => { setConfirmedModal(false) }}>OK</Button>
+          <Button style={{
+            backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+
+            color: "white"
+          }}
+            onClick={() => { setConfirmedModal(false) }}>OK</Button>
         </Segment>
       </Modal>
     </>

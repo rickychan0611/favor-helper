@@ -1,13 +1,6 @@
-import React, { useContext, useEffect } from 'react'
-import { useHistory } from "react-router-dom";
-import { Button, Dimmer, Image, Header, Segment, Icon, Modal, Container } from 'semantic-ui-react'
-import noImage from '../../assets/images/no-image.jpg'
+import React from 'react'
+import { Dimmer} from 'semantic-ui-react'
 import styles from './styles'
-import { PickFile } from '../../components'
-import { ImageSliderContext } from '../../context/ImageSliderContext'
-import addImage from '../../assets/images/add-image.jpg'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import { Placeholder } from 'semantic-ui-react'
 import { CarouselProvider, Slider, Slide, DotGroup, Dot } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import useWindowDimensions from '../../functions/getWindowDimensions'

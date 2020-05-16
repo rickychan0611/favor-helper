@@ -45,7 +45,12 @@ const PriceTimeColumn = ({ post, poster }) => {
       <Segment >
         <Segment>
           <Header as='h1'>Price:  ${post.price} </Header>
-          <Button fluid color="green" size='big' onClick={() => { setOpenModal(true) }}>I'm Hungry. Request Meal</Button>
+          <Button fluid
+            style={{
+              backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+              color: "white"
+            }}
+            size='big' onClick={() => { setOpenModal(true) }}>I'm Hungry. Request Meal</Button>
         </Segment>
         <Divider fluid />
 
