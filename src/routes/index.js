@@ -6,6 +6,7 @@ import SignIn from "../views/SignIn"
 import Home from "../views/Home"
 import Profile from "../views/Profile"
 import PostDetail from "../views/PostDetail"
+import MyOrders from "../views/MyOrders"
 import { CreatePostForm, TopBar, Map, SideNavBar, Footer, CreatePostFormContainer } from "../components"
 import UserContext from '../context/UserContext'
 
@@ -50,6 +51,7 @@ export default (props) => {
               <Route path="/sign-in" component={SignIn} />
               <Route path="/sign-out" component={Home} />
               <Route path="/profile" component={Profile} />
+              <Route path="/myOrders" component={MyOrders} />
               <Route path="/user/:id" component={Profile} />
               <Route path="/map" component={() => <Map height="80vh" />} />
             </div>

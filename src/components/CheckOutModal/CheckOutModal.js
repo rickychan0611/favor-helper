@@ -15,7 +15,7 @@ import {
   Radio,
 } from 'semantic-ui-react'
 import styles from './styles'
-import { Map } from '../../components'
+import { Map, FavButton } from '../../components'
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { UserContext } from '../../context/UserContext'
@@ -23,8 +23,8 @@ import { UserContext } from '../../context/UserContext'
 const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
   const { user, setUser } = useContext(UserContext)
   const [qty, setQty] = useState(1)
-  const [pickupDate, setPickupDate] = useState(null)
-  const [deliveryDate, setDeliveryDate] = useState(null)
+  const [pickupDate, setPickupDate] = useState(new Date())
+  const [deliveryDate, setDeliveryDate] = useState(new Date())
   const [deliveryForm, setDeliveryForm] = useState({})
   const [step2Modal, setStep2Modal] = useState(false)
   const [step3aModal, setStep3aModal] = useState(false)
@@ -81,6 +81,8 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       shippingMethod: pickupOrDelivery,
       deliveryForm,
       deliveryDate,
+      post,
+      qty
     }).then(doc => {
       setLoading(false)
       setStep5aModal(false)
@@ -104,7 +106,10 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       buyerUid: user.uid,
       posterUid: post.posterUid,
       shippingMethod: pickupOrDelivery,
-      pickupAddress: post.address
+      pickupAddress: post.address,
+      pickupDate,
+      post,
+      qty
     }).then(doc => {
       setLoading(false)
       setStep5aModal(false)
@@ -275,28 +280,27 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           Select a pickup date/time
         </Modal.Header>
         <Modal.Content>
-        <div style={{ width: '100%', minWidth: 300, textAlign: 'center' }}>
-            <div>            
+          <div style={{ width: '100%', minWidth: 300, textAlign: 'center' }}>
+            <div>
               <DatePicker
-              selected={new Date()}
-              onChange={date => setPickupDate(date)}
-              showTimeSelect
-              timeFormat="h:mm aa"
-              timeIntervals={15}
-              timeCaption="time"
-              dateFormat="MMMM d, yyyy"
-              inline
-              minDate={new Date()}
-              // maxDate={moment().add(2,'d').toDate()}
-              minTime={now.hours(10).minutes(0).toDate()}
-              maxTime={now.hours(21).minutes(45).toDate()}
-            />
+                selected={pickupDate}
+                onChange={date => setPickupDate(date)}
+                showTimeSelect
+                timeIntervals={15}
+                timeCaption="time"
+                dateFormat="MMMM d, yyyy h:mm aa"
+                inline
+                minDate={new Date()}
+                // maxDate={moment().add(2,'d').toDate()}
+                minTime={now.hours(10).minutes(0).toDate()}
+                maxTime={now.hours(21).minutes(45).toDate()}
+              />
             </div>
             <h4>Pickup time:&nbsp;
             {!pickupDate ? null : pickupDate.toLocaleString('en-US',
               { weekday: 'short', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true })}
             </h4>
-            </div>
+          </div>
           {/* </Segment> */}
         </Modal.Content>
         <Modal.Actions>
@@ -305,12 +309,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
           <Button style={{
             backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-
             color: "white"
-          }} onClick={() => {
-            setStep2Modal(true)
-            setStep3aModal(false)
-          }}>
+          }}
+            onClick={() => {
+              setStep2Modal(true)
+              setStep3aModal(false)
+            }}>
             <Icon name='arrow left' />Back
           </Button>
 
@@ -493,7 +497,7 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
       </Modal>
 
       {/* Step3b: delivery time */}
-      <Modal centered={false} open={step3bModal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550,  marginTop: 80 }}>
+      <Modal centered={false} open={step3bModal} dimmer='inverted' style={{ width: '90vw', maxWidth: 550, marginTop: 80 }}>
         <Modal.Header
           style={{
             backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)',
@@ -506,13 +510,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
           <div style={{ width: '100%', minWidth: 300, textAlign: 'center' }}>
             <div>
               <DatePicker
-                selected={new Date()}
+                selected={deliveryDate}
                 onChange={date => setDeliveryDate(date)}
                 showTimeSelect
-                timeFormat="h:mm aa"
                 timeIntervals={15}
                 timeCaption="time"
-                dateFormat="MMMM d, yyyy"
+                dateFormat="MMMM d, yyyy h:mm aa"
                 inline
                 minDate={new Date()}
                 // maxDate={moment().add(2,'d').toDate()}

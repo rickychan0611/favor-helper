@@ -22,8 +22,10 @@ import QuestionReplies from './QuestionReplies/QuestionReplies'
 import QuestionRepliesContainer from './QuestionRepliesContainer/QuestionRepliesContainer'
 import SideNavBar from './SideNavBar/SideNavBar'
 import CheckOutModal from './CheckOutModal/CheckOutModal'
-
-
+import Loading from './Loading/Loading'
+import FormatDate from './FormatDate/FormatDate'
+import FavButton from './FavButton/FavButton'
+import CloseButton from './CloseButton/CloseButton'
 
 export {
   Map, 
@@ -49,5 +51,9 @@ export {
   QuestionReplies,
   QuestionRepliesContainer,
   SideNavBar,
-  CheckOutModal
+  CheckOutModal,
+  Loading,
+  FormatDate,
+  FavButton,
+  CloseButton
 }

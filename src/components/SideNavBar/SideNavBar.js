@@ -59,7 +59,7 @@ const SideNavBar = ({setNavDim}) => {
           <Menu.Item name="/create-post" onClick={handleClick}>Create a meal</Menu.Item>
           <Menu.Item name="/messages" onClick={handleClick}>Messages</Menu.Item>
           <Menu.Item name="/notifications" onClick={handleClick}>Notifications</Menu.Item>
-          <Menu.Item name="/profile" onClick={handleClick}>My Orders</Menu.Item>
+          <Menu.Item name="/myOrders" onClick={handleClick}>My Orders</Menu.Item>
           <Menu.Item name="/profile" onClick={handleClick}>My Posts</Menu.Item>
           <Menu.Item name="/profile" onClick={handleClick}>My Profile</Menu.Item>
           {!user ?
