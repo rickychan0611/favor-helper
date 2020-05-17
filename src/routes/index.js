@@ -8,13 +8,10 @@ import Profile from "../views/Profile"
 import PostDetail from "../views/PostDetail"
 import MyOrders from "../views/MyOrders"
 import { CreatePostForm, TopBar, Map, SideNavBar, Footer, CreatePostFormContainer } from "../components"
-import UserContext from '../context/UserContext'
-
 import styles from './styles'
 import { Grid, Dimmer } from 'semantic-ui-react';
 
 export default (props) => {
-  // const { user,  openSideBar, setOpenSideBar } = useContext(UserContext)
   const [navDim, setNavDim] = useState(false)
   let { id } = useParams();
   return (

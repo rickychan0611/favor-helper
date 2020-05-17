@@ -12,15 +12,23 @@ import firebase from 'firebase'
 import styles from './styles'
 
 const MyOrders = () => {
-  const { user, setUser, updateProfilePic } = useContext(UserContext)
+  const history = useHistory()
+
+  const { user, loading, setUser, updateProfilePic } = useContext(UserContext)
   const [myOrders, setMyOrders] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [thisloading, setLoading] = useState(true)
   const [noOrder, setNoOrder] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [modalIndex, setModalIndex] = useState(0)
 
   useEffect(() => {
     if (user) {
+      if (user == "notLogged"){
+        setLoading(false)
+        alert("Please login 1st 😅")
+        history.push('/sign-in')
+      }
+      else {
       let orderArr = []
       let orders = db.collection('orders')
         // .orderBy('createAt', 'desc')
@@ -41,18 +49,16 @@ const MyOrders = () => {
         .catch(err => {
           console.log('Error getting documents', err)
         })
+      }
     }
   }, [user])
 
   const handleOpenModal = (item, index) => {
     setOpenModal(true)
     setModalIndex(index)
-    console.log(item.post.title)
   }
 
   const MapModal = () => {
-    console.log('hello')
-    console.log(JSON.stringify(myOrders[modalIndex]))
     let item = myOrders[modalIndex]
     return (
       <>
@@ -110,7 +116,7 @@ const MyOrders = () => {
     <div style={{ padding: 14, height: '100vh' }}>
       <MapModal myOrders={myOrders} />
       <h1>My Orders</h1>
-      {loading ?
+      {thisloading ?
         <Loading />
         :
         noOrder ? <h4>You haven't order anything yet. Order something!</h4> :

@@ -81,9 +81,10 @@ const UserContextProvider = ({ children }) => {
         });
 
     } else {
-      setUser(null)
+      setUser("notLogged")
       setLoading(false)
       console.log('onAuthStateChanged not sign in')
+      console.log(user)
     }
   });
 }
