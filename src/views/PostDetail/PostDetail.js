@@ -13,6 +13,8 @@ import {
   Container,
   Button,
   Divider,
+  Dimmer,
+  Loader
 } from 'semantic-ui-react'
 
 const PostDetail = (props) => {
@@ -80,9 +82,10 @@ const PostDetail = (props) => {
           </>
           :
           <>
-          <br></br>
-          <h3>loading...</h3>
-          </>
+          <Dimmer active inverted page>
+            <Loader inverted content='Loading' />
+          </Dimmer>
+        </>
         }
        
         <br></br>
