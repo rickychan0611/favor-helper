@@ -1,32 +1,18 @@
-import React, { useState } from 'react'
-import styles from './styles'
+import React, { useState, useContext } from 'react'
+import { UserContext } from '../../context/UserContext'
+import { SignInModal } from '../../components'
 import {
-  Label,
-  Grid,
   Button,
-  Form,
   Header,
   Segment,
-  Input,
-  Rating,
-  Image,
   Divider,
-  Icon,
-  Checkbox,
-  Modal
 } from 'semantic-ui-react'
 
-import {
-  DateInput,
-  TimeInput,
-  DateTimeInput,
-  DatesRangeInput
-} from 'semantic-ui-calendar-react';
-
-import { PreviewIcon } from '..'
 import CheckOutModal from '../CheckOutModal';
 
 const PriceTimeColumn = ({ post, poster }) => {
+  const { user } = useContext(UserContext)
+  const [openSignInModal, setOpenSignInModal] = useState(false)
   const [state, setState] = useState()
   const [openModal, setOpenModal] = useState(false)
   const handlePriceChange = (e) => {
@@ -36,6 +22,8 @@ const PriceTimeColumn = ({ post, poster }) => {
 
   return (
     <>
+      <SignInModal openSignInModal={openSignInModal} setOpenSignInModal={setOpenSignInModal} />
+
       <CheckOutModal
         openModal={openModal}
         setOpenModal={setOpenModal}
@@ -50,7 +38,16 @@ const PriceTimeColumn = ({ post, poster }) => {
               backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
               color: "white"
             }}
-            size='big' onClick={() => { setOpenModal(true) }}>I'm Hungry. Request Meal</Button>
+            size='big' onClick={() => {
+              if (user == "not signed in"){
+                setOpenSignInModal(true)
+              }
+              else {
+                setOpenModal(true)
+              }
+            }}>
+            I'm Hungry. Request Meal
+                </Button>
         </Segment>
         <Divider fluid />
 

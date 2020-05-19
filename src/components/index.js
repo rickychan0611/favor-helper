@@ -26,6 +26,7 @@ import Loading from './Loading/Loading'
 import FormatDate from './FormatDate/FormatDate'
 import FavButton from './FavButton/FavButton'
 import CloseButton from './CloseButton/CloseButton'
+import SignInModal from './SignInModal/SignInModal'
 
 export {
   Map, 
@@ -55,5 +56,6 @@ export {
   Loading,
   FormatDate,
   FavButton,
-  CloseButton
+  CloseButton,
+  SignInModal
 }

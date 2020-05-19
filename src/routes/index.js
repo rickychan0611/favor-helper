@@ -7,6 +7,8 @@ import Home from "../views/Home"
 import Profile from "../views/Profile"
 import PostDetail from "../views/PostDetail"
 import MyOrders from "../views/MyOrders"
+import MySales from "../views/MySales"
+
 import { CreatePostForm, TopBar, Map, SideNavBar, Footer, CreatePostFormContainer } from "../components"
 import styles from './styles'
 import { Grid, Dimmer } from 'semantic-ui-react';
@@ -48,7 +50,8 @@ export default (props) => {
               <Route path="/sign-in" component={SignIn} />
               <Route path="/sign-out" component={Home} />
               <Route path="/profile" component={Profile} />
-              <Route path="/myOrders" component={MyOrders} />
+              <Route path="/my-orders" component={MyOrders} />
+              <Route path="/my-sales" component={MySales} />
               <Route path="/user/:id" component={Profile} />
               <Route path="/map" component={() => <Map height="80vh" />} />
             </div>

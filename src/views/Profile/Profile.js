@@ -21,7 +21,6 @@ const Profile = () => {
 
   const handleChange = (e, { name, value }) => {
     setUser({ ...user, [name]: value })
-    // console.log('user' + JSON.stringify(formState))
   }
 
   const onSubmit = (open) => {
@@ -78,6 +77,7 @@ const Profile = () => {
 
   return (
     <div style={{ padding: 14 }}>
+      {loading ? <h1>loading</h1> : null }
       <Confirm
         open={confirm}
         onCancel={() => setConfirm(false)}

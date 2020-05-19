@@ -25,7 +25,9 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
   const [qty, setQty] = useState(1)
   const [pickupDate, setPickupDate] = useState(new Date())
   const [deliveryDate, setDeliveryDate] = useState(new Date())
-  const [deliveryForm, setDeliveryForm] = useState({})
+  const [deliveryForm, setDeliveryForm] = useState({
+    request: ''
+  })
   const [step2Modal, setStep2Modal] = useState(false)
   const [step3aModal, setStep3aModal] = useState(false)
   const [step4aModal, setStep4aModal] = useState(false)
@@ -123,7 +125,8 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
 
   useEffect(() => {
     if (user) {
-      setDeliveryForm(user.address)
+      let address = user.address
+      setDeliveryForm({...deliveryForm, address})
     }
   }, [user])
 

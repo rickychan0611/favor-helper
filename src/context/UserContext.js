@@ -37,7 +37,7 @@ const UserContextProvider = ({ children }) => {
     let photoURL = noAvatar
 
     if (userData) {
-      // setUser(userData)
+      setUser(userData)
       setLoading(false)
       console.log('user signed in')
             
@@ -81,10 +81,9 @@ const UserContextProvider = ({ children }) => {
         });
 
     } else {
-      setUser("notLogged")
+      setUser("not signed in")
       setLoading(false)
       console.log('onAuthStateChanged not sign in')
-      console.log(user)
     }
   });
 }
@@ -99,6 +98,7 @@ const UserContextProvider = ({ children }) => {
       value={
         {
           user,
+          setUser,
           loading,
           updateProfilePic,
           setDisplayName,
