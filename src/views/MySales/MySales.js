@@ -32,7 +32,7 @@ const MySales = () => {
       let orderArr = []
       let orders = db.collection('orders')
         // .orderBy('createAt', 'desc')
-        .where('buyerUid', '==', user.uid)
+        .where('posterUid', '==', user.uid)
         .get()
         .then(snapshot => {
           if (snapshot.empty) {
@@ -114,12 +114,12 @@ const MySales = () => {
 
   return (
     <div style={{ padding: 14, height: '100vh' }}>
-      <MapModal myOrders={myOrders} />
+      {/* <MapModal myOrders={myOrders} /> */}
       <h1>My Sales</h1>
       {thisloading ?
         <Loading />
         :
-        noOrder ? <h4>You haven't order anything yet. Order something!</h4> :
+        noOrder ? <h4>You don't have any sales yet.</h4> :
           <>
             <Grid stackable columns={3}>
               {myOrders.map((item, index) => {

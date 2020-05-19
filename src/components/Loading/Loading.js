@@ -7,7 +7,7 @@ import styles from './styles'
 const Loading = () => {
   return (
     <>
-      <Dimmer active inverted>
+      <Dimmer active inverted page>
           <Loader inverted>loading</Loader>
         </Dimmer>
     </>

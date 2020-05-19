@@ -7,6 +7,7 @@ import Home from "../views/Home"
 import Profile from "../views/Profile"
 import PostDetail from "../views/PostDetail"
 import MyOrders from "../views/MyOrders"
+import MyPosts from "../views/MyPosts"
 import MySales from "../views/MySales"
 
 import { CreatePostForm, TopBar, Map, SideNavBar, Footer, CreatePostFormContainer } from "../components"
@@ -51,6 +52,7 @@ export default (props) => {
               <Route path="/sign-out" component={Home} />
               <Route path="/profile" component={Profile} />
               <Route path="/my-orders" component={MyOrders} />
+              <Route path="/my-posts" component={MyPosts} />
               <Route path="/my-sales" component={MySales} />
               <Route path="/user/:id" component={Profile} />
               <Route path="/map" component={() => <Map height="80vh" />} />

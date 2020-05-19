@@ -4,13 +4,14 @@ import db from '../../firestore'
 import { useHistory } from "react-router-dom";
 import { UserContext } from '../../context/UserContext'
 import { PostsContext } from '../../context/PostsContext'
+import { Map, PostCard, PostCardContainer } from '../../components'
 
 import AvatarImageCropper from 'react-avatar-image-cropper';
 import firebase from 'firebase'
 
 import styles from './styles'
 
-const Profile = () => {
+const MyPosts = () => {
   const [confirm, setConfirm] = useState(false)
   const { user, setUser, loading, updateProfilePic } = useContext(UserContext)
   const { posts } = useContext(PostsContext)
@@ -68,7 +69,7 @@ const Profile = () => {
 
   let filteredPosts = []
   if (posts && user) {
-     filteredPosts = posts.filter(filterItems => filterItems.posterUid == user.id)
+    filteredPosts = posts.filter(filterItems => filterItems.posterUid == user.id)
   }
   useEffect(() => {
 
@@ -76,6 +77,7 @@ const Profile = () => {
 
   return (
     <div style={{ padding: 14 }}>
+      {loading ? <h1>loading</h1> : null}
       <Confirm
         open={confirm}
         onCancel={() => setConfirm(false)}
@@ -84,52 +86,22 @@ const Profile = () => {
       />
       {!loading && user ?
         <>
-          <h1>Your Profile</h1>
+          <h1>Your Posts</h1>
           <Container>
-            <Segment>
-              <Grid column={2} stackable>
-                <Grid.Column width={4}>
-                  <div style={{ textAlign: 'center', margin: "0 auto" }}>
-
-                    {/* {!avatar ? */}
+            <Grid stackable doubling columns={3}>
+              {filteredPosts ?
+                filteredPosts.map((item) => {
+                  return (
                     <>
-                      <img src={user.photoURL}
-                        style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: '50%' }} />
-
-
-                      <div style={{ textAlign: 'center', margin: "0 auto" }}>
-                        <Button size="tiny" onClick={() => { setAvatar(true) }}>Change</Button>
-                      </div>
+                      <Grid.Column>
+                        <PostCard item={item} edit />
+                      </Grid.Column>
                     </>
-                    {/* // : */}
-                    <Dimmer active={avatar} onClickOutside={() => { setAvatar(false) }} page>
-                      <div style={{ width: '250px', height: '250px', backgroundColor: 'white', margin: 'auto', border: '1px solid black', zIndex: 1000 }}>
-                        <AvatarImageCropper apply={apply} maxsize={1024 * 1024 * 5} />
-                      </div>
-                    </Dimmer>
-                    {/* // } */}
-
-                  </div>
-                </Grid.Column>
-                <Grid.Column width={12}>
-                  <Form>
-                    <Form.Input fluid
-                      label="Your Name"
-                      name="displayName"
-                      value={user.displayName}
-                      onChange={handleChange}
-                      placeholder='Enter your name' />
-                    <Form.TextArea fluid label='Tell us about yourself' name="aboutMe"
-                      style={{ minHeight: 100 }}
-                      value={user.aboutMe}
-                      onChange={handleChange}
-                      placeholder='Tell us a bit about yourself so guest can get to know you' />
-                    <Button type="submit" onClick={() => setConfirm(true)}>Save</Button>
-                  </Form>
-                </Grid.Column>
-              </Grid>
-            </Segment>
+                  )
+                }) : null}
+            </Grid>
           </Container>
+
         </>
         :
         <>
@@ -142,4 +114,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default MyPosts

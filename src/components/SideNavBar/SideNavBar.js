@@ -25,6 +25,7 @@ const SideNavBar = ({ setNavDim }) => {
       name == "/messages" ||
       name == "/my-orders" ||
       name == "/profile" ||
+      name == "/my-posts" ||
       name == "/my-sales"
     ) {
       if (user == "not signed in") {
@@ -80,7 +81,7 @@ const SideNavBar = ({ setNavDim }) => {
           <Menu.Item name="/profile" onClick={handleClick}>My Profile</Menu.Item>
           <Divider />
           <Menu.Item name="/create-post" onClick={handleClick}>Create a Meal</Menu.Item>
-          <Menu.Item name="/profile" onClick={handleClick}>My Posts</Menu.Item>
+          <Menu.Item name="/my-posts" onClick={handleClick}>My Posts</Menu.Item>
           <Menu.Item name="/my-sales" onClick={handleClick}>My Sales</Menu.Item>
 
           {user == 'not signed in' ?

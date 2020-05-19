@@ -28,7 +28,7 @@ const Post = ({ post, poster, loading, user }) => {
   return (
     <div>
       {loading ?
-        <Dimmer active inverted>
+        <Dimmer active inverted page>
           <Loader inverted content='Loading' />
         </Dimmer>
         :
