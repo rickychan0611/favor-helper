@@ -40,6 +40,10 @@ const PhotoSlideInDetail = ({images}) => {
         isIntrinsicHeight={true}
         touchEnabled={true}
         dragEnabled={true}
+        infinite={true}
+        isPlaying={true}
+        interval={3000}
+        playDirection="forward"
       >
         <div style={{
           backgroundColor: '#e0dede', height: 350
