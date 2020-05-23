@@ -153,7 +153,7 @@ const TopBar = () => {
               }}>
                 <Icon name='bars' size="large" style={{ color: '#707070' }}
                   onClick={() => { setOpenSideBar(!openSideBar) }} /></div>
-              <img style={{ marginLeft: 20 }} src={logo} height={40} />
+              <img style={{ marginLeft: 20 }} src={logo} height={44} />
               <div style={{
                 marginLeft: 'auto',
                 marginRight: 0,
