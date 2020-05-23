@@ -7,7 +7,7 @@ const styles = {
     boxShadow: '0px 10px 15px #cfdde8'
   },
   foodPic : { 
-    width: "100%", 
+  width: "100%", 
     height: 200, 
     objectFit: "cover", 
     position: 'absolute', 
@@ -77,7 +77,6 @@ const styles = {
     float: 'right',
     marginTop: 5,
     marginBottom: 5,
-
   },
   dates : {
     color: "grey",

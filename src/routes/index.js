@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Route, Switch, Redirect, useParams } from 'react-router-dom';
+import { Route, Switch, useLocation, useParams } from 'react-router-dom';
 import PostList from "../views/PostList"
 import Register from "../views/Register"
 import SignIn from "../views/SignIn"
@@ -17,6 +17,8 @@ import { Grid, Dimmer } from 'semantic-ui-react';
 export default (props) => {
   const [navDim, setNavDim] = useState(false)
   let { id } = useParams();
+  let location = useLocation();
+
   return (
     <>
       <div style={styles.topBar}>
@@ -25,7 +27,7 @@ export default (props) => {
 
       <SideNavBar setNavDim={setNavDim} />
       <Dimmer.Dimmable dimmed={navDim} blurring>
-        <Dimmer active={navDim} inverted/>
+        <Dimmer active={navDim} inverted />
         <div style={{
           paddingTop: 72,
           postion: "relative",
@@ -44,8 +46,9 @@ export default (props) => {
               posotion: 'relative',
               // backgroundColor: 'yellow'
             }}>
-              <Route path="/" exact component={Home} />
               {/* <Route path="/*" component={Home} /> */}
+              <Route path="/" exact component={Home} />
+
               <Route path="/posts" component={PostList} />
               <Route path="/register" component={Register} />
               <Route path="/sign-in" component={SignIn} />

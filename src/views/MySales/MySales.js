@@ -227,6 +227,7 @@ const MySales = () => {
                           </tr>
                         </table>
                         <Divider horizontal>Inform buyer</Divider>
+                        <p>Buyer will receive notifications by clicking below options:</p>
                         <Checkbox label={"Confirm " + item.shippingMethod + " date" }
                         onClick={()=>{
                           if (status == 'Unconfirmed') {

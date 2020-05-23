@@ -126,15 +126,72 @@ const TopBar = () => {
 
   return (
     <>
-      <Responsive maxWidth={530} as={React.Fragment}>
-        {/* ************* Top Bar ***************** */}
+      <Responsive minWidth={801} as={React.Fragment}>
+        {/* ************* Top Bar ******************/}
         <Sidebar
           icon='labeled'
           visible={true}
           direction="top"
-          style={{zIndex: 4000}}
+          style={{ zIndex: 4000 }}
         >
-          <Segment basic style={{ backgroundColor: 'white'}}>
+          <Segment basic
+            style={{
+              backgroundColor: 'white',
+              postion: 'absolute',
+              width: '100%',
+              height: 70,
+              overflow: 'hidden'
+
+            }}>
+            <div style={{
+              width: '100%',
+              display: "flex",
+              alignItems: "center",
+            }}>
+              <div style={{
+                marginLeft: 5
+              }}>
+                <Icon name='bars' size="large" style={{ color: '#707070' }}
+                  onClick={() => { setOpenSideBar(!openSideBar) }} /></div>
+              <img style={{ marginLeft: 20 }} src={logo} height={40} />
+              <div style={{
+                marginLeft: 'auto',
+                marginRight: 0,
+                display: "flex",
+                alignItems: "center",
+              }}>
+                <span style={{ fontSize: 21, color: '#707070', marginRight: 30 }}><Icon name='food' />Browser Meals</span>
+                <span style={{ fontSize: 21, color: '#707070', marginRight: 30 }}><Icon name='unordered list' />My Orders</span>
+                <span style={{ fontSize: 21, color: '#707070', marginRight: 30 }}><Icon name='talk' />My Messages</span>
+                {user ?
+                  <img src={user.photoURL}
+                    style={{ width: 40, borderRadius: '50%' }}
+                    onClick={() => { history.push('/profile') }} />
+                  : null}
+              </div>
+            </div>
+
+          </Segment>
+        </Sidebar>
+      </Responsive>
+
+      <Responsive maxWidth={800} as={React.Fragment}>
+        {/* ************* Top Bar ******************/}
+        <Sidebar
+          icon='labeled'
+          visible={true}
+          direction="top"
+          style={{ zIndex: 4000 }}
+        >
+          <Segment basic
+            style={{
+              backgroundColor: 'white',
+              postion: 'absolute',
+              width: '100%',
+              height: 70,
+              overflow: 'hidden'
+
+            }}>
             <Grid textAlign='center' verticalAlign='middle' column={3}>
               <Grid.Column width={2} >
                 <Icon name='bars' size="large" style={{ color: '#707070' }} 
@@ -157,11 +214,34 @@ const TopBar = () => {
                 <Icon name='talk' size="large" style={{ color: '#707070' }} />
               </Grid.Column>
             </Grid>
+
           </Segment>
         </Sidebar>
       </Responsive>
+      {/* <Grid textAlign='center' verticalAlign='middle' column={3}>
+              <Grid.Column width={2} >
+                <Icon name='bars' size="large" style={{ color: '#707070' }} 
+                onClick={()=>{setOpenSideBar(!openSideBar)}}/>
+              </Grid.Column>
+              <Grid.Column width={2} >
+                {user ?
+                  <img src={user.photoURL}
+                    style={{ width: 40, borderRadius: '50%' }}
+                    onClick={() => { history.push('/profile') }} />
+                  : null}
+              </Grid.Column>
+              <Grid.Column width={8}>
+                <img src={logo} height={40} />
+              </Grid.Column>
+              <Grid.Column width={2}>
+                <Icon name='bell' size="large" style={{ color: '#707070' }} />
+              </Grid.Column>
+              <Grid.Column width={2}>
+                <Icon name='talk' size="large" style={{ color: '#707070' }} />
+              </Grid.Column>
+            </Grid> */}
 
-      <Menu borderless fluid style={{ position: "fixed", height: 55 , zIndex: 3000}}>
+      {/* <Menu borderless fluid style={{ position: "fixed", height: 55 , zIndex: 3000}}>
         {user ? null :
           <div style={{ position: "relative", height: 40 }}>
             <img src='https://img.icons8.com/cotton/64/000000/like--v3.png'
@@ -247,7 +327,7 @@ const TopBar = () => {
 
           </>}
 
-      </Menu>
+      </Menu> */}
     </>
   )
 }
