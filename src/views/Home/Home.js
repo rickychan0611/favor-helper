@@ -16,7 +16,7 @@ const Home = () => {
       backgroundSize: 'cover',
       backgroundAttachment: 'fixed',
       backgroundPosition: 'top center',
-      marginTop: -85
+      marginTop: -72
     }}>
       {/* <div style={{position: 'fixed'}}>
       <img style={{ width: 100, margin: 20, filter: 'drop-shadow(0px 0px 10px white)' }} src={logo} />

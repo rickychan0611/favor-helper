@@ -160,9 +160,22 @@ const TopBar = () => {
                 display: "flex",
                 alignItems: "center",
               }}>
-                <span style={{ fontSize: 21, color: '#707070', marginRight: 30 }}><Icon name='food' />Browser Meals</span>
-                <span style={{ fontSize: 21, color: '#707070', marginRight: 30 }}><Icon name='unordered list' />My Orders</span>
-                <span style={{ fontSize: 21, color: '#707070', marginRight: 30 }}><Icon name='talk' />My Messages</span>
+                <span style={{
+                  fontSize: 21, color: '#707070', marginRight: 30, cursor: 'pointer'
+                }}
+                  onClick={() => { history.push('/posts') }} >
+                  <Icon name='food' />Browse Meals</span>
+                <span style={{
+                  fontSize: 21, color: '#707070', marginRight: 30, cursor: 'pointer'
+                }}
+                  onClick={() => { history.push('/my-orders') }} >
+                  <Icon name='unordered list' />My Orders</span>
+                <span style={{
+                  fontSize: 21, color: '#707070', marginRight: 30, cursor: 'pointer'
+                }}
+                  onClick={() => {
+                    history.push('/messages')
+                  }}><Icon name='talk' />My Messages</span>
                 {user ?
                   <img src={user.photoURL}
                     style={{ width: 40, borderRadius: '50%' }}
@@ -194,8 +207,8 @@ const TopBar = () => {
             }}>
             <Grid textAlign='center' verticalAlign='middle' column={3}>
               <Grid.Column width={2} >
-                <Icon name='bars' size="large" style={{ color: '#707070' }} 
-                onClick={()=>{setOpenSideBar(!openSideBar)}}/>
+                <Icon name='bars' size="large" style={{ color: '#707070' }}
+                  onClick={() => { setOpenSideBar(!openSideBar) }} />
               </Grid.Column>
               <Grid.Column width={2} >
                 {user ?
