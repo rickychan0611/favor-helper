@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styles from './styles'
 import { Input, Form, Icon, Header, Checkbox, Dimmer, Container, Responsive, Button } from 'semantic-ui-react';
 import firebase from 'firebase'
@@ -34,10 +34,53 @@ const Step4 = ({ Steps, setSteps }) => {
   const clearField = (name) => {
     setDeliveryForm({ [name]: '' })
   }
+
+  const [weeks, setWeeks] = useState([
+    { day: 'Mon', active: true },
+    { day: 'Tue', active: true },
+    { day: 'Wed', active: true },
+    { day: 'Thu', active: true },
+    { day: 'Fri', active: true },
+    { day: 'Sat', active: true },
+    { day: 'Sun', active: true }
+  ])
+
+  let counter = 0
+
+  const onUpdateItem = ( i ) => {
+    setWeeks(prevState => {
+      const state = prevState.map((item, j) => {
+        if (j === i && counter != 1) {
+          item.active = !prevState[i].active
+          counter = 1
+          return item
+        } else {
+          return item
+        }
+      })
+      return state
+    })
+  }
+
   return (
     <>
       <h2>Step 4: <br />Set Available Date</h2>
-      
+      <h4>Select available Pickup date: <br />
+
+        { weeks.map((item, i) => {
+          return (
+            <Button
+              compact size="mini"
+              color={item.active ? "green" : "grey"}
+              style={{ margin: 4 }}
+              onClick={(e) => {
+                onUpdateItem(i)
+              }}
+            >{item.day}
+            </Button>
+          )
+        }) }
+      </h4>
       <div style={{
         position: 'absolute',
         top: 'auto',
@@ -45,11 +88,15 @@ const Step4 = ({ Steps, setSteps }) => {
         left: 'auto',
         right: 45
       }}>
+
         <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
           onClick={() => { history.goBack() }}>
           <Icon name='close' />
         </Button>
-        <FavButton clicked={() => { setSteps({ Step: Step3 }) }}> <Icon name='arrow left' />Back</FavButton>
+        <FavButton clicked={() => {
+          setSteps({ Step: Step3 })
+          console.log('fuck')
+        }}> <Icon name='arrow left' />Back</FavButton>
         <FavButton clicked={() => { setSteps({ Step: Step3 }) }}> Next<Icon name='arrow right' /></FavButton>
       </div>
     </>
