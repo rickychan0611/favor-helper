@@ -9,6 +9,7 @@ import { FavButton } from '../../components';
 import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
+import Step4 from './Step4'
 
 
 const CreatePostStepsContainer = () => {
@@ -18,7 +19,7 @@ const CreatePostStepsContainer = () => {
   }
   const history = useHistory()
 
-  const [Steps, setSteps]= useState({Step: Step3})
+  const [Steps, setSteps]= useState({Step: Step1})
 
   return (
     <>
@@ -27,7 +28,7 @@ const CreatePostStepsContainer = () => {
         position: "fixed",
         zIndex: 0,
         width: '100vw',
-        height: "45vh",
+        height: "45vh",no
         backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)'
       }}>
         <div style={{

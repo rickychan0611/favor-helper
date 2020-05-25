@@ -8,6 +8,7 @@ import { UserContext } from '../../context/UserContext'
 import { FavButton, Map } from '../../components';
 import { PhotoSlider } from '../../components'
 import Step2 from './Step2'
+import Step4 from './Step4'
 
 const Step3 = ({ Steps, setSteps }) => {
   const { preview, setPreview, formState, setFormState, validationError, setValidationError, success, setSuccess, posts } = useContext(PostsContext)
@@ -36,7 +37,7 @@ const Step3 = ({ Steps, setSteps }) => {
   }
   return (
     <>
-      <h1>Step 3: <br />Pickup / Delivery</h1>
+      <h2>Step 3: <br />Pickup / Delivery</h2>
       <p>You can select both</p>
       <Checkbox
         label="Delivery: You will deliver to customers"
@@ -132,7 +133,7 @@ const Step3 = ({ Steps, setSteps }) => {
           <Icon name='close' />
         </Button>
         <FavButton clicked={() => { setSteps({ Step: Step2 }) }}> <Icon name='arrow left' />Back</FavButton>
-        <FavButton clicked={() => { setSteps({ Step: Step2 }) }}> Next<Icon name='arrow right' /></FavButton>
+        <FavButton clicked={() => { setSteps({ Step: Step4 }) }}> Next<Icon name='arrow right' /></FavButton>
       </div>
     </>
   )

@@ -40,7 +40,8 @@ export default (props) => {
             <Route path="/create-post" component={CreatePostStepsContainer} />
             <Route path="/edit/:id" component={CreatePostFormContainer} />
             <Route path="/details/:id" component={PostDetail} />
-            <Route path="/" exact component={CreatePostStepsContainer} />
+            <Route path="/" exact component={Home} />
+            {/* <Route path="/" exact component={CreatePostStepsContainer} /> */}
             {/* <Route path="*" component={Home} /> */}
 
             <div style={{

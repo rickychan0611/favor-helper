@@ -18,7 +18,7 @@ const Step1 = ({Steps, setSteps}) => {
 
   return (
     <>
-      <h1>Step 1: Information</h1>
+      <h2>Step 1: Information</h2>
       {/* <h3>What is the name of your meal?</h3> */}
       <Form>
         <Form.Input

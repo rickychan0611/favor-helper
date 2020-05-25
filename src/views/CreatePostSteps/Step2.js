@@ -19,10 +19,10 @@ const Step2 = ({Steps, setSteps}) => {
 
   return (
     <>
-      <h1>Step 2: <br />Upload some pictures</h1>
+      <h2>Step 2: <br />Upload pictures</h2>
       {/* <h3>What is the name of your meal?</h3> */}
       <PhotoSlider formState={formState} setFormState={setFormState} createPost={true}/>
-
+      <br/>
       <div style={{
         position: 'absolute',
         top: 'auto',
