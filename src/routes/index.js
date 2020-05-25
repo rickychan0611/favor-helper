@@ -9,6 +9,7 @@ import PostDetail from "../views/PostDetail"
 import MyOrders from "../views/MyOrders"
 import MyPosts from "../views/MyPosts"
 import MySales from "../views/MySales"
+import CreatePostStepsContainer from "../views/CreatePostSteps/CreatePostStepsContainer"
 
 import { CreatePostForm, TopBar, Map, SideNavBar, Footer, CreatePostFormContainer } from "../components"
 import styles from './styles'
@@ -35,10 +36,11 @@ export default (props) => {
           // backgroundColor: 'yellow'
         }}>
           <Switch>
-            <Route path="/create-post" component={CreatePostFormContainer} />
+            {/* <Route path="/create-post" component={CreatePostFormContainer} /> */}
+            <Route path="/create-post" component={CreatePostStepsContainer} />
             <Route path="/edit/:id" component={CreatePostFormContainer} />
             <Route path="/details/:id" component={PostDetail} />
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact component={CreatePostStepsContainer} />
             {/* <Route path="*" component={Home} /> */}
 
             <div style={{

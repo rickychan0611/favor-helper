@@ -8,9 +8,10 @@ import { ImageSliderContext } from '../../context/ImageSliderContext'
 import addImage from '../../assets/images/add-image.jpg'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { Placeholder } from 'semantic-ui-react'
-import { CarouselProvider, Slider, Slide, DotGroup, Dot } from 'pure-react-carousel'
+import { CarouselProvider, Slider, Slide, DotGroup, Dot, ButtonBack, ButtonNext } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import useWindowDimensions from '../../functions/getWindowDimensions'
+import FavButton from '../FavButton/FavButton';
 
 // const images = [
 //   { src: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" },
@@ -23,7 +24,7 @@ import useWindowDimensions from '../../functions/getWindowDimensions'
 //   { src: "https://drop.ndtv.com/albums/COOKS/pasta-vegetarian/pastaveg_640x480.jpg" }
 // ]
 
-const PhotoSlider = ({ formState, setFormState }) => {
+const PhotoSlider = ({ formState, setFormState, createPost }) => {
 
   const { height, width } = useWindowDimensions();
 
@@ -72,7 +73,10 @@ const PhotoSlider = ({ formState, setFormState }) => {
         naturalSlideWidth={420}
         naturalSlideHeight={350}
         totalSlides={images.length}
-        visibleSlides={width < 420 ? 1 : width < 800 ? 2 : width < 1025 ? 3 : width < 1677 ? 4 : width < 2097 ? 5 : 6}
+        visibleSlides={createPost ?
+          1 :
+          width < 420 ? 1 : width < 800 ? 2 : width < 1025 ? 3 : width < 1677 ? 4 : width < 2097 ? 5 : 6
+        }
         isIntrinsicHeight={true}
         touchEnabled={true}
         dragEnabled={true}
@@ -89,9 +93,19 @@ const PhotoSlider = ({ formState, setFormState }) => {
                     {/* // photo loading */}
                     {image.src == noImage ?
                       <Slide index={index - 1} key={index}>
-                        <Placeholder style={{ height: 350, width: 420 }}>
-                          <Placeholder.Image />
-                        </Placeholder>
+                        <PickFile src={image.src} index={index}>
+
+                          <Placeholder style={{ height: 350, width: 420 }}>
+                            <Placeholder.Image />
+                          </Placeholder>
+                          <div style={{ position: "absolute", width: '100%', top: 0, left: 0, }}>
+                                <Button fluid style={{
+                                  backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+                                  color: "white"
+                                }}>Upload photos to gallery</Button>
+                              </div>
+                          </PickFile>
+
                       </Slide>
                       :
 
@@ -100,11 +114,20 @@ const PhotoSlider = ({ formState, setFormState }) => {
                         <>
                           <Slide index={index - 1} style={{ position: "relative" }} >
                             <PickFile src={image.src} index={index}>
-                              <div style={{position: "relative", width: '100%'}}>
-                              <img fluid src={image.src} style={styles.photo} />
-                              <div style={{position: "absolute", top: 10, left: 10,}}>
-                                <Button>Upload photos to gallery</Button>
+                              <div style={{ position: "relative", width: '100%' }}>
+                                <img src={image.src} style={{
+                                  objectFit: 'contain',
+                                  height: 350,
+                                  // width: "100vw",
+                                  // width: 'auto'
+                                }} />
                               </div>
+
+                              <div style={{ position: "absolute", width: '100%', top: 0, left: 0, }}>
+                                <Button fluid style={{
+                                  backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+                                  color: "white"
+                                }}>Upload photos to gallery</Button>
                               </div>
                             </PickFile>
                           </Slide>
@@ -131,13 +154,17 @@ const PhotoSlider = ({ formState, setFormState }) => {
                     }
 
                   </Slide>
-                  <Dimmer active={active} onClickOutside={handleClose} page>
-                    <img src={dimPhoto} style={styles.ModalPhoto} onClick={handleClose} />
-                  </Dimmer>
+                      <Dimmer active={active} onClickOutside={handleClose} page>
+                        <img src={dimPhoto} style={styles.ModalPhoto} onClick={handleClose} />
+                      </Dimmer>
                 </>
               );
             })}
           </Slider>
+                <ButtonBack>Back</ButtonBack>
+                <ButtonNext>Next</ButtonNext>
+                <p>You can slide left and right to switch picture</p>
+
         </div >
       </CarouselProvider>
     </>

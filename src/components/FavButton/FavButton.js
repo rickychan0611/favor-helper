@@ -3,13 +3,16 @@ import {
   Button,
 } from 'semantic-ui-react'
 
-const FavButton = ({children}) => {
+const FavButton = ({children, clicked}) => {
   return (
     <>
-      <Button style={{
+      <Button 
+      style={{
         backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
         color: "white"
-      }}>
+      }}
+      onClick={clicked}
+      >
         {children}
       </Button>
     </>

@@ -3,11 +3,11 @@ import firebase from 'firebase'
 import imageCompression from 'browser-image-compression';
 import { ImageSliderContext } from '../../context/ImageSliderContext'
 import { UserContext } from '../../context/UserContext'
-
+import addImage from '../../assets/images/add-image.jpg'
 import noImage from '../../assets/images/no-image.jpg'
 
 const PickFile = ({ children, index, profilePic }) => {
-  const { insertImage } = useContext(ImageSliderContext)
+  const { insertImage, setImages } = useContext(ImageSliderContext)
   const { user, updateProfilePic } = useContext(UserContext)
 
   const [imgFile, setImgFile] = React.useState({})
@@ -33,7 +33,9 @@ const PickFile = ({ children, index, profilePic }) => {
         return uploadToServer(compressedFile, filename, index); // write your own logic
       })
       .catch(function (error) {
-        console.log(error.message);
+        alert("This file is invalid. please select another one")
+        // setImages({src: addImage})
+        console.log(error);
       });
   }
 
