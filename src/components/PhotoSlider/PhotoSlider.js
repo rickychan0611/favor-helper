@@ -94,7 +94,6 @@ const PhotoSlider = ({ formState, setFormState, createPost }) => {
                     {image.src == noImage ?
                       <Slide index={index - 1} key={index}>
                         <PickFile src={image.src} index={index}>
-
                           <Placeholder style={{ height: 350, width: 420 }}>
                             <Placeholder.Image />
                           </Placeholder>
@@ -105,7 +104,6 @@ const PhotoSlider = ({ formState, setFormState, createPost }) => {
                                 }}>Upload photos to gallery</Button>
                               </div>
                           </PickFile>
-
                       </Slide>
                       :
 

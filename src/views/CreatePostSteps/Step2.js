@@ -8,6 +8,7 @@ import { UserContext } from '../../context/UserContext'
 import { FavButton } from '../../components';
 import { PhotoSlider } from '../../components'
 import Step1 from './Step1'
+import Step3 from './Step3'
 
 const Step2 = ({Steps, setSteps}) => {
   const { preview, setPreview, formState, setFormState, validationError, setValidationError, success, setSuccess, posts } = useContext(PostsContext)
@@ -35,7 +36,7 @@ const Step2 = ({Steps, setSteps}) => {
           <Icon name='close' />
         </Button>
         <FavButton clicked={() => { setSteps({Step: Step1}) }}> <Icon name='arrow left' />Back</FavButton>
-        <FavButton clicked={() => { setSteps({Step: Step2}) }}> Next<Icon name='arrow right' /></FavButton>
+        <FavButton clicked={() => { setSteps({Step: Step3}) }}> Next<Icon name='arrow right' /></FavButton>
 
       </div>
     </>

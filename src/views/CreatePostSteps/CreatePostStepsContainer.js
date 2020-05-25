@@ -8,6 +8,7 @@ import { UserContext } from '../../context/UserContext'
 import { FavButton } from '../../components';
 import Step1 from './Step1'
 import Step2 from './Step2'
+import Step3 from './Step3'
 
 
 const CreatePostStepsContainer = () => {
@@ -17,7 +18,7 @@ const CreatePostStepsContainer = () => {
   }
   const history = useHistory()
 
-  const [Steps, setSteps]= useState({Step: Step2})
+  const [Steps, setSteps]= useState({Step: Step3})
 
   return (
     <>
