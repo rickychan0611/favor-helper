@@ -28,7 +28,7 @@ const CreatePostStepsContainer = () => {
         position: "fixed",
         zIndex: 0,
         width: '100vw',
-        height: "45vh",no
+        height: "45vh",
         backgroundImage: 'linear-gradient(to top right, #9991c9, #e5c1cd)'
       }}>
         <div style={{

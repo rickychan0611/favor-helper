@@ -3,8 +3,8 @@ import { Button, Header, Icon, Segment, Input } from 'semantic-ui-react'
 import { useHistory } from "react-router-dom";
 import logo from '../../assets/images/logo.png'
 import mainPic from '../../assets/images/main.png'
-
-import styles from './styles'
+import { LocationInput } from '../../components'
+import './styles.css'
 
 const Home = () => {
   const history = useHistory()
@@ -33,15 +33,20 @@ const Home = () => {
         <div style={{width: '90vw', maxWidth: 500, textAlign: "center", filter: 'drop-shadow(0px 0px 10px black)'}}>
         <h1>Welcome to Urban Favor</h1></div><br />
         <div style={{ width: '90vw', maxWidth: 500 }}>
-          <Input fluid placeholder="Enter Your Address" size="huge" 
+        <LocationInput />
+          {/* <Input fluid placeholder="Enter Your Address" size="huge" 
            style={{filter: 'drop-shadow(0px 0px 10px grey)'
-        }}/><br />
+        }}/> */}
+        <br />
           <Button fluid size="large"
             style={{
               backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
               color: "white",
               filter: 'drop-shadow(0px 0px 10px grey)'
-            }}><Icon name='food' />FIND MEALS NEARBY</Button></div>
+            }}
+            onClick={
+              ()=>{history.push('/posts')}
+            }><Icon name='food' />FIND MEALS NEARBY</Button></div>
       </div>
     </div>
   )
