@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styles from './styles'
-import { Input, Form, Icon, Header, Checkbox, Dimmer, Container, Responsive, Button } from 'semantic-ui-react';
+import { Input, Form, Icon, Modal, Checkbox, Button } from 'semantic-ui-react';
 import firebase from 'firebase'
 import { useHistory, useParams } from "react-router-dom";
 import { PostsContext } from '../../context/PostsContext'
@@ -9,9 +9,12 @@ import { FavButton, Map } from '../../components';
 import { PhotoSlider } from '../../components'
 import Step2 from './Step2'
 import Step4 from './Step4'
+import './styles.css'
+import db from '../../firestore'
 
 const Step3 = ({ Steps, setSteps }) => {
   const { preview, setPreview, formState, setFormState, validationError, setValidationError, success, setSuccess, posts } = useContext(PostsContext)
+  const { user, setUser } = useContext(UserContext)
 
   const handleChange = (e, { name, value }) => {
     setFormState({ ...formState, [name]: value })
@@ -35,8 +38,54 @@ const Step3 = ({ Steps, setSteps }) => {
   const clearField = (name) => {
     setDeliveryForm({ [name]: '' })
   }
+
+  const handleSubmit = () => {
+    if (formState.pickUp) {
+      setOpen(true)
+    } else {
+      setSteps({ Step: Step4 })
+    }
+  }
+
+  const saveAddressModal = () => {
+    // console.log(JSON.stringify('hello'))
+
+    // console.log(JSON.stringify(deliveryForm))
+    db.collection('users').doc(user.id).update(
+      { address: deliveryForm }
+    )
+  }
+
+  const [open, setOpen] = useState(false)
+
+  // useEffect(() => {
+  //   if (user) {
+  //     setDeliveryForm(user.address)
+  //   }
+  // }, [user])
+
   return (
     <>
+      <Modal
+        open={open}
+        dimmer='inverted'
+      >
+        <Modal.Content>
+          <h3>Do you want to set as your default address?</h3>
+        </Modal.Content>
+        <Modal.Actions>
+
+          <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
+            onClick={() => setSteps({ Step: Step4 })} >
+            <Icon name='close' /> No
+          </Button>
+          <FavButton
+            clicked={() => saveAddressModal()} >
+            <Icon name='checkmark' /> Yes
+          </FavButton>
+        </Modal.Actions>
+      </Modal>
+
       <h2>Step 3: <br />Pickup / Delivery</h2>
       <p>You can select both</p>
       <Checkbox
@@ -44,17 +93,32 @@ const Step3 = ({ Steps, setSteps }) => {
         onChange={deliveryToggle}
         checked={formState.delivery}
       />
+      {formState.delivery ?
+        <>
+          <h4>Delivery fee?<span> (within 5km) </span></h4>
+          <Input
+            className="deliveryFee"
+            type="number"
+            lable="within 1km radius"
+            value={formState.delivery1Km}
+            onChange={(e) => { setFormState({ ...formState, delivery1Km: e.value }) }}
+            icon="dollar"
+            iconPosition="left"
+            size="small"
+          />
+        </> : null
+      }
       <br /><br />
       <Checkbox
         label="Pickup: Customers will pickup from your location"
         onChange={pickUpToggle}
         checked={formState.pickUp}
       />
+      <Form onSubmit={handleSubmit}>
 
-      {formState.pickUp ?
-        <>
-          <h3 style={{ marginBottom: 0 }}>Enter the Pickup Address</h3><br />
-          <Form>
+        {formState.pickUp ?
+          <>
+            <h3 style={{ marginBottom: 0 }}>Enter the Pickup Address</h3><br />
             <Form.Input
               required
               label='Address line 1'
@@ -111,30 +175,37 @@ const Step3 = ({ Steps, setSteps }) => {
               icon={<Icon name='close' link onClick={() => { clearField("phoneNumber") }} />}
             />
             <Form.TextArea
-              label='Delivery Instruction'
+              label='Pickup Instruction'
               placeholder="ex. Buzz number or enter from back door."
-              name="deliveryInstruction"
-              value={deliveryForm.deliveryInstruction}
+              name="PickupInstruction"
+              value={deliveryForm.PickupInstruction}
               onChange={handleDeliveryForm}
             />
-          </Form>
-        </>
-        : null}
-      {/* <Map height={300} formState={formState} setFormState={setFormState} /> */}
-      <div style={{
-        position: 'absolute',
-        top: 'auto',
-        bottom: 50,
-        left: 'auto',
-        right: 45
-      }}>
-        <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
-          onClick={() => { history.goBack() }}>
-          <Icon name='close' />
-        </Button>
-        <FavButton clicked={() => { setSteps({ Step: Step2 }) }}> <Icon name='arrow left' />Back</FavButton>
-        <FavButton clicked={() => { setSteps({ Step: Step4 }) }}> Next<Icon name='arrow right' /></FavButton>
-      </div>
+          </>
+          : null}
+        {/* <Map height={300} formState={formState} setFormState={setFormState} /> */}
+        <div style={{
+          position: 'relative',
+          width: '100%'
+        }}
+        >
+          <div style={{
+            marginTop: 30,
+            position: 'absolute',
+            left: 'auto',
+            right: 0
+          }}>
+            <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
+              onClick={() => { history.goBack() }} icon>
+              <Icon name='close' />
+            </Button>
+            <FavButton clicked={() => { setSteps({ Step: Step2 }) }}> <Icon name='arrow left' />Back</FavButton>
+            <FavButton disable={!formState.delivery && !formState.pickUp ? true : false} content="Submit" clicked={() => {
+            }}> Next<Icon name='arrow right' /></FavButton>
+          </div>
+        </div>
+      </Form>
+
     </>
   )
 }

@@ -19,7 +19,7 @@ const CreatePostStepsContainer = () => {
   }
   const history = useHistory()
 
-  const [Steps, setSteps]= useState({Step: Step4})
+  const [Steps, setSteps]= useState({Step: Step3})
 
   return (
     <>
@@ -53,6 +53,7 @@ const CreatePostStepsContainer = () => {
               borderRadius: 7,
               padding: 30,
               paddingBottom: 170,
+              marginBottom: 30
             }}>
             <Steps.Step setSteps={setSteps}/>
         </div>

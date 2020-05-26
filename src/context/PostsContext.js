@@ -17,7 +17,31 @@ const PostsContextProvider = ({ children }) => {
     address: "",
     pickup: false,
     delivery: false,
-    aboutMe: ""
+    aboutMe: "",
+    pickupWeeks: [
+      { day: 'Mon', active: true },
+      { day: 'Tue', active: true },
+      { day: 'Wed', active: true },
+      { day: 'Thu', active: true },
+      { day: 'Fri', active: true },
+      { day: 'Sat', active: true },
+      { day: 'Sun', active: true }
+    ],
+    deliveryWeeks: [
+        { day: 'Mon', active: true },
+        { day: 'Tue', active: true },
+        { day: 'Wed', active: true },
+        { day: 'Thu', active: true },
+        { day: 'Fri', active: true },
+        { day: 'Sat', active: true },
+        { day: 'Sun', active: true }
+    ],
+    delivery1Km : 0,
+    pickupStartTime : new Date().setHours(8,0,0,0),
+    pickupEndTime : new Date().setHours(21,0,0,0),
+    deliveryStartTime : new Date().setHours(8,0,0,0),
+    deliveryEndTime : new Date().setHours(21,0,0,0),
+
   })
 
   const { title, price, pickUp, delivery, address, summary } = formState

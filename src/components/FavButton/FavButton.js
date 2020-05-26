@@ -3,7 +3,7 @@ import {
   Button,
 } from 'semantic-ui-react'
 
-const FavButton = ({children, clicked}) => {
+const FavButton = ({children, clicked, disable}) => {
   return (
     <>
       <Button 
@@ -12,6 +12,7 @@ const FavButton = ({children, clicked}) => {
         color: "white"
       }}
       onClick={clicked}
+      disabled={disable}
       >
         {children}
       </Button>
