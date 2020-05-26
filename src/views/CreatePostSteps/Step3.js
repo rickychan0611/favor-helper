@@ -11,10 +11,12 @@ import Step2 from './Step2'
 import Step4 from './Step4'
 import './styles.css'
 import db from '../../firestore'
+import _ from 'lodash';
 
 const Step3 = ({ Steps, setSteps }) => {
   const { preview, setPreview, formState, setFormState, validationError, setValidationError, success, setSuccess, posts } = useContext(PostsContext)
   const { user, setUser } = useContext(UserContext)
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e, { name, value }) => {
     setFormState({ ...formState, [name]: value })
@@ -41,7 +43,11 @@ const Step3 = ({ Steps, setSteps }) => {
 
   const handleSubmit = () => {
     if (formState.pickUp) {
-      setOpen(true)
+      if ( _.isEqual(user.address, deliveryForm)) {
+        setSteps({ Step: Step4 })
+      } else {
+        setOpen(true)
+      }
     } else {
       setSteps({ Step: Step4 })
     }
@@ -49,20 +55,25 @@ const Step3 = ({ Steps, setSteps }) => {
 
   const saveAddressModal = () => {
     // console.log(JSON.stringify('hello'))
-
-    // console.log(JSON.stringify(deliveryForm))
+    setLoading(true)
+    console.log(JSON.stringify(deliveryForm))
     db.collection('users').doc(user.id).update(
       { address: deliveryForm }
-    )
+    ).then(() => {
+      setLoading(false)
+      setSteps({ Step: Step4 })
+    })
   }
 
   const [open, setOpen] = useState(false)
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setDeliveryForm(user.address)
-  //   }
-  // }, [user])
+  useEffect(() => {
+    if (user) {
+      if (user.address) {
+        setDeliveryForm(user.address)
+      }
+    }
+  }, [user])
 
   return (
     <>
@@ -81,7 +92,9 @@ const Step3 = ({ Steps, setSteps }) => {
           </Button>
           <FavButton
             clicked={() => saveAddressModal()} >
-            <Icon name='checkmark' /> Yes
+            {loading ?
+              <Icon loading name='spinner' /> :
+              <><Icon name='checkmark' /> Yes</>}
           </FavButton>
         </Modal.Actions>
       </Modal>
