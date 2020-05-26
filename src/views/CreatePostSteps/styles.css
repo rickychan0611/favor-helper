@@ -1,5 +1,9 @@
+.datePicker {
+  white-space: nowrap;
+  display: inline-block
+}
 .time {
-  width: 100px;
+  width: 90px;
 }
 
 .deliveryFee {

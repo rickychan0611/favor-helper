@@ -37,18 +37,53 @@ const Step4 = ({ Steps, setSteps }) => {
     setDeliveryForm({ [name]: '' })
   }
 
-  const onUpdateItem = (i) => {
+  const onPickupWeeks = (i) => {
+    let counter = 0
+    formState.pickupWeeks.map(item => {
+      if (item.active == false) {
+        counter++
+      }
+    })
     const state = formState.pickupWeeks.map((item, j) => {
       if (j === i) {
-        item.active = !formState.pickupWeeks[i].active
+        if (counter != 6) {
+          item.active = !formState.pickupWeeks[i].active
+        }
+        else {
+          item.active = true
+        }
         return item
       } else {
         return item
       }
     })
-    // return state
     setFormState({
       ...formState, pickupWeeks: state
+    })
+  }
+
+  const onDeliveryWeeks = (i) => {
+    let counter = 0
+    formState.deliveryWeeks.map(item => {
+      if (item.active == false) {
+        counter++
+      }
+    })
+    const state = formState.deliveryWeeks.map((item, j) => {
+      if (j === i) {
+        if (counter != 6) {
+          item.active = !formState.deliveryWeeks[i].active
+        }
+        else {
+          item.active = true
+        }
+        return item
+      } else {
+        return item
+      }
+    })
+    setFormState({
+      ...formState, deliveryWeeks: state
     })
   }
 
@@ -59,98 +94,107 @@ const Step4 = ({ Steps, setSteps }) => {
   return (
     <>
       <h2>Step 4: <br />Set Available Days</h2>
-      <Divider horizontal>Pick up</Divider>
-      <h4>Select Available Pickup Days: <span style={{ fontSize: 13 }}>(Green = available)</span> <br />
-        {formState.pickupWeeks.map((item, i) => {
-          return (
-            <Button
-              compact size="mini"
-              color={item.active ? "green" : "grey"}
-              style={{ margin: 4 }}
-              onClick={() => {
-                onUpdateItem(i)
-              }}
-            >{item.day}
-            </Button>
-          )
-        })}
-      </h4>
-      <h4>Available Pickup Hours:</h4>
-      <span>From: &nbsp;
+      {formState.pickUp ?
+        <>
+          <Divider horizontal>Pick up</Divider>
+          <h4>Select Available Pickup Days: <span style={{ fontSize: 13 }}>(Green = available)</span> <br />
+            {formState.pickupWeeks.map((item, i) => {
+              return (
+                <Button
+                  compact size="mini"
+                  color={item.active ? "green" : "grey"}
+                  style={{ margin: 4 }}
+                  onClick={() => {
+                    onPickupWeeks(i)
+                  }}
+                >{item.day}
+                </Button>
+              )
+            })}
+          </h4>
+          <h4>Available Pickup Hours:</h4>
+          <div className="datePicker">From: &nbsp;
         <DatePicker
-        className="time"
-        selected={formState.pickupStartTime}
-        onChange={date => setFormState({
-          ...formState, pickupStartTime: date
-        })}
-        showTimeSelect
-        showTimeSelectOnly
-        timeIntervals={15}
-        timeCaption="Time"
-        dateFormat="h:mm aa"
-      />
-      &nbsp;&nbsp;to&nbsp;&nbsp;
+              className="time"
+              selected={formState.pickupStartTime}
+              onChange={date => setFormState({
+                ...formState, pickupStartTime: date
+              })}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+            />
+          </div>
+          <div className="datePicker">
+            &nbsp;&nbsp;to&nbsp;&nbsp;
       <DatePicker
-        className="time"
-        selected={formState.pickupEndTime}
-        onChange={date => setFormState({
-          ...formState, pickupEndTime: date
-        })}
-        showTimeSelect
-        showTimeSelectOnly
-        timeIntervals={15}
-        timeCaption="Time"
-        dateFormat="h:mm aa"
-      />
-      </span>
-      <br/>
-      <br/>
-
-      <Divider horizontal>Delivery</Divider>
-      <h4>Select Available Delivery Days: <span style={{ fontSize: 13 }}>(Green = available)</span> <br />
-        {formState.deliveryWeeks.map((item, i) => {
-          return (
-            <Button
-              compact size="mini"
-              color={item.active ? "green" : "grey"}
-              style={{ margin: 4 }}
-              onClick={() => {
-                onUpdateItem(i)
-              }}
-            >{item.day}
-            </Button>
-          )
-        })}
-      </h4>
-      <h4>Available Delivery Hours:</h4>
-      <span>From: &nbsp;
+              className="time"
+              selected={formState.pickupEndTime}
+              onChange={date => setFormState({
+                ...formState, pickupEndTime: date
+              })}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+            />
+          </div>
+          <br />
+          <br />
+        </> : null}
+      {formState.delivery ?
+        <>
+          <Divider horizontal>Delivery</Divider>
+          <h4>Select Available Delivery Days: <span style={{ fontSize: 13 }}>(Green = available)</span> <br />
+            {formState.deliveryWeeks.map((item, i) => {
+              return (
+                <Button
+                  compact size="mini"
+                  color={item.active ? "green" : "grey"}
+                  style={{ margin: 4 }}
+                  onClick={() => {
+                    onDeliveryWeeks(i)
+                  }}
+                >{item.day}
+                </Button>
+              )
+            })}
+          </h4>
+          <h4>Available Delivery Hours:</h4>
+          <div className="datePicker" >From: &nbsp;
         <DatePicker
-        className="time"
-        selected={formState.deliveryStartTime}
-        onChange={date => setFormState({
-          ...formState, deliveryStartTime: date
-        })}
-        showTimeSelect
-        showTimeSelectOnly
-        timeIntervals={15}
-        timeCaption="Time"
-        dateFormat="h:mm aa"
-      />
-      &nbsp;&nbsp;to&nbsp;&nbsp;
+              className="time"
+              selected={formState.deliveryStartTime}
+              onChange={date => setFormState({
+                ...formState, deliveryStartTime: date
+              })}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+            />
+          </div>
+          <div className="datePicker">
+            &nbsp;&nbsp;to&nbsp;&nbsp;
       <DatePicker
-        className="time"
-        selected={formState.deliveryEndTime}
-        onChange={date => setFormState({
-          ...formState, deliveryEndTime: date
-        })}
-        showTimeSelect
-        showTimeSelectOnly
-        timeIntervals={15}
-        timeCaption="Time"
-        dateFormat="h:mm aa"
-      />
-      </span>
-
+              className="time"
+              selected={formState.deliveryEndTime}
+              onChange={date => setFormState({
+                ...formState, deliveryEndTime: date
+              })}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+            />
+          </div>
+        </>
+        : null}
 
       <div style={{
         position: 'absolute',
@@ -167,7 +211,12 @@ const Step4 = ({ Steps, setSteps }) => {
         <FavButton clicked={() => {
           setSteps({ Step: Step3 })
         }}> <Icon name='arrow left' />Back</FavButton>
-        <FavButton clicked={() => { setSteps({ Step: Step3 }) }}> Next<Icon name='arrow right' /></FavButton>
+        <FavButton clicked={() => {
+          // setSteps({ Step: Step3 }) 
+          console.log('click')
+
+        }}>
+          Next<Icon name='arrow right' /></FavButton>
       </div>
     </>
   )
