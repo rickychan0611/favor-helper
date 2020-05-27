@@ -7,6 +7,7 @@ import { PostsContext } from '../../context/PostsContext'
 import { UserContext } from '../../context/UserContext'
 import { FavButton, Map } from '../../components';
 import { PhotoSlider } from '../../components'
+import Step5 from './Step5'
 import Step3 from './Step3'
 import DatePicker from "react-datepicker"
 import './styles.css'
@@ -122,7 +123,7 @@ const Step4 = ({ Steps, setSteps }) => {
               })}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={15}
+              timeIntervals={60}
               timeCaption="Time"
               dateFormat="h:mm aa"
             />
@@ -137,7 +138,7 @@ const Step4 = ({ Steps, setSteps }) => {
               })}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={15}
+              timeIntervals={60}
               timeCaption="Time"
               dateFormat="h:mm aa"
             />
@@ -212,7 +213,7 @@ const Step4 = ({ Steps, setSteps }) => {
           setSteps({ Step: Step3 })
         }}> <Icon name='arrow left' />Back</FavButton>
         <FavButton clicked={() => {
-          // setSteps({ Step: Step3 }) 
+          setSteps({ Step: Step5 }) 
           console.log('click')
 
         }}>

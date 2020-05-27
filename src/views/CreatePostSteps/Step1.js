@@ -18,7 +18,6 @@ const Step1 = ({ Steps, setSteps }) => {
   }
   const callback = () => {
     localStorage.setItem("newPost", JSON.stringify(formState))
-    console.log(localStorage.getItem("newPost"))
   }
 
   const handleSubmit = () => {

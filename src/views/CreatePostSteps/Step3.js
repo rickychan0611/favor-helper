@@ -43,6 +43,8 @@ const Step3 = ({ Steps, setSteps }) => {
 
   const handleSubmit = () => {
     if (formState.pickUp) {
+      setFormState({...formState, pickUpAddress: deliveryForm})
+
       if (_.isEqual(user.address, deliveryForm)) {
         setSteps({ Step: Step4 })
       } else {
@@ -50,6 +52,7 @@ const Step3 = ({ Steps, setSteps }) => {
       }
     } else {
       setSteps({ Step: Step4 })
+      setFormState({...formState, pickUpAddress: deliveryForm})
     }
   }
 

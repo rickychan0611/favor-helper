@@ -17,6 +17,7 @@ import { FavButton } from '../../components'
 import db from '../../firestore'
 
 const Step5 = ({ Steps, setSteps }) => {
+ 
   const uploadToServer = (file) => {
     firebase.storage().ref('userPic/' + user.id).put(file)
       .then((fileData) => { // then get downloadUrl
@@ -42,7 +43,7 @@ const Step5 = ({ Steps, setSteps }) => {
   }
   const [avatar, setAvatar] = useState(false)
 
-  const { formState, setFormState } = useContext(PostsContext)
+  const { formState, setFormState, submitPostToServer } = useContext(PostsContext)
   const { user, updateProfilePic } = useContext(UserContext)
 
   const handleChange = (e, { name, value }) => {
@@ -54,6 +55,7 @@ const Step5 = ({ Steps, setSteps }) => {
     db.collection('users').doc(user.id).update(
       { aboutMe: formState.aboutMe }
     )
+    submitPostToServer()
   }
 
   useEffect(() => {

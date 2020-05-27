@@ -159,8 +159,8 @@ const PhotoSlider = ({ formState, setFormState, createPost }) => {
               );
             })}
           </Slider>
-                <ButtonBack>Back</ButtonBack>
-                <ButtonNext>Next</ButtonNext>
+                <ButtonBack>Backward</ButtonBack>
+                <ButtonNext>Forward</ButtonNext>
 
         </div >
       </CarouselProvider>

@@ -63,10 +63,10 @@ const PostsContextProvider = ({ children }) => {
       .then(doc => {
         console.log("Post updated!");
         history.push('/profile')
+        localStorage.removeItem('newPost')
         setFormState({
           title: "",
           price: "",
-          address: "",
           pickup: false,
           delivery: false,
           location: ""
@@ -78,7 +78,6 @@ const PostsContextProvider = ({ children }) => {
       const createPost = db.collection('posts').doc()
       console.log('formState' + JSON.stringify(formState))
 
-      if (validation()) {
         createPost.set(
           { ...formState, createAt: timeStamp, id: createPost.id }
         ).then(doc => {
@@ -96,10 +95,6 @@ const PostsContextProvider = ({ children }) => {
             console.error("Error adding Post: ", error);
           })
         return
-      }
-      else {
-        setValidationError(true)
-      }
     }
   }
 
