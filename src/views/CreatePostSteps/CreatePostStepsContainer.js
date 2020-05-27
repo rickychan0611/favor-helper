@@ -10,6 +10,7 @@ import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
 import Step4 from './Step4'
+import Step5 from './Step5'
 
 
 const CreatePostStepsContainer = () => {
@@ -19,7 +20,7 @@ const CreatePostStepsContainer = () => {
   }
   const history = useHistory()
 
-  const [Steps, setSteps]= useState({Step: Step3})
+  const [Steps, setSteps]= useState({Step: Step1})
 
   return (
     <>
@@ -52,7 +53,7 @@ const CreatePostStepsContainer = () => {
               boxShadow: '0px 0px 20px grey',
               borderRadius: 7,
               padding: 30,
-              paddingBottom: 170,
+              paddingBottom: 130,
               marginBottom: 30
             }}>
             <Steps.Step setSteps={setSteps}/>

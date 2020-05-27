@@ -93,7 +93,7 @@ const Step4 = ({ Steps, setSteps }) => {
 
   return (
     <>
-      <h2>Step 4: <br />Set Available Days</h2>
+      <h2>Step 4 of 5: <br />Set Available Days</h2>
       {formState.pickUp ?
         <>
           <Divider horizontal>Pick up</Divider>

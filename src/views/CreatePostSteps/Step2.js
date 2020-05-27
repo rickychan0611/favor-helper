@@ -1,7 +1,5 @@
 import React, { useContext } from 'react'
-import styles from './styles'
-import { Input, Form, Icon, Header, Grid, Dimmer, Container, Responsive, Button } from 'semantic-ui-react';
-import firebase from 'firebase'
+import { Icon, Button } from 'semantic-ui-react';
 import { useHistory, useParams } from "react-router-dom";
 import { PostsContext } from '../../context/PostsContext'
 import { UserContext } from '../../context/UserContext'
@@ -19,9 +17,11 @@ const Step2 = ({ Steps, setSteps }) => {
 
   return (
     <>
-      <h2>Step 2: <br />Upload pictures</h2>
-      {/* <h3>What is the name of your meal?</h3> */}
+      <h2>Step 2 of 5: <br />Upload pictures</h2><p> Please upload at least 1 picture. <br/>Press + to add. Press x to delete.</p>
       <PhotoSlider formState={formState} setFormState={setFormState} createPost={true} />
+      <br/><br/>
+      <p>The 1st picture from the left is the default picture.</p>
+
       <br />
       <div style={{
         position: 'absolute',
@@ -36,7 +36,14 @@ const Step2 = ({ Steps, setSteps }) => {
           <Icon name='close' />
         </Button>
         <FavButton clicked={() => { setSteps({ Step: Step1 }) }}> <Icon name='arrow left' />Back</FavButton>
-        <FavButton clicked={() => { setSteps({ Step: Step3 }) }}> Next<Icon name='arrow right' /></FavButton>
+        <FavButton clicked={() => {
+          if ( formState.images == '') {
+            alert("Please upload at least one picture.")
+          }
+          else {
+          setSteps({ Step: Step3 })
+          }
+        }}> Next<Icon name='arrow right' /></FavButton>
 
       </div>
     </>

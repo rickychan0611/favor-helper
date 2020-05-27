@@ -43,7 +43,7 @@ const Step3 = ({ Steps, setSteps }) => {
 
   const handleSubmit = () => {
     if (formState.pickUp) {
-      if ( _.isEqual(user.address, deliveryForm)) {
+      if (_.isEqual(user.address, deliveryForm)) {
         setSteps({ Step: Step4 })
       } else {
         setOpen(true)
@@ -99,7 +99,7 @@ const Step3 = ({ Steps, setSteps }) => {
         </Modal.Actions>
       </Modal>
 
-      <h2>Step 3: <br />Pickup / Delivery</h2>
+      <h2>Step 3 of 5: <br />Pickup / Delivery</h2>
       <p>You can select both</p>
       <Checkbox
         label="Delivery: You will deliver to customers"
@@ -213,8 +213,11 @@ const Step3 = ({ Steps, setSteps }) => {
               <Icon name='close' />
             </Button>
             <FavButton clicked={() => { setSteps({ Step: Step2 }) }}> <Icon name='arrow left' />Back</FavButton>
-            <FavButton disable={!formState.delivery && !formState.pickUp ? true : false} content="Submit" clicked={() => {
-            }}> Next<Icon name='arrow right' /></FavButton>
+            <FavButton disable={!formState.delivery && !formState.pickUp ? true : false}
+              content="Submit"
+              clicked={() => {
+              }}> Next<Icon name='arrow right' />
+            </FavButton>
           </div>
         </div>
       </Form>

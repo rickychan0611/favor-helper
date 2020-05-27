@@ -161,7 +161,6 @@ const PhotoSlider = ({ formState, setFormState, createPost }) => {
           </Slider>
                 <ButtonBack>Back</ButtonBack>
                 <ButtonNext>Next</ButtonNext>
-                <p>You can slide left and right to switch picture</p>
 
         </div >
       </CarouselProvider>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styles from './styles'
 import { Input, Form, Icon, Header, Grid, Dimmer, Container, Responsive, Button } from 'semantic-ui-react';
 import firebase from 'firebase'
@@ -8,70 +8,113 @@ import { UserContext } from '../../context/UserContext'
 import { FavButton } from '../../components';
 import Step2 from './Step2'
 
-const Step1 = ({Steps, setSteps}) => {
-
-  const { preview, setPreview, formState, setFormState, validationError, setValidationError, success, setSuccess, posts } = useContext(PostsContext)
-  const handleChange = (e, { name, value }) => {
-    setFormState({ ...formState, [name]: value })
-  }
+const Step1 = ({ Steps, setSteps }) => {
   const history = useHistory()
+  const { formState, setFormState } = useContext(PostsContext)
+  const handleChange = (e, { name, value }) => {
+    localStorage.removeItem('newPost')
+    setFormState({ ...formState, [name]: value }, callback()
+    )
+  }
+  const callback = () => {
+    localStorage.setItem("newPost", JSON.stringify(formState))
+    console.log(localStorage.getItem("newPost"))
+  }
+
+  const handleSubmit = () => {
+    localStorage.setItem("newPost", JSON.stringify(formState))
+    setSteps({ Step: Step2 })
+  }
+
+  const clearField = (name) => {
+    setFormState({ ...formState, [name]: '' })
+  }
+
+  useEffect(() => {
+    let state = JSON.parse(localStorage.getItem("newPost"))
+    if (state) {
+      setFormState(state)
+    }
+  }, [])
 
   return (
     <>
-      <h2>Step 1: Information</h2>
+      <h2>Step 1 of 5: Information</h2>
       {/* <h3>What is the name of your meal?</h3> */}
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Input
+          required
           fluid
           label="What is the name of your meal?"
           placeholder="What's cooking?"
           size="large"
           value={formState.title}
-          onChange={(e) => { setFormState({ ...formState, title: e.target.value }) }}
+          name="title"
+          onChange={handleChange}
+          icon={<Icon name='close' link onClick={() => { clearField("title") }} />}
         />
         <Form.Group widths='equal'>
           <Form.Input
+            required
             fluid
             label="How much?"
             placeholder="Enter an amount"
             size="large"
             type='number'
             value={formState.price}
-            onChange={(e) => { setFormState({ ...formState, price: e.target.value }) }}
+            name="price"
+            onChange={handleChange}
+            icon={<Icon name='close' link onClick={() => { clearField("price") }} />}
           />
           <Form.Input
             fluid
-            label="How many orders will you do?"
+            label="How many orders will you do? (0 = unlimited)"
             placeholder="Enter 0 if no limit"
             size="large"
             type='number'
             value={formState.maxOrder}
-            onChange={(e) => { setFormState({ ...formState, maxOrder: e.target.value }) }}
+            name="maxOrder"
+            onChange={handleChange}
+            icon={<Icon name='close' link onClick={() => { clearField("maxOrder") }} />}
           />
         </Form.Group>
         <Form.TextArea fluid label="Description" name="summary"
+          style={{ minHeight: 100 }}
+          required
           value={formState.summary}
-          placeholder="What's so good about your meal? Detailed descriptons get the most customers joinning up!"
-          onChange={(e) => { setFormState({ ...formState, summary: e.target.value }) }}
+          name="summary"
+          placeholder="What is your meal? Detailed descriptons get the most customers joinning up!"
+          onChange={handleChange}
         />
-      </Form>
+        <button onClick={()=>clearField("summary")}>clear</button>
 
-      <div style={{
-        position: 'absolute',
-        top: 'auto',
-        bottom: 60,
-        left: 'auto',
-        right: 45
-      }}>
-
-        <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
-          onClick={() => { history.goBack() }}>
-          <Icon name='close' /> Cancel
+        <div style={{
+          position: 'relative',
+          width: '100%'
+        }}
+        >
+          <div style={{
+            marginTop: 30,
+            position: 'absolute',
+            left: 'auto',
+            right: 0
+          }}>
+            <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
+              onClick={() => { history.goBack() }}>
+              <Icon name='close' /> Cancel
         </Button>
 
-        <FavButton clicked={() => { setSteps({Step: Step2}) }}> Next<Icon name='arrow right' /></FavButton>
+            <FavButton
+              // disable={!formState.delivery && !formState.pickUp ? true : false}
+              content="Submit"
+              clicked={() => {
+              }}> Next<Icon name='arrow right' />
+            </FavButton>
 
-      </div>
+          </div>
+        </div>
+      </Form>
+
     </>
   )
 }
