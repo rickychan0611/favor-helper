@@ -1,11 +1,13 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useContext } from 'react'
 import db from '../firestore'
 import { useHistory } from "react-router-dom";
+import { UserContext } from './UserContext'
 
 export const PostsContext = createContext()
 
 const PostsContextProvider = ({ children }) => {
   const history = useHistory()
+  const { user, setUser } = useContext(UserContext)
 
   const [posts, setPosts] = useState([])
   const [preview, setPreview] = useState(false)
@@ -28,19 +30,19 @@ const PostsContextProvider = ({ children }) => {
       { day: 'Sun', active: true }
     ],
     deliveryWeeks: [
-        { day: 'Mon', active: true },
-        { day: 'Tue', active: true },
-        { day: 'Wed', active: true },
-        { day: 'Thu', active: true },
-        { day: 'Fri', active: true },
-        { day: 'Sat', active: true },
-        { day: 'Sun', active: true }
+      { day: 'Mon', active: true },
+      { day: 'Tue', active: true },
+      { day: 'Wed', active: true },
+      { day: 'Thu', active: true },
+      { day: 'Fri', active: true },
+      { day: 'Sat', active: true },
+      { day: 'Sun', active: true }
     ],
-    delivery1Km : 0,
-    pickupStartTime : new Date().setHours(8,0,0,0),
-    pickupEndTime : new Date().setHours(21,0,0,0),
-    deliveryStartTime : new Date().setHours(8,0,0,0),
-    deliveryEndTime : new Date().setHours(21,0,0,0),
+    deliveryFee: 0,
+    pickupStartTime: new Date().setHours(8, 0, 0, 0),
+    pickupEndTime: new Date().setHours(21, 0, 0, 0),
+    deliveryStartTime: new Date().setHours(8, 0, 0, 0),
+    deliveryEndTime: new Date().setHours(21, 0, 0, 0),
 
   })
 
@@ -60,41 +62,47 @@ const PostsContextProvider = ({ children }) => {
     if (formState.id) {
       console.log('formState' + JSON.stringify(formState))
       db.collection('posts').doc(formState.id).update(formState)
-      .then(doc => {
-        console.log("Post updated!");
-        history.push('/profile')
-        localStorage.removeItem('newPost')
-        setFormState({
-          title: "",
-          price: "",
-          pickup: false,
-          delivery: false,
-          location: ""
+        .then(doc => {
+          console.log("Post updated!");
+          history.push('/profile')
+          localStorage.removeItem('newPost')
+          localStorage.removeItem('Images')
+          setFormState({
+            title: "",
+            price: "",
+            pickup: false,
+            delivery: false,
+            location: ""
+          })
         })
-      })
     }
     if (!formState.id) {
       const timeStamp = new Date()
       const createPost = db.collection('posts').doc()
       console.log('formState' + JSON.stringify(formState))
 
-        createPost.set(
-          { ...formState, createAt: timeStamp, id: createPost.id }
-        ).then(doc => {
-          setSuccess(true)
-          console.log("Post Saved: ");
-          setFormState({
-            title: "",
-            price: "",
-            address: "",
-            pickup: false,
-            delivery: false
-          })
+      createPost.set(
+        { ...formState, 
+          createAt: timeStamp, 
+          id: createPost.id,
+          posterUid: user.uid }
+      ).then(doc => {
+        setSuccess(true)
+        console.log("Post Saved: ");
+        localStorage.removeItem('newPost')
+        localStorage.removeItem('Images')
+        setFormState({
+          title: "",
+          price: "",
+          address: "",
+          pickup: false,
+          delivery: false
         })
-          .catch(function (error) {
-            console.error("Error adding Post: ", error);
-          })
-        return
+      })
+        .catch(function (error) {
+          console.error("Error adding Post: ", error);
+        })
+      return
     }
   }
 
@@ -122,17 +130,17 @@ const PostsContextProvider = ({ children }) => {
   //get all posts
   useEffect(
     () => {
-        db.collection('posts')
-          .orderBy('createAt', 'desc')
-          .onSnapshot(snapshot => {
-            let postArr = []
-            setPosts([])
-            snapshot.forEach(doc => {
-              postArr.push(doc.data())
-            })
-            setPosts(postArr)
-          }
-          )
+      db.collection('posts')
+        .orderBy('createAt', 'desc')
+        .onSnapshot(snapshot => {
+          let postArr = []
+          setPosts([])
+          snapshot.forEach(doc => {
+            postArr.push(doc.data())
+          })
+          setPosts(postArr)
+        }
+        )
     },
     []
   )

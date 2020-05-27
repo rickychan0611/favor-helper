@@ -54,7 +54,13 @@ const ImageSliderContextProvider = ({ children }) => {
 
   useEffect(()=>{
     let state = JSON.parse(localStorage.getItem('Images'))
-    setImages(state)
+    if (state){
+      setImages(state)
+    }
+    else {
+      setImages([{ src: addImage }])
+    }
+
   }, [])
 
   return (

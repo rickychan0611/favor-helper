@@ -84,7 +84,8 @@ const PostCard = ({ item, edit }) => {
             <h3 style={styles.title}>{item.title}</h3>
             <Divider fitted />
             <div style={styles.addressContainer}>
-              <p style={styles.address}>{item.address[2].long_name}</p>
+              {!item.pickupAddress ? null :
+              <p style={styles.address}>{item.pickupAddress.city}</p>}
               <p style={styles.pickup}>
                 {item.pickUp ? <Icon name="shopping bag" /> : null}
                 {item.delivery ? <> &nbsp;&nbsp;<Icon name="shipping fast" />  </> : null}

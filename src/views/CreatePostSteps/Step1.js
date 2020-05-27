@@ -30,8 +30,33 @@ const Step1 = ({ Steps, setSteps }) => {
   }
 
   useEffect(() => {
+    // localStorage.removeItem('newPost')
+    // localStorage.removeItem('Images')    
     let state = JSON.parse(localStorage.getItem("newPost"))
-    if (state) {
+
+    // setFormState({
+    //   ...formState,
+    //   pickupWeeks: [
+    //     { day: 'Mon', active: true },
+    //     { day: 'Tue', active: true },
+    //     { day: 'Wed', active: true },
+    //     { day: 'Thu', active: true },
+    //     { day: 'Fri', active: true },
+    //     { day: 'Sat', active: true },
+    //     { day: 'Sun', active: true }
+    //   ],
+    //   deliveryWeeks: [
+    //     { day: 'Mon', active: true },
+    //     { day: 'Tue', active: true },
+    //     { day: 'Wed', active: true },
+    //     { day: 'Thu', active: true },
+    //     { day: 'Fri', active: true },
+    //     { day: 'Sat', active: true },
+    //     { day: 'Sun', active: true }
+    //   ],
+    // })
+    console.log(state)
+    if (state && formState) {
       setFormState(state)
     }
   }, [])
@@ -52,7 +77,6 @@ const Step1 = ({ Steps, setSteps }) => {
           onChange={handleChange}
           icon={<Icon name='close' link onClick={() => { clearField("title") }} />}
         />
-        <Form.Group widths='equal'>
           <Form.Input
             required
             fluid
@@ -76,7 +100,6 @@ const Step1 = ({ Steps, setSteps }) => {
             onChange={handleChange}
             icon={<Icon name='close' link onClick={() => { clearField("maxOrder") }} />}
           />
-        </Form.Group>
         <Form.TextArea fluid label="Description" name="summary"
           style={{ minHeight: 100 }}
           required
@@ -85,7 +108,7 @@ const Step1 = ({ Steps, setSteps }) => {
           placeholder="What is your meal? Detailed descriptons get the most customers joinning up!"
           onChange={handleChange}
         />
-        <button onClick={()=>clearField("summary")}>clear</button>
+        <button onClick={() => clearField("summary")}>clear</button>
 
         <div style={{
           position: 'relative',
