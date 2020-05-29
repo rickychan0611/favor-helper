@@ -70,9 +70,13 @@ const Profile = () => {
   if (posts && user) {
      filteredPosts = posts.filter(filterItems => filterItems.posterUid == user.id)
   }
-  useEffect(() => {
-
-  }, [])
+  // useEffect(() => {
+  //   if (user) {
+  //     if (user.aboutMe) {
+  //       setFormState({ ...formState, aboutMe: user.aboutMe })
+  //     }
+  //   }
+  // }, [user])
 
   return (
     <div style={{ padding: 14 }}>
