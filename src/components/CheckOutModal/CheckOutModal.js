@@ -211,9 +211,9 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
                     checked={pickupOrDelivery === "Pick-up"}
                     onChange={handlePickupOrDelivery}
                   /><br />
-                  {post.address[2].long_name},&nbsp;
-                  {post.address[4].short_name},&nbsp;
-                  {post.address[5].short_name}&nbsp;
+                  {post.pickupAddress.city}
+                  {/* {post.address[4].short_name},&nbsp;
+                  {post.address[5].short_name}&nbsp; */}
               </h5>
                 <Divider horizontal>Or</Divider>
                 <h4>
@@ -429,23 +429,29 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
               </tr>
               <tr>
                 <td>Pickup address:</td>
-                <td>{post.address[1].long_name}</td>
+                <td>{post.pickupAddress.address1}</td>
+              </tr>
+            {post.pickupAddress.address ? 
+              <tr>
+                <td>Pickup address:</td>
+                <td>{post.pickupAddress.address1}</td>
+              </tr>
+             : null}
+              <tr>
+                <td> </td>
+                <td>{post.pickupAddress.city}</td>
               </tr>
               <tr>
                 <td> </td>
-                <td>{post.address[2].long_name}</td>
+                <td>{post.pickupAddress.province}</td>
               </tr>
               <tr>
                 <td> </td>
-                <td>{post.address[3].long_name}</td>
+                <td>{post.pickupAddress.country}</td>
               </tr>
               <tr>
                 <td> </td>
-                <td>{post.address[4].short_name}</td>
-              </tr>
-              <tr>
-                <td> </td>
-                <td>{post.address[5].short_name}</td>
+                <td>{post.pickupAddress.postalCode}</td>
               </tr>
               <tr>
                 <td>Pickup Time: </td>

@@ -50,7 +50,7 @@ const Post = ({ post, poster, loading, user }) => {
 
                     <Grid.Column width={14}>
                         <p><span style={{color: "#666abd"}}>LOCATION</span><br/>
-                        {post.address[2].long_name}, {post.address[4].short_name}, {post.address[5].short_name}</p>
+                        {post.pickupAddress.city}</p>
 
                     </Grid.Column>
 
