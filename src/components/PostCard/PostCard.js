@@ -85,7 +85,7 @@ const PostCard = ({ item, edit }) => {
             <Divider fitted />
             <div style={styles.addressContainer}>
               {!item.pickupAddress ? null :
-              <p style={styles.address}>{item.pickupAddress.city}</p>}
+              <p style={styles.address}>Location: {item.pickupAddress.city}</p>}
               <p style={styles.pickup}>
                 {item.pickUp ? <Icon name="shopping bag" /> : null}
                 {item.delivery ? <> &nbsp;&nbsp;<Icon name="shipping fast" />  </> : null}
@@ -96,22 +96,21 @@ const PostCard = ({ item, edit }) => {
             <Divider fitted />
 
             {/* <Divider fitted /> */}
-            <div style={styles.addressContainer}>
+            {/* <div style={styles.addressContainer}>
               <p style={styles.address}>Qty left : {item.minOrder ? <>{item.minOrder}</> : <>no limit</>} </p>
               <p style={styles.pickup}>Total Qty : {item.maxOrder ? <>{item.maxOrder}</> : <>no limit</>}
               </p>
             </div>
-            <div style={{ clear: "both" }}></div>
+            <div style={{ clear: "both" }}></div> */}
 
-            <Divider fitted />
+            {/* <Divider fitted />
             <p style={styles.dates}>{item.CutOffTime ? <>Group Buy: {item.minOrder} more orders to be valid. </> : <>Group Buy: N/A</>}<br />
-            </p>
+            </p> */}
 
-            <Divider fitted />
+            {/* <Divider fitted />
             <p style={styles.dates}>{item.CutOffTime ? <>Booking ends: {item.CutOffTime}</> : <>No booking nessessary</>}<br />
-          Meal will be ready on: {item.completionDate ? <>{item.completionDate}</> : <>everyday</>}</p>
+          Meal will be ready on: {item.completionDate ? <>{item.completionDate}</> : <>everyday</>}</p> */}
           </div>
-
         </div>
       </div>
     </>

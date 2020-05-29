@@ -1,7 +1,7 @@
 const styles = {
   container :{ 
     width: "100%", 
-    height: 440, 
+    height: 350, 
     backgroundColor: "white", 
     position: 'relative' ,
     boxShadow: '0px 10px 15px #cfdde8'
