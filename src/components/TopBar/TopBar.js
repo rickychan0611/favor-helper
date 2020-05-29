@@ -153,7 +153,8 @@ const TopBar = () => {
               }}>
                 <Icon name='bars' size="large" style={{ color: '#707070' }}
                   onClick={() => { setOpenSideBar(!openSideBar) }} /></div>
-              <img style={{ marginLeft: 20 }} src={logo} height={44} />
+              <img style={{ marginLeft: 20 }} src={logo} height={44} 
+              onClick={() => { history.push('/posts') }}/>
               <div style={{
                 marginLeft: 'auto',
                 marginRight: 0,
@@ -218,7 +219,8 @@ const TopBar = () => {
                   : null}
               </Grid.Column>
               <Grid.Column width={8}>
-                <img src={logo} height={40} />
+                <img src={logo} height={40} 
+                onClick={() => { history.push('/posts') }}/>
               </Grid.Column>
               <Grid.Column width={2}>
                 <Icon name='bell' size="large" style={{ color: '#707070' }} />
