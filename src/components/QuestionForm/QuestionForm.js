@@ -20,7 +20,7 @@ import {
 import styles from './styles'
 
 
-const QuestionForm = ({replyQuestion}) => {
+const QuestionForm = ({ replyQuestion }) => {
   const { user } = React.useContext(UserContext)
   let history = useHistory()
   let { id } = useParams();
@@ -48,7 +48,16 @@ const QuestionForm = ({replyQuestion}) => {
   return (
     <>
       <h4>Ask a question:</h4>
-      {user ?
+      {user == "not signed in" ?
+
+        <Segment warning textAlign='center' onClick={() => history.push('/sign-in')}>
+          <h5>Please login to ask a question.</h5>
+          <Button size="small" color="teal"
+            onClick={() => { history.push('/sign-in') }}>
+            Login
+        </Button>
+        </Segment>
+        : 
         // Question Form
         <div style={{ display: 'flex' }}>
           {/* <div style={{ width: '10%' }}>
@@ -56,7 +65,7 @@ const QuestionForm = ({replyQuestion}) => {
           </div> */}
           <div style={{ width: '100%' }}>
             <Form onSubmit={HandleQuestionSubmit}>
-              <Form.TextArea required 
+              <Form.TextArea required
                 onChange={handleQuestionChange}
                 value={question}
               />
@@ -66,14 +75,6 @@ const QuestionForm = ({replyQuestion}) => {
             </Form>
           </div>
         </div>
-        :
-        <Segment warning textAlign='center' onClick={() => history.push('/sign-in')}>
-          <h5>Please login to leave a message.</h5>
-          <Button size="small" color="teal" 
-              onClick={() => { history.push('/sign-in') }}>
-            Login
-          </Button>
-        </Segment>
       }
     </>
   )

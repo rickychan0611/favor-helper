@@ -75,7 +75,7 @@ const Step5 = ({ Steps, setSteps }) => {
 
             {/* {!avatar ? */}
             <>
-              {!user ? null :
+              {user == "not signed in" ? null :
                 <img src={user.photoURL}
                   style={{ width: 100, height: 100, objectFit: 'cover', borderRadius: '50%' }} />
               }

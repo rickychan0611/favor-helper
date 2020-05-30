@@ -147,27 +147,55 @@ const MySales = () => {
                      {item.deliveryDate ?
                             <FormatDate date={item.deliveryDate} /> :
                             <FormatDate date={item.pickupDate} />}
-                            <br />
+                          <br />
                             Status: {status}
                         </h3>
                       </div>
                       <Segment raised style={{ marginTop: 0 }}>
-                        
-                      <table style={{ width: '100%' }}>
-                        <tr>
-                          <td>Order#: {item.id.slice(0, 4).toUpperCase()}</td>
-                          <td style={{ textAlign: "right" }}> 
-                          {item.createAt.toDate().toLocaleString(
-                            'en-US',
-                            {
-                              month: 'long',
-                              day: 'numeric',
-                              year: 'numeric'
-                            }
-                          )}
-                          </td>
-                        </tr>
-                      </table>
+
+                        <div style={{backgroundColor: "white", padding: 10}}>
+                          <h5 style={{marginBottom: 5}}>Buyer is waiting for confirmation</h5>
+                          <Checkbox label={"Confirm " + item.shippingMethod + " date"}
+                            onClick={() => {
+                              if (status == 'Unconfirmed') {
+                                setStatus('Confirmed')
+                              }
+                              else {
+                                setStatus('Unconfirmed')
+                                setClearCheck(false)
+                              }
+                            }} /><br/>
+                          <Checkbox label={"Order is ready for " + item.shippingMethod}
+                            disabled={status == "Unconfirmed"}
+                            checked={clearCheck}
+                            onClick={() => {
+                              if (status == 'Confirmed') {
+                                setStatus('Ready')
+                                setClearCheck(true)
+                              }
+                              if (status == 'Ready') {
+                                setStatus('Confirmed')
+                                setClearCheck(false)
+                              }
+                            }} />
+                        </div>
+
+                        <Divider />
+                        <table style={{ width: '100%' }}>
+                          <tr>
+                            <td>Order#: {item.id.slice(0, 4).toUpperCase()}</td>
+                            <td style={{ textAlign: "right" }}>
+                              {item.createAt.toDate().toLocaleString(
+                                'en-US',
+                                {
+                                  month: 'long',
+                                  day: 'numeric',
+                                  year: 'numeric'
+                                }
+                              )}
+                            </td>
+                          </tr>
+                        </table>
                         <Grid columns={3}>
                           <Grid.Column width={4}>
                             <img src={item.post.images[0].src} style={{ objectFit: "cover", height: 60, width: 60 }} />
@@ -176,13 +204,13 @@ const MySales = () => {
                             <h3 style={{ margin: 0 }}>{item.post.title}</h3>
                             <h5 style={{ margin: 0 }}>Qty: {item.qty}<br />
                              Total: ${item.qty * item.post.price}</h5>
-                              <span style={{ color: "green" }}>
-                                {item.status}<br />
-                                {item.shippingMethod === "Pick-up" ?
-                                  <span onClick={() => {
-                                    handleOpenModal(item, index)
-                                  }}>Click to see address</span> : null}
-                              </span>
+                            <span style={{ color: "green" }}>
+                              {item.status}<br />
+                              {item.shippingMethod === "Pick-up" ?
+                                <span onClick={() => {
+                                  handleOpenModal(item, index)
+                                }}>Click to see address</span> : null}
+                            </span>
                           </Grid.Column>
                         </Grid>
                         <table style={{ width: '100%' }}>
@@ -226,31 +254,8 @@ const MySales = () => {
                             <td colspan="2">{item.deliveryForm.request}</td>
                           </tr>
                         </table>
-                        <Divider horizontal>Inform buyer</Divider>
-                        <p>Buyer will receive notifications by clicking below options:</p>
-                        <Checkbox label={"Confirm " + item.shippingMethod + " date" }
-                        onClick={()=>{
-                          if (status == 'Unconfirmed') {
-                            setStatus('Confirmed')
-                          }
-                          else {
-                            setStatus('Unconfirmed')
-                            setClearCheck(false)
-                          }
-                        }}/>
-                        <Checkbox label={"Order is ready for " + item.shippingMethod}  
-                        disabled={status == "Unconfirmed"}
-                        checked={clearCheck}
-                        onClick={()=>{
-                          if (status == 'Confirmed') {
-                            setStatus('Ready')
-                            setClearCheck(true)
-                          }
-                          if (status == 'Ready') {
-                            setStatus('Confirmed')
-                            setClearCheck(false)
-                          }
-                        }}/>
+                        {/* <Divider horizontal>Inform buyer</Divider> */}
+
                       </Segment>
                     </Grid.Column>
                   </>

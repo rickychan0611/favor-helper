@@ -86,19 +86,19 @@ const PostCard = ({ item, edit }) => {
             <div style={styles.addressContainer}>
               {!item.pickupAddress ? null :
               <p style={styles.address}>Location: {item.pickupAddress.city}</p>}
-              <p style={styles.pickup}>
+              <p style={styles.pickUp}>
                 {item.pickUp ? <Icon name="shopping bag" /> : null}
                 {item.delivery ? <> &nbsp;&nbsp;<Icon name="shipping fast" />  </> : null}
               </p>
             </div>
             {/* clear right float css */}
             <div style={{ clear: "both" }}></div>
-            <Divider fitted />
+            {/* <Divider fitted /> */}
 
             {/* <Divider fitted /> */}
             {/* <div style={styles.addressContainer}>
               <p style={styles.address}>Qty left : {item.minOrder ? <>{item.minOrder}</> : <>no limit</>} </p>
-              <p style={styles.pickup}>Total Qty : {item.maxOrder ? <>{item.maxOrder}</> : <>no limit</>}
+              <p style={styles.pickUp}>Total Qty : {item.maxOrder ? <>{item.maxOrder}</> : <>no limit</>}
               </p>
             </div>
             <div style={{ clear: "both" }}></div> */}

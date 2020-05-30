@@ -39,7 +39,8 @@ const Post = ({ post, poster, loading, user }) => {
               <Grid column={2} stackable>
                 <Grid.Column width={10} >
                   <h1 style={styles.title}>{post.title}</h1>
-                  <h5 style={{color:"grey", marginTop: 5, fontSize: 12}}>{post.createAt.toDate().toLocaleString()}</h5>
+                  <h5 style={{color:"grey", marginTop: 5, fontSize: 12}}>
+                    Post date:{post.createAt.toDate().toLocaleString()}</h5>
 
                   <Grid column={2}>
                     <Grid.Column width={1}>

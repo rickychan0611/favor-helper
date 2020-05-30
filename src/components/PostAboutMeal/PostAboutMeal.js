@@ -10,9 +10,9 @@ const PostAboutMeal = ({ post, poster }) => {
       {/* <Header style={{ marginBottom: 0 }}>Style</Header>
         {post.dishStyle} */}
       {/* <Divider fluid /> */}
-      <h4 style={{color:'grey'}}>Description:</h4>
-      <span style={{whiteSpace: 'pre-line'}}>{post.summary}</span>
-        <br/><br/>
+      <h4 style={{color:'grey', marginBottom: 0 }}>Description:</h4>
+      <h4 style={{whiteSpace: 'pre-line', marginTop: 3}}>{post.summary}</h4>
+        <br/>
       {/* </Segment> */}
     </Fragment>
   )

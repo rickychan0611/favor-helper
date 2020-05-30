@@ -145,7 +145,7 @@ const Step3 = ({ Steps, setSteps }) => {
       }
       <br /><br />
       <Checkbox
-        label="Pickup: Customers will pickup from your address"
+        label="Pickup: Customers will  from your address"
         onChange={pickUpToggle}
         checked={formState.pickUp}
       />

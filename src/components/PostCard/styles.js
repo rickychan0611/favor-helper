@@ -1,7 +1,7 @@
 const styles = {
   container :{ 
     width: "100%", 
-    height: 350, 
+    height: 330, 
     backgroundColor: "white", 
     position: 'relative' ,
     boxShadow: '0px 10px 15px #cfdde8'
@@ -72,7 +72,7 @@ const styles = {
     marginBottom: 5,
     float: 'left'
   },
-  pickup : {
+  pickUp : {
     color: "grey",
     float: 'right',
     marginTop: 5,

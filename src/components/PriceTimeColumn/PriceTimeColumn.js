@@ -5,7 +5,7 @@ import {
   Button,
   Header,
   Segment,
-  Divider,
+  Icon,
 } from 'semantic-ui-react'
 
 import CheckOutModal from '../CheckOutModal';
@@ -33,23 +33,10 @@ const PriceTimeColumn = ({ post, poster }) => {
       <Segment >
         <Segment>
           <Header as='h1'>Price:  ${post.price} </Header>
-          <Button fluid
-            style={{
-              backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
-              color: "white"
-            }}
-            size='big' onClick={() => {
-              if (user == "not signed in"){
-                setOpenSignInModal(true)
-              }
-              else {
-                setOpenModal(true)
-              }
-            }}>
-            I'm Hungry. Request Meal
-                </Button>
+
         </Segment>
-        <Divider fluid />
+
+        {/* <Divider fluid />
 
         <Header style={{ margin: 0 }}>Minimum Order: </Header>
         {post.minOrder}
@@ -61,19 +48,43 @@ const PriceTimeColumn = ({ post, poster }) => {
 
         <Header style={{ margin: 0 }}>Order Cut-off Time: </Header>
         {post.CutOffTime}
-        <Divider fluid />
+        <Divider fluid /> */}
 
-        <Header style={{ margin: 0 }}>Completion Date: </Header>
+        {/* <Header style={{ margin: 0 }}>Completion Date: </Header>
         {post.completionDate}
-        <Divider fluid />
+        <Divider fluid /> */}
+        <Segment>
+          <h4 style={{ marginBottom: 5 }}>Shipping Method:</h4>
+          {post.pickUp ?
+            <><Icon name="check" color="green" />
+              <span style={{ fontSize: 16 }}>Self Pick-up
+              </span>&nbsp;&nbsp;&nbsp; </> : null}
+          {post.delivery ?
+            <><Icon name="check" color="green" />
+              <span style={{ fontSize: 16 }}>
+                Delivery {": " + post.deliveryFee === "0" ? "Free" : "$" + post.deliveryFee}
+              </span></> : null}
+        </Segment>
 
-        <Header style={{ margin: 0 }}>Pick up / Delivery</Header>
-      Self Pick-up? {post.pickup ? "Yes" : "No"} <br />
-      Delivery? {post.delivery ? "Yes" : "No"}
-        <Divider fluid />
+        {/* <Header style={{ margin: 0 }}>instructions: </Header>
+        {post.pickUpGuide} */}
 
-        <Header style={{ margin: 0 }}>instructions: </Header>
-        {post.pickUpGuide}
+        <Button fluid
+          style={{
+            backgroundImage: 'linear-gradient(to top right, #7775fa, #9a99f0)',
+            color: "white"
+          }}
+          size='big' onClick={() => {
+            if (user == "not signed in") {
+              setOpenSignInModal(true)
+            }
+            else {
+              setOpenModal(true)
+            }
+          }}>
+          Request Meal
+          </Button>
+
       </Segment >
     </>
   )

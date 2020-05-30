@@ -17,7 +17,7 @@ const PostsContextProvider = ({ children }) => {
     title: "",
     price: "",
     address: "",
-    pickup: false,
+    pickUp: false,
     delivery: false,
     aboutMe: "",
     pickupWeeks: [
@@ -70,7 +70,7 @@ const PostsContextProvider = ({ children }) => {
           setFormState({
             title: "",
             price: "",
-            pickup: false,
+            pickUp: false,
             delivery: false,
             location: ""
           })
@@ -95,7 +95,7 @@ const PostsContextProvider = ({ children }) => {
           title: "",
           price: "",
           address: "",
-          pickup: false,
+          pickUp: false,
           delivery: false
         })
       })

@@ -1,6 +1,8 @@
 const styles = {
   container :{
-    backgroundColor: 'white'
+    // backgroundColor: 'white',
+    // paddingLeft: 40,
+    // paddingRight: 40,
   }
 }
 

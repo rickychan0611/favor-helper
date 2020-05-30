@@ -57,7 +57,7 @@ const PostDetail = (props) => {
   }, [id])
 
   const [poster, setPoster] = useState({})
-  
+
   const getPoster = (id) => {
     db.collection('users').where('uid', '==', id).get()
       .then(snapshot => {
@@ -71,27 +71,28 @@ const PostDetail = (props) => {
 
   return (
     <>
-      {post ? <PhotoSlideInDetail images={post.images} /> : null}
+      {/* {post ? <PhotoSlideInDetail images={post.images} /> : null} */}
 
       <Container style={styles.container}>
         {post ?
           <>
             <div>
-              <Post post={post} loading={loading} poster={poster} user={user}/>
+              <Post post={post} loading={loading} poster={poster} user={user} />
             </div>
           </>
           :
           <>
-          <Dimmer active inverted page>
-            <Loader inverted content='Loading' />
-          </Dimmer>
-        </>
+            <Dimmer active inverted page>
+              <Loader inverted content='Loading' />
+            </Dimmer>
+          </>
         }
-       
+
         <br></br>
         <Divider />
         <Button onClick={() => history.push('/posts')}>Go back</Button>
       </Container>
+      <br></br>
     </>
   )
 }
