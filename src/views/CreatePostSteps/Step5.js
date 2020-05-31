@@ -113,7 +113,10 @@ const Step5 = ({ Steps, setSteps }) => {
       }}>
 
         <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
-          onClick={() => { history.goBack() }} icon>
+          onClick={() => { 
+            history.goBack() 
+            setFormState({})
+          }} icon>
           <Icon name='close' />
         </Button>
         <FavButton clicked={() => { setSteps({ Step: Step4 }) }}> <Icon name='arrow left' />Back</FavButton>

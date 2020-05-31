@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect, useContext } from 'react'
 import db from '../firestore'
 import { useHistory } from "react-router-dom";
 import { UserContext } from './UserContext'
+import useStateWithCallback from 'use-state-with-callback';
+import addImage from '../assets/images/add-image.jpg'
 
 export const PostsContext = createContext()
 
@@ -49,7 +51,8 @@ const PostsContextProvider = ({ children }) => {
     pickupStartTime: startTime,
     pickupEndTime: endTime,
     deliveryStartTime: startTime,
-    deliveryEndTime: endTime
+    deliveryEndTime: endTime,
+    image: [{src: addImage}]
   })
 
   const { title, price, pickUp, delivery, address, summary } = formState

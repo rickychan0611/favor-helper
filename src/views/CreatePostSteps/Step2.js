@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Icon, Button } from 'semantic-ui-react';
 import { useHistory, useParams } from "react-router-dom";
 import { PostsContext } from '../../context/PostsContext'
@@ -8,17 +8,21 @@ import { PhotoSlider } from '../../components'
 import Step1 from './Step1'
 import Step3 from './Step3'
 
-const Step2 = ({ Steps, setSteps }) => {
+const Step2 = ({ Steps, setSteps, createPost }) => {
   const { preview, setPreview, formState, setFormState, validationError, setValidationError, success, setSuccess, posts } = useContext(PostsContext)
   const handleChange = (e, { name, value }) => {
     setFormState({ ...formState, [name]: value })
   }
   const history = useHistory()
 
+  useEffect(()=>{
+    console.log(formState)
+    console.log(localStorage.getItem('Images'))
+  },[])
   return (
     <>
       <h2>Step 2 of 5: <br />Upload pictures</h2><p> Please upload at least 1 picture. <br/>Press + to add. Press x to delete.</p>
-      <PhotoSlider formState={formState} setFormState={setFormState} createPost={true} />
+      <PhotoSlider formState={formState} setFormState={setFormState} createPost={createPost} />
       <br/><br/>
       <p>The 1st picture from the left is the default picture.</p>
 
@@ -32,7 +36,10 @@ const Step2 = ({ Steps, setSteps }) => {
       }}>
 
         <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
-          onClick={() => { history.goBack() }} icon>
+          onClick={() => { 
+            history.goBack() 
+            setFormState({})
+          }} icon>
           <Icon name='close' />
         </Button>
         <FavButton clicked={() => { setSteps({ Step: Step1 }) }}> <Icon name='arrow left' />Back</FavButton>

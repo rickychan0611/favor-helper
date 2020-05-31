@@ -43,7 +43,9 @@ const PostCard = ({ item, edit }) => {
           <Button color="blue"
             onClick={() => {
               setFormState(item)
-              history.push('/edit/' + item.id)
+              localStorage.setItem("editPost", JSON.stringify(item))
+              // history.push('/edit/' + item.id)
+              history.push('/edit-post')
             }
             }>
             Edit

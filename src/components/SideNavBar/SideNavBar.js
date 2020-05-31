@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../../context/UserContext'
+import { PostsContext } from '../../context/PostsContext'
 import { useHistory } from "react-router-dom";
 import { SignInModal } from '../../components'
 
@@ -14,6 +15,7 @@ import styles from './styles'
 
 const SideNavBar = ({ setNavDim }) => {
   const { user, loading, openSideBar, setOpenSideBar, signOut } = useContext(UserContext)
+  const { setFormState } = useContext(PostsContext)
   const history = useHistory()
   const [openSignInModal, setOpenSignInModal] = useState(false)
 
@@ -32,7 +34,9 @@ const SideNavBar = ({ setNavDim }) => {
         // alert("please sign in")
         setOpenSignInModal(true)
       }
-      else { history.push(name) }
+      else { 
+        history.push(name) 
+      }
     }
     else {
       history.push(name)

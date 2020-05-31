@@ -3,39 +3,32 @@ import styles from './styles'
 import { Input, Form, Icon, Header, Grid, Dimmer, Container, Responsive, Button } from 'semantic-ui-react';
 import firebase from 'firebase'
 import { useHistory, useParams } from "react-router-dom";
-import { ImageSliderContext } from '../../context/ImageSliderContext'
 import { PostsContext } from '../../context/PostsContext'
 import { UserContext } from '../../context/UserContext'
+import { ImageSliderContext } from '../../context/ImageSliderContext'
 import { FavButton } from '../../components';
 import Step1 from './Step1'
 import Step2 from './Step2'
 import Step3 from './Step3'
 import Step4 from './Step4'
 import Step5 from './Step5'
-import addImage from '../../assets/images/add-image.jpg'
 
 
-const CreatePostStepsContainer = () => {
+const EditPostStepsContainer = () => {
   const { pickupWeeks, deliveryWeeks, formState, setFormState } = useContext(PostsContext)
+  const { setImages } = useContext(ImageSliderContext)
   const handleChange = (e, { name, value }) => {
     setFormState({ ...formState, [name]: value })
   }
   const history = useHistory()
-  const { setImages } = useContext(ImageSliderContext)
 
   const [Steps, setSteps]= useState({Step: Step1})
 
   useEffect(() => {
-    // localStorage.removeItem('newPost')
-    // localStorage.removeItem('Images')   
-    let localImage = JSON.parse(localStorage.getItem('Images')) 
-    if (!localImage) {
-      setImages([{ src: addImage }])
-    }
-    else {
-      setImages(localImage)
-    }
-    let state = JSON.parse(localStorage.getItem('newPost')) 
+    // localStorage.removeItem('editPost')
+    // localStorage.removeItem('Images') 
+    setImages(formState.images)
+    let state = formState
     let d = new Date()
     let startTime = d.setHours(8)
     startTime = d.setMinutes(0)
@@ -75,7 +68,8 @@ const CreatePostStepsContainer = () => {
           flexDirection: "column",
           alignItems: "center",
         }}>
-          <h1 style={{ color: 'white', margin: '0 auto', fontWeight: "bold" }}>CREATE A MEAL</h1><br></br>
+          <h1 style={{ color: 'white', margin: '0 auto', fontWeight: "bold" }}>
+            EDIT YOUR MEAL</h1><br></br>
           <div
             style={{
               position: "relative",
@@ -90,7 +84,7 @@ const CreatePostStepsContainer = () => {
               paddingBottom: 130,
               marginBottom: 30
             }}>
-            <Steps.Step setSteps={setSteps} createPost={true}/>
+            <Steps.Step setSteps={setSteps} edit={true}/>
         </div>
       </div>
       </div>
@@ -99,4 +93,4 @@ const CreatePostStepsContainer = () => {
   )
 }
 
-export default CreatePostStepsContainer
+export default EditPostStepsContainer

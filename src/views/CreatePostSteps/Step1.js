@@ -8,9 +8,9 @@ import { UserContext } from '../../context/UserContext'
 import { FavButton } from '../../components';
 import Step2 from './Step2'
 
-const Step1 = ({ Steps, setSteps }) => {
+const Step1 = ({ Steps, setSteps, createPost }) => {
   const history = useHistory()
-  const { formState, setFormState, pickupWeeks, deliveryWeeks } = useContext(PostsContext)
+  const { formState, setFormState } = useContext(PostsContext)
   const handleChange = (e, { name, value }) => {
     localStorage.removeItem('newPost')
     setFormState({ ...formState, [name]: value }, callback()
@@ -28,30 +28,6 @@ const Step1 = ({ Steps, setSteps }) => {
   const clearField = (name) => {
     setFormState({ ...formState, [name]: '' })
   }
-
-  useEffect(() => {
-    // localStorage.removeItem('newPost')
-    // localStorage.removeItem('Images')    
-    let state = JSON.parse(localStorage.getItem("newPost"))
-    let d = new Date()
-    let startTime = d.setHours(8)
-    startTime = d.setMinutes(0)
-    let endTime = d.setHours(21)
-    endTime = d.setMinutes(0)
-    state = {
-      ...state,
-      pickupStartTime: startTime,
-      pickupEndTime: endTime,
-      deliveryStartTime: startTime,
-      deliveryEndTime: endTime,
-      pickupWeeks,
-      deliveryWeeks
-    }
-    console.log(state)
-    if (state && formState) {
-      setFormState(state)
-    }
-  }, [])
 
   return (
     <>
@@ -114,7 +90,10 @@ const Step1 = ({ Steps, setSteps }) => {
             right: 0
           }}>
             <Button style={{ backgroundColor: "#bcbbbd", color: "white" }}
-              onClick={() => { history.goBack() }}>
+              onClick={() => { 
+                history.goBack() 
+                setFormState({})
+                }}>
               <Icon name='close' /> Cancel
         </Button>
 
