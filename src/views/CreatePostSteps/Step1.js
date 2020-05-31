@@ -40,7 +40,7 @@ const Step1 = ({ Steps, setSteps }) => {
     //     { day: 'Mon', active: true },
     //     { day: 'Tue', active: true },
     //     { day: 'Wed', active: true },
-    //     { day: 'Thu', active: true },
+  //     { day: 'Thu', active: true },
     //     { day: 'Fri', active: true },
     //     { day: 'Sat', active: true },
     //     { day: 'Sun', active: true }

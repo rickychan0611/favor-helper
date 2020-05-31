@@ -142,6 +142,7 @@ const CreatePostForm = ({ item, edit }) => {
   }
   return (
     <>
+    <div style={{overflow: 'scroll'}}>
       <Modal
         open={success}
         size='small'
@@ -311,6 +312,7 @@ const CreatePostForm = ({ item, edit }) => {
 
         </>
         : null}
+        </div>
     </>
   )
 }

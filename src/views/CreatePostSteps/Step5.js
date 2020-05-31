@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { 
+import {
   Grid,
   Button,
   Form,
@@ -17,7 +17,7 @@ import { FavButton } from '../../components'
 import db from '../../firestore'
 
 const Step5 = ({ Steps, setSteps }) => {
- 
+
   const uploadToServer = (file) => {
     firebase.storage().ref('userPic/' + user.id).put(file)
       .then((fileData) => { // then get downloadUrl
@@ -43,14 +43,14 @@ const Step5 = ({ Steps, setSteps }) => {
   }
   const [avatar, setAvatar] = useState(false)
 
-  const { formState, setFormState, submitPostToServer } = useContext(PostsContext)
+  const { formState, setFormState, submitPostToServer, loading, setLoading } = useContext(PostsContext)
   const { user, updateProfilePic } = useContext(UserContext)
 
   const handleChange = (e, { name, value }) => {
     setFormState({ ...formState, [name]: value })
   }
   const history = useHistory()
-  
+
   const submit = () => {
     db.collection('users').doc(user.id).update(
       { aboutMe: formState.aboutMe }
@@ -66,7 +66,7 @@ const Step5 = ({ Steps, setSteps }) => {
     }
   }, [user])
 
- return (
+  return (
     <>
       <h2>Step 5 of 5: About yourself</h2>
       <Grid column={1} stackable>
@@ -87,7 +87,7 @@ const Step5 = ({ Steps, setSteps }) => {
             {/* // : */}
             <Dimmer active={avatar} onClickOutside={() => { setAvatar(false) }} page>
               <div style={{ width: '250px', height: '250px', backgroundColor: 'white', margin: 'auto', border: '1px solid black', zIndex: 1000 }}>
-                <AvatarImageCropper apply={apply} maxsize={1024 * 1024 * 5}/>
+                <AvatarImageCropper apply={apply} maxsize={1024 * 1024 * 5} />
               </div>
             </Dimmer>
             {/* // } */}
@@ -117,11 +117,17 @@ const Step5 = ({ Steps, setSteps }) => {
           <Icon name='close' />
         </Button>
         <FavButton clicked={() => { setSteps({ Step: Step4 }) }}> <Icon name='arrow left' />Back</FavButton>
-        <FavButton clicked={() => { 
-          setSteps({ Step: Step5 }) 
-          submit()
-          }}> <Icon name='check' /> All done, publish </FavButton>
-
+        {!loading ?
+          <FavButton clicked={() => {
+            setSteps({ Step: Step5 })
+            submit()
+          }}> <Icon name='check' /> Publish now
+          </FavButton>
+          :
+          <FavButton>
+            <Icon loading name='spinner' color="white" />
+          </FavButton>
+        }
       </div>
     </>
   )

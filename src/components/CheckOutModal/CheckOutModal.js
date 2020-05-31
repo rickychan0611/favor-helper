@@ -123,10 +123,50 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
     })
   }
 
+
+  const [pickUpDays, setPickUpDays] = useState()
+  const [deliveryDays, setDeliveryDays] = useState()
+
+  const filterPickUpDay = (date) => {
+    const day = moment(date).day()
+    return eval(pickUpDays)
+  }
+
+  const filterDeliveryDay = (date) => {
+    const day = moment(date).day()
+    return eval(deliveryDays)
+  }
+
+  let p = ''
+  let d = ''
+
+  const getPickUpDays = post.pickupWeeks.map(async (item, i) => {
+    if (item.active == false) {
+      p = p + 'day !== ' + i + ' && '
+        return
+    }
+  })
+  
+  const getDeliveryDays = post.deliveryWeeks.map(async (item, i) => {
+    if (item.active == false) {
+        d = d + 'day !== ' + i + ' && '
+        return
+    }
+  })
+
+  useEffect(() => {
+    Promise.all(getPickUpDays).then(()=> {
+      setPickUpDays(p.slice(0, p.length - 4))
+    })
+    Promise.all(getDeliveryDays).then(()=> {
+      setDeliveryDays(d.slice(0, d.length - 4))
+    })
+  }, [])
+
   useEffect(() => {
     if (user) {
       let address = user.address
-      setDeliveryForm({...deliveryForm, address})
+      setDeliveryForm({ ...deliveryForm, address })
     }
   }, [user])
 
@@ -214,7 +254,7 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
                   {post.pickupAddress.city}
                   {/* {post.address[4].short_name},&nbsp;
                   {post.address[5].short_name}&nbsp; */}
-              </h5>
+                </h5>
                 <Divider horizontal>Or</Divider>
                 <h4>
                   <Radio
@@ -297,6 +337,7 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
                 // maxDate={moment().add(2,'d').toDate()}
                 minTime={now.hours(10).minutes(0).toDate()}
                 maxTime={now.hours(21).minutes(45).toDate()}
+                filterDate={filterPickUpDay}
               />
             </div>
             <h4>Pickup time:&nbsp;
@@ -431,12 +472,12 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
                 <td>Pickup address:</td>
                 <td>{post.pickupAddress.address1}</td>
               </tr>
-            {post.pickupAddress.address ? 
-              <tr>
-                <td>Pickup address:</td>
-                <td>{post.pickupAddress.address1}</td>
-              </tr>
-             : null}
+              {post.pickupAddress.address ?
+                <tr>
+                  <td>Pickup address:</td>
+                  <td>{post.pickupAddress.address1}</td>
+                </tr>
+                : null}
               <tr>
                 <td> </td>
                 <td>{post.pickupAddress.city}</td>
@@ -530,6 +571,8 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
                 // maxDate={moment().add(2,'d').toDate()}
                 minTime={now.hours(10).minutes(0).toDate()}
                 maxTime={now.hours(21).minutes(45).toDate()}
+                filterDate={filterDeliveryDay}
+
               />
             </div>
             <h4>Perferred delivery time:&nbsp;

@@ -85,11 +85,11 @@ const Post = ({ post, poster, loading, user }) => {
                     <Ref innerRef={contextRef}>
                       <Rail internal close position='left'
                         style={{ width: '100%', margin: 10 }}>
-                        <Sticky
+                        {/* <Sticky
                           offset={70}
-                          context={contextRef}>
+                          context={contextRef}> */}
                           <PriceTimeColumn post={post} poster={poster} />
-                        </Sticky>
+                        {/* </Sticky> */}
                       </Rail>
                     </Ref>
 

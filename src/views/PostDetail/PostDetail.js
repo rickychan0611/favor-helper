@@ -71,7 +71,7 @@ const PostDetail = (props) => {
 
   return (
     <>
-      {/* {post ? <PhotoSlideInDetail images={post.images} /> : null} */}
+      {post ? <PhotoSlideInDetail images={post.images} /> : null}
 
       <Container style={styles.container}>
         {post ?

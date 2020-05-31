@@ -8,7 +8,7 @@ export const PostsContext = createContext()
 const PostsContextProvider = ({ children }) => {
   const history = useHistory()
   const { user, setUser } = useContext(UserContext)
-
+  const [loading, setLoading] = useState(false)
   const [posts, setPosts] = useState([])
   const [preview, setPreview] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -21,22 +21,22 @@ const PostsContextProvider = ({ children }) => {
     delivery: false,
     aboutMe: "",
     pickupWeeks: [
+      { day: 'Sun', active: true },
       { day: 'Mon', active: true },
       { day: 'Tue', active: true },
       { day: 'Wed', active: true },
       { day: 'Thu', active: true },
       { day: 'Fri', active: true },
       { day: 'Sat', active: true },
-      { day: 'Sun', active: true }
     ],
     deliveryWeeks: [
+      { day: 'Sun', active: true },
       { day: 'Mon', active: true },
       { day: 'Tue', active: true },
       { day: 'Wed', active: true },
       { day: 'Thu', active: true },
       { day: 'Fri', active: true },
       { day: 'Sat', active: true },
-      { day: 'Sun', active: true }
     ],
     deliveryFee: 0,
     pickupStartTime: new Date().setHours(8, 0, 0, 0),
@@ -59,12 +59,14 @@ const PostsContextProvider = ({ children }) => {
   }
 
   const submitPostToServer = () => {
+    setLoading(true)
     if (formState.id) {
       console.log('formState' + JSON.stringify(formState))
       db.collection('posts').doc(formState.id).update(formState)
         .then(doc => {
           console.log("Post updated!");
-          history.push('/profile')
+          setLoading(false)
+          history.push('/my-posts')
           localStorage.removeItem('newPost')
           localStorage.removeItem('Images')
           setFormState({
@@ -88,7 +90,9 @@ const PostsContextProvider = ({ children }) => {
           posterUid: user.uid }
       ).then(doc => {
         setSuccess(true)
+        setLoading(false)
         console.log("Post Saved: ");
+        history.push('/my-posts')
         localStorage.removeItem('newPost')
         localStorage.removeItem('Images')
         setFormState({
@@ -100,6 +104,7 @@ const PostsContextProvider = ({ children }) => {
         })
       })
         .catch(function (error) {
+          setLoading(false)
           console.error("Error adding Post: ", error);
         })
       return
@@ -108,6 +113,7 @@ const PostsContextProvider = ({ children }) => {
 
   const updatePostToServer = () => {
     const timeStamp = new Date()
+    setLoading(true)
     const createPost = db.collection('posts').doc()
     if (validation()) {
 
@@ -115,9 +121,11 @@ const PostsContextProvider = ({ children }) => {
         { ...formState, createAt: timeStamp }
       ).then(doc => {
         setSuccess(true)
+        setLoading(false)
         console.log("Post Saved: ");
       })
         .catch(function (error) {
+          setLoading(false)
           console.error("Error adding Post: ", error);
         })
       return
@@ -159,7 +167,9 @@ const PostsContextProvider = ({ children }) => {
           validationError,
           setValidationError,
           success,
-          setSuccess
+          setSuccess,
+          loading,
+          setLoading
         }
       }>
       {children}

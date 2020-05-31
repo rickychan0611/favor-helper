@@ -27,8 +27,8 @@ export default (props) => {
       </div>
 
       <SideNavBar setNavDim={setNavDim} />
-      {/* <Dimmer.Dimmable dimmed={navDim} blurring>
-        <Dimmer active={navDim} inverted /> */}
+      <Dimmer.Dimmable dimmed={navDim} blurring>
+        <Dimmer active={navDim} inverted />
         <div style={{
           paddingTop: 72,
           postion: "relative",
@@ -72,7 +72,7 @@ export default (props) => {
           </div>
 
         </div>
-      {/* </Dimmer.Dimmable> */}
+      </Dimmer.Dimmable>
 
     </>
   )
