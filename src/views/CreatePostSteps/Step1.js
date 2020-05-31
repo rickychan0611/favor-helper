@@ -10,7 +10,7 @@ import Step2 from './Step2'
 
 const Step1 = ({ Steps, setSteps }) => {
   const history = useHistory()
-  const { formState, setFormState } = useContext(PostsContext)
+  const { formState, setFormState, pickupWeeks, deliveryWeeks } = useContext(PostsContext)
   const handleChange = (e, { name, value }) => {
     localStorage.removeItem('newPost')
     setFormState({ ...formState, [name]: value }, callback()
@@ -33,28 +33,20 @@ const Step1 = ({ Steps, setSteps }) => {
     // localStorage.removeItem('newPost')
     // localStorage.removeItem('Images')    
     let state = JSON.parse(localStorage.getItem("newPost"))
-
-    // setFormState({
-    //   ...formState,
-    //   pickupWeeks: [
-    //     { day: 'Mon', active: true },
-    //     { day: 'Tue', active: true },
-    //     { day: 'Wed', active: true },
-  //     { day: 'Thu', active: true },
-    //     { day: 'Fri', active: true },
-    //     { day: 'Sat', active: true },
-    //     { day: 'Sun', active: true }
-    //   ],
-    //   deliveryWeeks: [
-    //     { day: 'Mon', active: true },
-    //     { day: 'Tue', active: true },
-    //     { day: 'Wed', active: true },
-    //     { day: 'Thu', active: true },
-    //     { day: 'Fri', active: true },
-    //     { day: 'Sat', active: true },
-    //     { day: 'Sun', active: true }
-    //   ],
-    // })
+    let d = new Date()
+    let startTime = d.setHours(8)
+    startTime = d.setMinutes(0)
+    let endTime = d.setHours(21)
+    endTime = d.setMinutes(0)
+    state = {
+      ...state,
+      pickupStartTime: startTime,
+      pickupEndTime: endTime,
+      deliveryStartTime: startTime,
+      deliveryEndTime: endTime,
+      pickupWeeks,
+      deliveryWeeks
+    }
     console.log(state)
     if (state && formState) {
       setFormState(state)
@@ -77,29 +69,29 @@ const Step1 = ({ Steps, setSteps }) => {
           onChange={handleChange}
           icon={<Icon name='close' link onClick={() => { clearField("title") }} />}
         />
-          <Form.Input
-            required
-            fluid
-            label="How much?"
-            placeholder="Enter an amount"
-            size="large"
-            type='number'
-            value={formState.price}
-            name="price"
-            onChange={handleChange}
-            icon={<Icon name='close' link onClick={() => { clearField("price") }} />}
-          />
-          <Form.Input
-            fluid
-            label="How many orders will you do? (0 = unlimited)"
-            placeholder="Enter 0 if no limit"
-            size="large"
-            type='number'
-            value={formState.maxOrder}
-            name="maxOrder"
-            onChange={handleChange}
-            icon={<Icon name='close' link onClick={() => { clearField("maxOrder") }} />}
-          />
+        <Form.Input
+          required
+          fluid
+          label="How much?"
+          placeholder="Enter an amount"
+          size="large"
+          type='number'
+          value={formState.price}
+          name="price"
+          onChange={handleChange}
+          icon={<Icon name='close' link onClick={() => { clearField("price") }} />}
+        />
+        <Form.Input
+          fluid
+          label="How many orders will you do? (0 = unlimited)"
+          placeholder="Enter 0 if no limit"
+          size="large"
+          type='number'
+          value={formState.maxOrder}
+          name="maxOrder"
+          onChange={handleChange}
+          icon={<Icon name='close' link onClick={() => { clearField("maxOrder") }} />}
+        />
         <Form.TextArea fluid label="Description" name="summary"
           style={{ minHeight: 100 }}
           required

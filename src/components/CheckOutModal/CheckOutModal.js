@@ -335,8 +335,10 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
                 inline
                 minDate={new Date()}
                 // maxDate={moment().add(2,'d').toDate()}
-                minTime={now.hours(10).minutes(0).toDate()}
-                maxTime={now.hours(21).minutes(45).toDate()}
+                // minTime={now.hours(10).minutes(0).toDate()}
+                // maxTime={now.hours(21).minutes(45).toDate()}
+                minTime={post.pickupStartTime.toDate()}
+                maxTime={post.pickupEndTime.toDate()}
                 filterDate={filterPickUpDay}
               />
             </div>
@@ -571,6 +573,8 @@ const CheckOutModal = ({ openModal, setOpenModal, post, poster }) => {
                 // maxDate={moment().add(2,'d').toDate()}
                 minTime={now.hours(10).minutes(0).toDate()}
                 maxTime={now.hours(21).minutes(45).toDate()}
+                minTime={moment(post.deliveryStartTime).toDate()}
+                maxTime={moment(post.deliveryEndTime).toDate()}
                 filterDate={filterDeliveryDay}
 
               />

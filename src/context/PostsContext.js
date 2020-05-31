@@ -13,6 +13,29 @@ const PostsContextProvider = ({ children }) => {
   const [preview, setPreview] = useState(false)
   const [success, setSuccess] = useState(false)
   const [validationError, setValidationError] = useState(false)
+  const pickupWeeks = [
+    { day: 'Sun', active: true },
+    { day: 'Mon', active: true },
+    { day: 'Tue', active: true },
+    { day: 'Wed', active: true },
+    { day: 'Thu', active: true },
+    { day: 'Fri', active: true },
+    { day: 'Sat', active: true },
+  ]
+  const deliveryWeeks = [
+    { day: 'Sun', active: true },
+    { day: 'Mon', active: true },
+    { day: 'Tue', active: true },
+    { day: 'Wed', active: true },
+    { day: 'Thu', active: true },
+    { day: 'Fri', active: true },
+    { day: 'Sat', active: true },
+  ]
+  let d = new Date()
+  let startTime = d.setHours(8)
+  startTime = d.setMinutes(0)
+  let endTime = d.setHours(21)
+  endTime = d.setMinutes(0)
   const [formState, setFormState] = useState({
     title: "",
     price: "",
@@ -20,30 +43,13 @@ const PostsContextProvider = ({ children }) => {
     pickUp: false,
     delivery: false,
     aboutMe: "",
-    pickupWeeks: [
-      { day: 'Sun', active: true },
-      { day: 'Mon', active: true },
-      { day: 'Tue', active: true },
-      { day: 'Wed', active: true },
-      { day: 'Thu', active: true },
-      { day: 'Fri', active: true },
-      { day: 'Sat', active: true },
-    ],
-    deliveryWeeks: [
-      { day: 'Sun', active: true },
-      { day: 'Mon', active: true },
-      { day: 'Tue', active: true },
-      { day: 'Wed', active: true },
-      { day: 'Thu', active: true },
-      { day: 'Fri', active: true },
-      { day: 'Sat', active: true },
-    ],
+    pickupWeeks,
+    deliveryWeeks,
     deliveryFee: 0,
-    pickupStartTime: new Date().setHours(8, 0, 0, 0),
-    pickupEndTime: new Date().setHours(21, 0, 0, 0),
-    deliveryStartTime: new Date().setHours(8, 0, 0, 0),
-    deliveryEndTime: new Date().setHours(21, 0, 0, 0),
-
+    pickupStartTime: startTime,
+    pickupEndTime: endTime,
+    deliveryStartTime: startTime,
+    deliveryEndTime: endTime
   })
 
   const { title, price, pickUp, delivery, address, summary } = formState
@@ -74,7 +80,11 @@ const PostsContextProvider = ({ children }) => {
             price: "",
             pickUp: false,
             delivery: false,
-            location: ""
+            location: "",
+            pickupWeeks,
+            deliveryWeeks,
+            startTime,
+            endTime
           })
         })
     }
@@ -84,10 +94,12 @@ const PostsContextProvider = ({ children }) => {
       console.log('formState' + JSON.stringify(formState))
 
       createPost.set(
-        { ...formState, 
-          createAt: timeStamp, 
+        {
+          ...formState,
+          createAt: timeStamp,
           id: createPost.id,
-          posterUid: user.uid }
+          posterUid: user.uid
+        }
       ).then(doc => {
         setSuccess(true)
         setLoading(false)
@@ -100,7 +112,9 @@ const PostsContextProvider = ({ children }) => {
           price: "",
           address: "",
           pickUp: false,
-          delivery: false
+          delivery: false,
+          pickupWeeks,
+          deliveryWeeks
         })
       })
         .catch(function (error) {
@@ -169,7 +183,9 @@ const PostsContextProvider = ({ children }) => {
           success,
           setSuccess,
           loading,
-          setLoading
+          setLoading,
+          pickupWeeks,
+          deliveryWeeks
         }
       }>
       {children}

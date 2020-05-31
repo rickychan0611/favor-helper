@@ -117,10 +117,12 @@ const Step4 = ({ Steps, setSteps }) => {
           <div className="datePicker">From: &nbsp;
         <DatePicker
               className="time"
-              selected={formState.pickupStartTime}
-              onChange={date => setFormState({
+              selected={new Date (formState.pickupStartTime)}
+              onChange={date => {
+                console.log(date)
+                setFormState({
                 ...formState, pickupStartTime: date
-              })}
+              })}}
               showTimeSelect
               showTimeSelectOnly
               timeIntervals={60}
@@ -132,7 +134,7 @@ const Step4 = ({ Steps, setSteps }) => {
             &nbsp;&nbsp;to&nbsp;&nbsp;
       <DatePicker
               className="time"
-              selected={formState.pickupEndTime}
+              selected={new Date(formState.pickupEndTime)}
               onChange={date => setFormState({
                 ...formState, pickupEndTime: date
               })}
